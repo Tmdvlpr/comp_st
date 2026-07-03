@@ -1,0 +1,21 @@
+2026-06-19 13:27:01,332 WARNING weather location.lat/lon не заданы — ambient недоступен
+2026-06-19 15:40:08,901 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-06-23 09:22:56,417 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-06-23 09:29:02,558 WARNING data_loader streaming-fetch попытка 2/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 10s
+2026-06-29 16:51:23,941 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-02 11:02:39,288 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s

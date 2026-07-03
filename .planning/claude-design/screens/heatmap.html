@@ -1,0 +1,265 @@
+<!-- @dsCard group="Экраны" name="Тепловая карта" -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тепловая карта — CS Monitor AI</title>
+<style>
+:root{
+  --bg:#0d1426;
+  --app-grad:radial-gradient(1100px 620px at 12% -12%,rgba(96,66,168,.34),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(40,86,168,.22),transparent 55%),linear-gradient(150deg,#1a1533 0%,#141b30 52%,#0c1222 100%);
+  --surface:rgba(26,31,56,.78);--surface-2:rgba(38,44,74,.82);--surface-3:rgba(52,58,94,.88);
+  --line:rgba(132,140,200,.16);--line-2:rgba(132,140,200,.30);
+  --text:#E6ECF6;--text-1:#fff;--text-2:#B7C0D6;--text-3:#9BA5BC;
+  --accent:#58A6FF;--accent-2:#7CC0FF;--accent-strong:#2563c4;--on-accent:#fff;--accent-glow:rgba(88,166,255,.16);
+  --crit:#FF5C6C;--warn:#F5B14C;--info:#8C93B0;--ok:#3FB950;--teal:#3FB8AF;
+  --crit-ink:#FF8893;--warn-ink:#F7C06B;--ok-ink:#6EE67D;--info-ink:#C5CBDF;--tl-ok:#22351f;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+  --fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:30px;--fs-2xl:56px;
+  --shadow-md:0 8px 30px rgba(0,0,0,.35);
+  --font-display:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',ui-monospace,'Cascadia Code',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--font-display);font-size:var(--fs-sm);color:var(--text);background:var(--app-grad) fixed,var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono)}
+.sev-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sev-dot.crit{background:var(--crit);box-shadow:0 0 4px var(--crit)}
+.sev-dot.warn{background:var(--warn)}.sev-dot.info{background:var(--info)}.sev-dot.ok{background:var(--ok)}
+.badge-sev{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono)}
+.badge-sev.crit{background:color-mix(in srgb,var(--crit) 20%,transparent);color:var(--crit-ink)}
+.badge-sev.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)}
+.badge-sev.info{background:color-mix(in srgb,var(--info) 20%,transparent);color:var(--info-ink)}
+
+/* ── App grid ───────────────────────────────── */
+.app{display:grid;grid-template-rows:36px 1fr;height:100vh;min-height:720px}
+.topbar{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:0 12px;height:36px;
+  background:var(--surface);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.tb-clock{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);color:var(--text-1)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.tb-stat{display:inline-flex;align-items:center;gap:4px;color:var(--text-2);font-family:var(--font-mono);font-size:12px}
+.spacer{flex:1}
+.tb-btn{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);font-size:12px;cursor:pointer}
+.tb-pill{background:var(--crit);color:#fff;border-radius:9px;padding:0 6px;font-size:11px;font-weight:700;font-family:var(--font-mono)}
+.tb-ico{width:26px;height:24px;display:grid;place-items:center;border-radius:6px;border:1px solid transparent;color:var(--text-2);cursor:pointer;font-size:14px}
+.tb-ico:hover{border-color:var(--line-2);color:var(--text)}
+.tb-ico.active{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
+.sep{width:1px;height:18px;background:var(--line)}
+.fresh{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-2)}
+.fresh .chipm{display:inline-flex;align-items:center;gap:4px;padding:1px 6px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);font-size:10px}
+
+/* ── Full-screen heatmap layout ────────────────── */
+.hm-screen{overflow:auto;padding:20px 28px 28px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);box-shadow:var(--shadow-md)}
+
+.hm-head{display:flex;align-items:center;gap:10px}
+.hm-head h1{font-size:var(--fs-xl);font-weight:700;color:var(--text-1);margin:0}
+.hm-head .badge{margin-left:12px;font-family:var(--font-mono);font-size:12px;color:var(--text-3);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+.hm-head .path{margin-left:auto;font-family:var(--font-mono);font-size:12px;color:var(--text-3)}
+
+.hm-legend{display:flex;gap:22px;flex-wrap:wrap;padding:14px 20px;align-items:center}
+.hm-legend .lg-item{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2)}
+.swatch-lg{width:18px;height:18px;border-radius:5px;border:1px solid var(--line-2)}
+
+.hm-table-wrap{flex:1;min-height:0;overflow:auto;padding:4px 20px 20px;position:relative}
+.hm-table{width:100%;border-collapse:separate;border-spacing:6px;font-size:13px}
+.hm-table thead th{position:sticky;top:0;z-index:2;background:var(--surface);padding:8px 4px 12px;font-family:var(--font-mono);color:var(--text-2);font-weight:600;text-align:center;font-size:13px;letter-spacing:.02em}
+.hm-table thead th.corner{background:transparent;position:sticky;left:0;top:0;z-index:3}
+.hm-table tbody th{position:sticky;left:0;z-index:1;background:var(--surface);color:var(--text-2);text-align:right;padding:0 14px 0 4px;white-space:nowrap;font-weight:500;font-size:13px}
+.hm-table tbody tr:hover th{color:var(--text-1)}
+
+.cell{height:52px;width:100%;border-radius:8px;border:1px solid var(--line);cursor:pointer;position:relative;transition:transform .12s ease,filter .12s ease,border-color .12s ease}
+.cell:hover{filter:brightness(1.18);transform:scale(1.05);z-index:1}
+.cell .cnt{position:absolute;bottom:4px;right:6px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.55)}
+.cell.crit{background:color-mix(in srgb,var(--crit) 62%,transparent)}
+.cell.warn{background:color-mix(in srgb,var(--warn) 55%,transparent)}
+.cell.info{background:color-mix(in srgb,var(--info) 45%,transparent)}
+.cell.ok{background:color-mix(in srgb,var(--ok) 40%,transparent)}
+.cell.none{background:transparent;border:1px dashed var(--line-2);opacity:.45;cursor:default}
+.cell.sel{border:2px solid var(--accent);transform:scale(1.08);z-index:2;box-shadow:0 0 0 3px var(--accent-glow)}
+
+.hm-foot{display:flex;align-items:center;gap:8px;padding:12px 20px;color:var(--text-3);font-size:12px}
+.hm-foot .ico{color:var(--text-2)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── TOP BAR ── -->
+  <div class="topbar">
+    <div class="tb-clock"><span class="pulse"></span><span>14:32</span></div>
+    <span class="sep"></span>
+    <span class="tb-stat" title="Датчиков на станции">⚟ 128</span>
+    <span class="tb-stat" title="Аномалий за период">△ 34</span>
+    <span class="spacer"></span>
+    <button class="tb-btn"><span class="tb-pill">7</span> Журнал (J) ↗</button>
+    <span class="sep"></span>
+    <span class="fresh">🕒 14:30
+      <span class="chipm"><span class="sev-dot ok"></span>ML</span>
+      <span class="chipm"><span class="sev-dot ok"></span>БД</span>
+    </span>
+    <span class="sep"></span>
+    <span class="tb-ico active" title="Мониторинг">▦</span>
+    <span class="tb-ico" title="Схема КС">⌗</span>
+    <span class="tb-ico" title="Двигатель · 3D-режим">⚙</span>
+    <span class="tb-ico" title="Отчёт смены">🗎</span>
+    <span class="tb-ico" title="Дежурный режим (K)">◱</span>
+    <span class="tb-ico" title="Тема: dark (T)">☾</span>
+  </div>
+
+  <!-- ── FULL-SCREEN HEATMAP ── -->
+  <section class="hm-screen">
+
+    <div class="hm-head">
+      <h1>Тепловая карта</h1>
+      <span class="badge">126 ячеек</span>
+      <span class="path">Тепловая карта критичности датчиков</span>
+    </div>
+
+    <div class="card hm-legend">
+      <span class="lg-item"><i class="swatch-lg" style="background:color-mix(in srgb,var(--crit) 62%,transparent);border-color:var(--crit)"></i>Суперважно</span>
+      <span class="lg-item"><i class="swatch-lg" style="background:color-mix(in srgb,var(--warn) 55%,transparent);border-color:var(--warn)"></i>Внимание</span>
+      <span class="lg-item"><i class="swatch-lg" style="background:color-mix(in srgb,var(--info) 45%,transparent);border-color:var(--info)"></i>Наблюдение</span>
+      <span class="lg-item"><i class="swatch-lg" style="background:color-mix(in srgb,var(--ok) 40%,transparent);border-color:var(--ok)"></i>Норма</span>
+      <span class="lg-item" style="margin-left:auto"><i class="swatch-lg" style="background:transparent;border:1px dashed var(--line-2)"></i>Датчик отсутствует на агрегате</span>
+    </div>
+
+    <div class="card hm-table-wrap">
+      <table class="hm-table">
+        <thead>
+          <tr>
+            <th class="corner"></th>
+            <th>ГПА-1</th>
+            <th>ГПА-2</th>
+            <th>ГПА-3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Давление на выходе</th>
+            <td><div class="cell crit sel" title="Давление на выходе · ГПА-1 · Суперважно · 14 аномалий"><span class="cnt">14</span></div></td>
+            <td><div class="cell ok" title="Давление на выходе · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Давление на выходе · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Темп. подшипника</th>
+            <td><div class="cell warn" title="Темп. подшипника · ГПА-1 · Внимание · 5 аномалий"><span class="cnt">5</span></div></td>
+            <td><div class="cell warn" title="Темп. подшипника · ГПА-2 · Внимание · 3 аномалии"><span class="cnt">3</span></div></td>
+            <td><div class="cell ok" title="Темп. подшипника · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Вибрация ОС</th>
+            <td><div class="cell info" title="Вибрация ОС · ГПА-1 · Наблюдение · 2 аномалии"><span class="cnt">2</span></div></td>
+            <td><div class="cell ok" title="Вибрация ОС · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Вибрация ОС · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Обороты ТНД</th>
+            <td><div class="cell ok" title="Обороты ТНД · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Обороты ТНД · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell none" title="Обороты ТНД · ГПА-3 · датчик отсутствует на этом агрегате"></div></td>
+          </tr>
+          <tr>
+            <th>Темп. газа за ТВД</th>
+            <td><div class="cell crit" title="Темп. газа за ТВД · ГПА-1 · Суперважно · 9 аномалий"><span class="cnt">9</span></div></td>
+            <td><div class="cell ok" title="Темп. газа за ТВД · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Темп. газа за ТВД · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Перепад на АВО</th>
+            <td><div class="cell ok" title="Перепад на АВО · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell info" title="Перепад на АВО · ГПА-2 · Наблюдение · 1 аномалия"><span class="cnt">1</span></div></td>
+            <td><div class="cell ok" title="Перепад на АВО · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Расход топлива</th>
+            <td><div class="cell ok" title="Расход топлива · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Расход топлива · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Расход топлива · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Политропный КПД</th>
+            <td><div class="cell ok" title="Политропный КПД · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell warn" title="Политропный КПД · ГПА-2 · Внимание · 2 аномалии"><span class="cnt">2</span></div></td>
+            <td><div class="cell ok" title="Политропный КПД · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Политропный напор</th>
+            <td><div class="cell ok" title="Политропный напор · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Политропный напор · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Политропный напор · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Нагрев в нагнетателе</th>
+            <td><div class="cell info" title="Нагрев в нагнетателе · ГПА-1 · Наблюдение · 1 аномалия"><span class="cnt">1</span></div></td>
+            <td><div class="cell ok" title="Нагрев в нагнетателе · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Нагрев в нагнетателе · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Approach АВО</th>
+            <td><div class="cell ok" title="Approach АВО · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Approach АВО · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell none" title="Approach АВО · ГПА-3 · датчик отсутствует на этом агрегате"></div></td>
+          </tr>
+          <tr>
+            <th>Обороты ТВД</th>
+            <td><div class="cell ok" title="Обороты ТВД · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell crit" title="Обороты ТВД · ГПА-2 · Суперважно · 7 аномалий"><span class="cnt">7</span></div></td>
+            <td><div class="cell ok" title="Обороты ТВД · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Темп. масла</th>
+            <td><div class="cell ok" title="Темп. масла · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Темп. масла · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Темп. масла · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Давление масла</th>
+            <td><div class="cell ok" title="Давление масла · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Давление масла · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell warn" title="Давление масла · ГПА-3 · Внимание · 2 аномалии"><span class="cnt">2</span></div></td>
+          </tr>
+          <tr>
+            <th>Удельный расход топлива</th>
+            <td><div class="cell ok" title="Удельный расход топлива · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Удельный расход топлива · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Удельный расход топлива · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>ΔT подшипников</th>
+            <td><div class="cell info" title="ΔT подшипников · ГПА-1 · Наблюдение · 1 аномалия"><span class="cnt">1</span></div></td>
+            <td><div class="cell ok" title="ΔT подшипников · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="ΔT подшипников · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Shaft mismatch</th>
+            <td><div class="cell ok" title="Shaft mismatch · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Shaft mismatch · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell none" title="Shaft mismatch · ГПА-3 · датчик отсутствует на этом агрегате"></div></td>
+          </tr>
+          <tr>
+            <th>Остаток СТ</th>
+            <td><div class="cell ok" title="Остаток СТ · ГПА-1 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Остаток СТ · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell ok" title="Остаток СТ · ГПА-3 · Норма · 0 аномалий"></div></td>
+          </tr>
+          <tr>
+            <th>Кросс-ГПА z</th>
+            <td><div class="cell warn" title="Кросс-ГПА z · ГПА-1 · Внимание · 4 аномалии"><span class="cnt">4</span></div></td>
+            <td><div class="cell ok" title="Кросс-ГПА z · ГПА-2 · Норма · 0 аномалий"></div></td>
+            <td><div class="cell crit" title="Кросс-ГПА z · ГПА-3 · Суперважно · 11 аномалий"><span class="cnt">11</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hm-foot"><span class="ico">ⓘ</span>Клик по ячейке открывает график датчика в панели мониторинга</div>
+
+  </section>
+
+</div>
+</body>
+</html>

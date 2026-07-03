@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>CS Monitor — финальный мокап</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 12px; }
+
+/* ── DARK THEME ── */
+body.dark { background: #18181b; color: #fafafa; }
+body.dark .surface  { background: #27272a; }
+body.dark .surface2 { background: #3f3f46; }
+body.dark .border   { border-color: #3f3f46; }
+body.dark .text2    { color: #a1a1aa; }
+body.dark .text3    { color: #71717a; }
+body.dark .header   { background: #111113; border-bottom: 1px solid #27272a; }
+body.dark .divider  { background: #3f3f46; }
+
+/* ── LIGHT THEME ── */
+body.light { background: #f4f4f5; color: #18181b; }
+body.light .surface  { background: #ffffff; }
+body.light .surface2 { background: #f4f4f5; }
+body.light .border   { border-color: #e4e4e7; }
+body.light .text2    { color: #71717a; }
+body.light .text3    { color: #a1a1aa; }
+body.light .header   { background: #ffffff; border-bottom: 1px solid #e4e4e7; }
+body.light .divider  { background: #e4e4e7; }
+
+/* ── LAYOUT ── */
+.layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+.header { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 42px; flex-shrink: 0; }
+.logo { font-weight: 700; font-size: 13px; letter-spacing: -0.3px; }
+.live-badge { font-size: 10px; padding: 2px 7px; background: #14532d; color: #4ade80; border-radius: 3px; font-weight: 600; }
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.theme-toggle { display: flex; background: var(--tog-bg, #27272a); border-radius: 20px; padding: 2px; gap: 1px; cursor: pointer; border: none; }
+body.dark  .theme-toggle { --tog-bg: #27272a; }
+body.light .theme-toggle { --tog-bg: #e4e4e7; }
+.tog-btn { padding: 2px 8px; border-radius: 16px; font-size: 10px; border: none; cursor: pointer; background: transparent; }
+body.dark  .tog-btn.active { background: #3f3f46; color: #fafafa; }
+body.light .tog-btn.active { background: #18181b; color: #fafafa; }
+body.dark  .tog-btn:not(.active) { color: #71717a; }
+body.light .tog-btn:not(.active) { color: #a1a1aa; }
+.journal-btn { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; border: none; background: #7c3aed; color: #fff; }
+
+/* ── STATS ROW ── */
+.stats-row { display: flex; gap: 6px; padding: 8px 14px; flex-shrink: 0; align-items: stretch; }
+.stat-card { border-radius: 6px; padding: 6px 10px; display: flex; flex-direction: column; gap: 1px; min-width: 70px; }
+.stat-val  { font-size: 18px; font-weight: 700; line-height: 1; }
+.stat-lbl  { font-size: 10px; }
+.divider-v { width: 1px; align-self: stretch; margin: 0 2px; }
+.stat-card.gpa { border-left: 3px solid #4ade80; }
+.stat-card.crit { border-left: 3px solid #f87171; }
+.stat-card.warn { border-left: 3px solid #fb923c; }
+.stat-card.info { border-left: 3px solid #60a5fa; }
+.stat-card.muted { border-left: 3px solid #52525b; }
+.kiosk-btn { margin-left: auto; padding: 5px 12px; border-radius: 5px; border: none; background: #1e3a1e; color: #4ade80; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+/* ── MAIN BODY ── */
+.body { display: flex; gap: 6px; padding: 0 14px 8px; flex: 1; overflow: hidden; }
+
+/* Sidebar */
+.sidebar { width: 160px; flex-shrink: 0; border-radius: 6px; display: flex; flex-direction: column; overflow: hidden; }
+.sidebar-header { padding: 7px 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; }
+body.dark  .sidebar-header { color: #71717a; }
+body.light .sidebar-header { color: #a1a1aa; }
+.sidebar-scroll { flex: 1; overflow-y: auto; padding: 4px 6px 6px; }
+.gpa-group { margin-bottom: 8px; }
+.gpa-label { font-size: 10px; font-weight: 700; padding: 2px 4px; margin-bottom: 3px; border-radius: 3px; }
+.sensor-btn { width: 100%; display: flex; align-items: center; gap: 5px; padding: 4px 6px; border-radius: 4px; border: none; background: transparent; cursor: pointer; font-size: 11px; text-align: left; margin-bottom: 1px; font-family: inherit; }
+body.dark  .sensor-btn { color: #a1a1aa; }
+body.light .sensor-btn { color: #71717a; }
+body.dark  .sensor-btn:hover { background: #3f3f46; color: #fafafa; }
+body.light .sensor-btn:hover { background: #e4e4e7; color: #18181b; }
+.sensor-btn.active { background: #1e3a5f !important; color: #60a5fa !important; }
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.dot.crit { background: #f87171; }
+.dot.warn { background: #fb923c; }
+.dot.ok   { background: #52525b; }
+.chip-crit { font-size: 8px; padding: 1px 4px; border-radius: 2px; background: #3f1d1d; color: #f87171; margin-left: auto; }
+.chip-warn { font-size: 8px; padding: 1px 4px; border-radius: 2px; background: #3f2710; color: #fb923c; margin-left: auto; }
+
+/* Chart panel */
+.chart-panel { flex: 1; border-radius: 6px; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.chart-header { padding: 8px 12px; display: flex; align-items: baseline; gap: 8px; flex-shrink: 0; border-bottom: 1px solid; }
+body.dark  .chart-header { border-color: #27272a; }
+body.light .chart-header { border-color: #e4e4e7; }
+.chart-title { font-size: 14px; font-weight: 700; }
+.chart-meta  { font-size: 10px; }
+body.dark  .chart-meta { color: #71717a; }
+body.light .chart-meta { color: #a1a1aa; }
+.chart-body { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.chart-placeholder { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+body.dark  .chart-placeholder { color: #3f3f46; }
+body.light .chart-placeholder { color: #d4d4d8; }
+.chart-placeholder svg { opacity: 0.5; }
+
+/* Right column: heatmap */
+.right-col { width: 180px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; }
+.panel { border-radius: 6px; overflow: hidden; }
+.panel-header { padding: 7px 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid; flex-shrink: 0; }
+body.dark  .panel-header { border-color: #27272a; color: #71717a; }
+body.light .panel-header { border-color: #e4e4e7; color: #a1a1aa; }
+.heatmap-panel { flex: 1; display: flex; flex-direction: column; }
+.heatmap-body { padding: 8px 10px; overflow-y: auto; flex: 1; }
+.hm-row { display: flex; align-items: center; gap: 4px; margin-bottom: 3px; }
+.hm-label { font-size: 9px; width: 60px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.dark  .hm-label { color: #71717a; }
+body.light .hm-label { color: #a1a1aa; }
+.hm-cells { display: flex; gap: 2px; }
+.hm-cell { width: 14px; height: 14px; border-radius: 2px; font-size: 7px; display: flex; align-items: center; justify-content: center; color: transparent; cursor: pointer; }
+.hm-cell:hover { color: #fff; font-size: 8px; }
+.hm-crit { background: #f87171; }
+.hm-warn { background: #fb923c; }
+.hm-ok   { background: #27272a; }
+body.light .hm-ok { background: #e4e4e7; }
+.hm-none { background: #1c1c1f; }
+body.light .hm-none { background: #f4f4f5; }
+.hm-col-labels { display: flex; gap: 2px; padding: 0 10px 4px; margin-left: 64px; }
+.hm-col-label  { width: 14px; text-align: center; font-size: 8px; }
+body.dark  .hm-col-label { color: #52525b; }
+body.light .hm-col-label { color: #a1a1aa; }
+
+/* Bottom journal strip */
+.journal-strip { flex-shrink: 0; padding: 0 14px 0; height: 80px; display: flex; flex-direction: column; }
+.journal-strip .panel { flex: 1; display: flex; flex-direction: column; }
+.journal-items { display: flex; gap: 6px; padding: 6px 10px; overflow-x: auto; align-items: center; flex: 1; }
+.journal-item { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 4px; flex-shrink: 0; cursor: pointer; }
+body.dark  .journal-item { background: #27272a; }
+body.light .journal-item { background: #f4f4f5; border: 1px solid #e4e4e7; }
+.journal-item:hover { opacity: 0.8; }
+.ji-time { font-size: 10px; font-family: monospace; }
+body.dark  .ji-time { color: #71717a; }
+body.light .ji-time { color: #a1a1aa; }
+.ji-sensor { font-size: 11px; font-weight: 600; }
+.ji-type  { font-size: 10px; padding: 1px 5px; border-radius: 2px; }
+.ji-crit  { background: #3f1d1d; color: #f87171; }
+.ji-warn  { background: #3f2710; color: #fb923c; }
+.ji-info  { background: #1e3a5f; color: #60a5fa; }
+.ack-btn  { font-size: 9px; padding: 1px 5px; border-radius: 2px; border: none; cursor: pointer; }
+body.dark  .ack-btn { background: #3f3f46; color: #a1a1aa; }
+body.light .ack-btn { background: #e4e4e7; color: #71717a; }
+
+/* KIOSK overlay */
+.kiosk { display: none; position: fixed; inset: 0; z-index: 100; padding: 16px; flex-direction: column; gap: 10px; }
+body.dark  .kiosk { background: #111113; }
+body.light .kiosk { background: #f4f4f5; }
+.kiosk.active { display: flex; }
+.kiosk-header { display: flex; align-items: center; gap: 10px; }
+.kiosk-title  { font-size: 16px; font-weight: 700; }
+.kiosk-time   { font-size: 12px; font-family: monospace; }
+body.dark  .kiosk-time { color: #71717a; }
+body.light .kiosk-time { color: #a1a1aa; }
+.kiosk-close  { margin-left: auto; padding: 5px 12px; border-radius: 4px; border: none; cursor: pointer; font-size: 11px; }
+body.dark  .kiosk-close { background: #27272a; color: #a1a1aa; }
+body.light .kiosk-close { background: #e4e4e7; color: #71717a; }
+.kiosk-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 1; }
+.kiosk-tile { border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.kt-gpa  { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+body.dark  .kt-gpa { color: #71717a; }
+body.light .kt-gpa { color: #a1a1aa; }
+.kt-score { font-size: 48px; font-weight: 700; line-height: 1; }
+.kt-label { font-size: 12px; font-weight: 600; }
+.kt-stats { display: flex; gap: 8px; margin-top: 4px; }
+.kt-stat  { display: flex; flex-direction: column; gap: 2px; }
+.kt-stat-val { font-size: 20px; font-weight: 700; }
+.kt-stat-lbl { font-size: 10px; }
+body.dark  .kt-stat-lbl { color: #71717a; }
+body.light .kt-stat-lbl { color: #a1a1aa; }
+.kt-events { flex: 1; overflow-y: auto; }
+.kt-event { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid; font-size: 11px; }
+body.dark  .kt-event { border-color: #27272a; }
+body.light .kt-event { border-color: #e4e4e7; }
+</style>
+</head>
+<body class="dark">
+
+<div class="layout">
+
+  <!-- HEADER -->
+  <div class="header surface">
+    <span class="logo">CS Monitor AI</span>
+    <span class="live-badge">● LIVE</span>
+    <span class="text2" style="font-size:10px">95 датчиков · 3 ГПА · обучение до 07.04.2026</span>
+    <div class="header-right">
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="tog-btn active" id="dark-btn">☾</span>
+        <span class="tog-btn" id="light-btn">☀</span>
+      </button>
+      <button class="journal-btn">17 ЖУРНАЛ</button>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-card surface gpa">
+      <span class="stat-val" style="color:#4ade80">90</span>
+      <span class="stat-lbl text2">ГПА-1 · норма</span>
+    </div>
+    <div class="stat-card surface gpa">
+      <span class="stat-val" style="color:#4ade80">81</span>
+      <span class="stat-lbl text2">ГПА-2 · норма</span>
+    </div>
+    <div class="stat-card surface gpa">
+      <span class="stat-val" style="color:#4ade80">93</span>
+      <span class="stat-lbl text2">ГПА-3 · норма</span>
+    </div>
+    <div class="divider-v divider"></div>
+    <div class="stat-card surface crit">
+      <span class="stat-val" style="color:#f87171">21</span>
+      <span class="stat-lbl text2">ML-аномалии</span>
+    </div>
+    <div class="stat-card surface warn">
+      <span class="stat-val" style="color:#fb923c">76</span>
+      <span class="stat-lbl text2">Залипания</span>
+    </div>
+    <div class="stat-card surface warn">
+      <span class="stat-val" style="color:#fb923c">24</span>
+      <span class="stat-lbl text2">Физичность</span>
+    </div>
+    <div class="stat-card surface warn">
+      <span class="stat-val" style="color:#fb923c">76</span>
+      <span class="stat-lbl text2">Техпроцесс</span>
+    </div>
+    <div class="stat-card surface warn">
+      <span class="stat-val" style="color:#fb923c">75</span>
+      <span class="stat-lbl text2">Скорость ΔV</span>
+    </div>
+    <div class="stat-card surface info">
+      <span class="stat-val" style="color:#60a5fa">22</span>
+      <span class="stat-lbl text2">Сезонные</span>
+    </div>
+    <div class="stat-card surface muted">
+      <span class="stat-val text2">85</span>
+      <span class="stat-lbl text2">Uptime</span>
+    </div>
+    <button class="kiosk-btn" onclick="document.querySelector('.kiosk').classList.toggle('active')">🖥 Экран дежурного</button>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="body">
+
+    <!-- Sidebar: sensor list -->
+    <div class="sidebar surface">
+      <div class="sidebar-header">ДАТЧИКИ</div>
+      <div class="sidebar-scroll">
+        <div class="gpa-group">
+          <div class="gpa-label" style="color:#f87171">▼ ГПА-1</div>
+          <button class="sensor-btn active"><span class="dot crit"></span>rpm_tnd<span class="chip-crit">ML</span></button>
+          <button class="sensor-btn"><span class="dot warn"></span>gas_pressure<span class="chip-warn">ΔV</span></button>
+          <button class="sensor-btn"><span class="dot warn"></span>vibro_front<span class="chip-warn">Зал</span></button>
+          <button class="sensor-btn"><span class="dot ok"></span><span class="text3">oil_temp_in</span></button>
+          <button class="sensor-btn"><span class="dot ok"></span><span class="text3">rpm_st</span></button>
+        </div>
+        <div class="gpa-group">
+          <div class="gpa-label" style="color:#fb923c">▼ ГПА-2</div>
+          <button class="sensor-btn"><span class="dot warn"></span>vibro_rear<span class="chip-warn">ΔV</span></button>
+          <button class="sensor-btn"><span class="dot warn"></span>gas_leak_enc<span class="chip-warn">Зал</span></button>
+          <button class="sensor-btn"><span class="dot ok"></span><span class="text3">rpm_tnd</span></button>
+          <button class="sensor-btn"><span class="dot ok"></span><span class="text3">fuel_gas_p</span></button>
+        </div>
+        <div class="gpa-group">
+          <div class="gpa-label" style="color:#60a5fa">▼ ГПА-3</div>
+          <button class="sensor-btn"><span class="dot warn"></span>gas_temp_out<span class="chip-warn">Сез</span></button>
+          <button class="sensor-btn"><span class="dot ok"></span><span class="text3">vibro_front</span></button>
+          <button class="sensor-btn"><span class="dot ok"></span><span class="text3">rpm_tvd</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart panel -->
+    <div class="chart-panel surface">
+      <div class="chart-header">
+        <span class="chart-title">ГПА-1 · RPM TND</span>
+        <span class="chart-meta">rpm_tnd · R²: 0.986 · диапазон 0–5 229 · модель catboost</span>
+        <div style="margin-left:auto;display:flex;gap:6px;font-size:10px">
+          <button style="padding:3px 8px;border-radius:3px;border:none;cursor:pointer;font-size:10px;background:#27272a;color:#a1a1aa">1д</button>
+          <button style="padding:3px 8px;border-radius:3px;border:none;cursor:pointer;font-size:10px;background:#27272a;color:#a1a1aa">3д</button>
+          <button style="padding:3px 8px;border-radius:3px;border:none;cursor:pointer;font-size:10px;background:#1e3a5f;color:#60a5fa;font-weight:600">Всё</button>
+        </div>
+      </div>
+      <div class="chart-body">
+        <div class="chart-placeholder">
+          <svg width="120" height="50" viewBox="0 0 120 50">
+            <polyline points="0,45 10,40 20,38 30,10 35,8 40,10 50,38 60,36 70,35 80,15 85,12 90,15 100,36 110,35 120,34" fill="none" stroke="#3f3f46" stroke-width="2"/>
+            <polyline points="0,44 10,42 20,40 30,12 35,10 40,12 50,40 60,38 70,37 80,17 85,14 90,17 100,38 110,37 120,36" fill="none" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="3,2"/>
+          </svg>
+          <span style="font-size:11px">Plotly-график загружается здесь</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: heatmap -->
+    <div class="right-col">
+      <div class="panel surface heatmap-panel" style="flex:1">
+        <div class="panel-header">ТЕПЛОВАЯ КАРТА</div>
+        <div class="hm-col-labels">
+          <span class="hm-col-label">1</span>
+          <span class="hm-col-label">2</span>
+          <span class="hm-col-label">3</span>
+        </div>
+        <div class="heatmap-body">
+          <div class="hm-row"><span class="hm-label">rpm_tnd</span><div class="hm-cells"><div class="hm-cell hm-crit" title="ГПА-1: ML"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">rpm_tvd</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">gas_press_in</span><div class="hm-cells"><div class="hm-cell hm-warn"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-crit"></div></div></div>
+          <div class="hm-row"><span class="hm-label">gas_press_out</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">vibro_front</span><div class="hm-cells"><div class="hm-cell hm-warn"></div><div class="hm-cell hm-crit"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">vibro_rear</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">temp_bearing</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div></div></div>
+          <div class="hm-row"><span class="hm-label">oil_temp_in</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">oil_temp_out</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">gas_leak_enc</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div><div class="hm-cell hm-warn"></div></div></div>
+          <div class="hm-row"><span class="hm-label">fuel_gas_p</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-crit"></div></div></div>
+          <div class="hm-row"><span class="hm-label">anti_surge</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">axial_shift</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div></div></div>
+          <div class="hm-row"><span class="hm-label">gas_temp_in</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div></div></div>
+          <div class="hm-row"><span class="hm-label">gas_temp_out</span><div class="hm-cells"><div class="hm-cell hm-ok"></div><div class="hm-cell hm-ok"></div><div class="hm-cell hm-warn"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JOURNAL STRIP -->
+  <div class="journal-strip" style="padding-bottom:8px">
+    <div class="panel surface" style="flex:1;display:flex;flex-direction:column">
+      <div class="panel-header">ЖУРНАЛ СОБЫТИЙ</div>
+      <div class="journal-items">
+        <div class="journal-item">
+          <span class="ji-time">11:22</span>
+          <span class="ji-sensor">rpm_tnd · ГПА-1</span>
+          <span class="ji-type ji-crit">ML-аномалия</span>
+          <button class="ack-btn">✓</button>
+        </div>
+        <div class="journal-item">
+          <span class="ji-time">11:20</span>
+          <span class="ji-sensor">vibro_front · ГПА-2</span>
+          <span class="ji-type ji-warn">Залипание</span>
+          <button class="ack-btn">✓</button>
+        </div>
+        <div class="journal-item">
+          <span class="ji-time">11:15</span>
+          <span class="ji-sensor">gas_pressure · ГПА-1</span>
+          <span class="ji-type ji-warn">Скорость ΔV</span>
+          <button class="ack-btn">✓</button>
+        </div>
+        <div class="journal-item">
+          <span class="ji-time">11:10</span>
+          <span class="ji-sensor">gas_temp_out · ГПА-3</span>
+          <span class="ji-type ji-info">Сезонная</span>
+          <button class="ack-btn">✓</button>
+        </div>
+        <div class="journal-item">
+          <span class="ji-time">11:05</span>
+          <span class="ji-sensor">fuel_gas_p · ГПА-3</span>
+          <span class="ji-type ji-crit">ML-аномалия</span>
+          <button class="ack-btn">✓</button>
+        </div>
+        <div class="journal-item">
+          <span class="ji-time">10:58</span>
+          <span class="ji-sensor">oil_temp_in · ГПА-2</span>
+          <span class="ji-type ji-warn">Физичность</span>
+          <button class="ack-btn">✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- KIOSK OVERLAY -->
+<div class="kiosk">
+  <div class="kiosk-header">
+    <span class="kiosk-title">Экран дежурного</span>
+    <span class="kiosk-time" id="ktime">14.05.2026 · 11:22:07</span>
+    <button class="kiosk-close" onclick="document.querySelector('.kiosk').classList.remove('active')">✕ Закрыть (Esc)</button>
+  </div>
+  <div class="kiosk-grid">
+    <div class="kiosk-tile surface">
+      <div class="kt-gpa">ГПА-1</div>
+      <div class="kt-score" style="color:#4ade80">90</div>
+      <div class="kt-label" style="color:#4ade80">НОРМА</div>
+      <div class="kt-stats">
+        <div class="kt-stat"><span class="kt-stat-val" style="color:#f87171">1</span><span class="kt-stat-lbl">Тревога</span></div>
+        <div class="kt-stat"><span class="kt-stat-val" style="color:#fb923c">3</span><span class="kt-stat-lbl">Внимание</span></div>
+        <div class="kt-stat"><span class="kt-stat-val text2">29</span><span class="kt-stat-lbl">Датчиков</span></div>
+      </div>
+      <div class="kt-events">
+        <div class="kt-event"><span style="color:#f87171">●</span><span>rpm_tnd — ML-аномалия</span></div>
+        <div class="kt-event"><span style="color:#fb923c">◆</span><span>gas_pressure — ΔV</span></div>
+        <div class="kt-event"><span style="color:#fb923c">◆</span><span>vibro_front — Залипание</span></div>
+      </div>
+    </div>
+    <div class="kiosk-tile surface">
+      <div class="kt-gpa">ГПА-2</div>
+      <div class="kt-score" style="color:#4ade80">81</div>
+      <div class="kt-label" style="color:#4ade80">НОРМА</div>
+      <div class="kt-stats">
+        <div class="kt-stat"><span class="kt-stat-val" style="color:#f87171">0</span><span class="kt-stat-lbl">Тревога</span></div>
+        <div class="kt-stat"><span class="kt-stat-val" style="color:#fb923c">5</span><span class="kt-stat-lbl">Внимание</span></div>
+        <div class="kt-stat"><span class="kt-stat-val text2">28</span><span class="kt-stat-lbl">Датчиков</span></div>
+      </div>
+      <div class="kt-events">
+        <div class="kt-event"><span style="color:#fb923c">◆</span><span>vibro_rear — ΔV</span></div>
+        <div class="kt-event"><span style="color:#fb923c">◆</span><span>gas_leak_enc — Залипание</span></div>
+      </div>
+    </div>
+    <div class="kiosk-tile surface">
+      <div class="kt-gpa">ГПА-3</div>
+      <div class="kt-score" style="color:#4ade80">93</div>
+      <div class="kt-label" style="color:#4ade80">НОРМА</div>
+      <div class="kt-stats">
+        <div class="kt-stat"><span class="kt-stat-val" style="color:#f87171">1</span><span class="kt-stat-lbl">Тревога</span></div>
+        <div class="kt-stat"><span class="kt-stat-val" style="color:#fb923c">2</span><span class="kt-stat-lbl">Внимание</span></div>
+        <div class="kt-stat"><span class="kt-stat-val text2">35</span><span class="kt-stat-lbl">Датчиков</span></div>
+      </div>
+      <div class="kt-events">
+        <div class="kt-event"><span style="color:#f87171">●</span><span>fuel_gas_p — ML-аномалия</span></div>
+        <div class="kt-event"><span style="color:#fb923c">◆</span><span>gas_temp_out — Сезонная</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const b = document.body;
+  const isDark = b.classList.contains('dark');
+  b.classList.toggle('dark', !isDark);
+  b.classList.toggle('light', isDark);
+  document.getElementById('dark-btn').classList.toggle('active', !isDark);
+  document.getElementById('light-btn').classList.toggle('active', isDark);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelector('.kiosk').classList.remove('active');
+});
+setInterval(() => {
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('ktime').textContent =
+    `${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} · ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+}, 1000);
+</script>
+
+</body>
+</html>

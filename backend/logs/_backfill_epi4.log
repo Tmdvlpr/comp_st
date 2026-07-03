@@ -1,0 +1,71 @@
+🏭 Станция: Охангаронская КС (ohangaron)
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+🔁 reprocess_history: 2026-06-11 00:00:00+00:00 → 2026-07-01 10:14:23.249723+00:00, окно 2д, перекрытие 1д
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-01 15:14:46,022 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+💾 БД: anomalies_t — 26 новых записей (SHAP у 26/26)
+💾 health: обновлено 38520 точек
+💾 domain: upsert 2568 строк
+  ✓ 2026-06-11..2026-06-13: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (2): ['06-13 12:35', '06-14 13:45']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-01 15:15:32,774 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+💾 БД: anomalies_t — 89 новых записей (SHAP у 89/89)
+💾 health: обновлено 38425 точек
+💾 domain: upsert 2571 строк
+  ✓ 2026-06-13..2026-06-15: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (2): ['06-14 13:45', '06-15 20:35']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['06-15 20:20']
+2026-07-01 15:16:21,429 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+💾 БД: anomalies_t — 116 новых записей (SHAP у 116/116)

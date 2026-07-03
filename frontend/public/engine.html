@@ -1,0 +1,1493 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>НК-16-18СТ — параметры ГПА в реальном времени</title>
+<link rel="icon" href="data:,"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fg-1: #E6ECF6;
+    --c-inlet:#4d9cff; --c-knd:#05dbe9; --c-mid:#7c85ff; --c-kvd:#a369ff;
+    --c-ks:#ffa828; --c-tvd:#ff7d36; --c-tnd:#ffcc2a; --c-st:#b7ff54; --c-exh:#26f2d5;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { height:100%; }
+  body {
+    font-family:'Inter',system-ui,sans-serif;
+    background:#0c1222; min-height:100%; cursor:grab;
+  }
+  body.dragging { cursor:grabbing; }
+  body.is-light { --fg-1:#1b2138; }
+  /* Светлая тема: затемнённая палитра подписей/выносок/точек узлов.
+     Те же оттенки, что и в :root, но с пониженной светлотой — чтобы цветовое
+     кодирование сохранялось, а текст оставался читаемым на фоне ~#e7ecf8.
+     Применяется автоматически: текст li, border точек и stroke линий идут
+     через var(--c-*), заданные инлайн в JS. */
+  body.is-light {
+    --c-inlet:#1565c0; --c-knd:#0392a0; --c-mid:#4b54d6; --c-kvd:#7a3fcc;
+    --c-ks:#c46a00; --c-tvd:#c2480e; --c-tnd:#a87a00; --c-st:#5a8f1e; --c-exh:#0f9c89;
+  }
+
+  #engine { position:fixed; inset:0; pointer-events:none; }
+  #engine canvas { position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:auto; }
+  #labels { position:fixed; inset:0; pointer-events:none; }
+  #lines { position:absolute; inset:0; width:100%; height:100%; }
+  #lines line { stroke-width:1; }
+
+  .toolbox-labels { position:absolute; top:50%; transform:translateY(-50%); list-style:none;
+    display:flex; flex-direction:column; }
+  .toolbox-labels-left  { left:max(3vw,24px); text-align:left; align-items:flex-start; }
+  .toolbox-labels-right { right:max(3vw,24px); text-align:right; align-items:flex-end; }
+  .toolbox-labels li {
+    font-size:13px; letter-spacing:.05em; line-height:1;
+    padding:.9em 0; opacity:0; transition:color .25s; white-space:nowrap;
+    /* контраст на 3D-фоне: тёмная обводка/тень текста */
+    text-shadow:0 1px 4px rgba(0,0,0,.92), 0 0 2px rgba(0,0,0,.85);
+    font-weight:500;
+  }
+  body.is-light .toolbox-labels li { text-shadow:0 1px 3px rgba(255,255,255,.9); }
+  .module-label-point {
+    position:absolute; top:0; left:0; width:7px; height:7px;
+    border:1px solid currentColor; border-radius:50%;
+    margin:-4px 0 0 -4px; opacity:0;
+  }
+
+  .caption {
+    position:fixed; left:24px; bottom:20px; color:var(--fg-1);
+    font-size:12px; letter-spacing:.06em; opacity:.55; pointer-events:none;
+    transition:color .25s;
+  }
+  .caption b { font-weight:600; }
+  .specline {
+    position:fixed; right:24px; bottom:20px; color:var(--fg-1);
+    font-size:11px; letter-spacing:.08em; opacity:0; pointer-events:none;
+    transition:color .25s; text-align:right;
+  }
+  .loader {
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    color:#8590A8; font-size:12px; letter-spacing:.2em; transition:opacity .4s; pointer-events:none;
+  }
+  #theme-btn {
+    position:fixed; top:20px; right:20px; z-index:100; width:38px; height:38px;
+    background:rgba(40,46,78,0.55); border:1px solid rgba(132,140,200,0.30);
+    border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    font-size:15px; line-height:1; color:var(--fg-1);
+    transition:background .25s,border-color .25s,transform .2s;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); opacity:0;
+  }
+  #theme-btn:hover { transform:scale(1.08); }
+  body.is-light #theme-btn { background:rgba(0,0,0,.08); border-color:rgba(0,0,0,.14); }
+  #gpa-toggle {
+    position:fixed; top:68px; right:20px; z-index:100;
+    display:flex; align-items:center; gap:8px;
+    color:var(--fg-1); font-size:11px; letter-spacing:.1em; cursor:pointer; opacity:0;
+    background:rgba(40,46,78,0.55); border:1px solid rgba(132,140,200,0.30);
+    border-radius:18px; padding:8px 14px;
+    transition:background .25s,border-color .25s,color .25s;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    user-select:none;
+  }
+  body.is-light #gpa-toggle { background:rgba(0,0,0,.08); border-color:rgba(0,0,0,.14); }
+  #gpa-toggle input { accent-color:#58A6FF; cursor:pointer; }
+  body.is-light #gpa-toggle input { accent-color:#1565c0; }
+
+  #title-block {
+    position:fixed; top:15px; left:124px; color:var(--fg-1); pointer-events:none;
+    transition:color .25s; opacity:0;
+  }
+  #title-block .t1 { font-size:16px; font-weight:600; letter-spacing:.04em; }
+  #title-block .t2 { font-size:10px; letter-spacing:.22em; opacity:.55; margin-top:3px; }
+
+  #focus-label {
+    position:fixed; top:62px; left:50%; transform:translateX(-50%);
+    font-size:11px; letter-spacing:.18em; color:var(--fg-1);
+    opacity:0; pointer-events:none; white-space:nowrap; transition:color .25s;
+  }
+  #focus-desc {
+    position:fixed; top:82px; left:50%; transform:translateX(-50%);
+    font-size:11px; letter-spacing:.04em; color:var(--fg-1); opacity:0;
+    pointer-events:none; white-space:nowrap; transition:color .25s;
+  }
+  #scroll-hint {
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    color:var(--fg-1); font-size:10px; letter-spacing:.18em;
+    opacity:0; pointer-events:none; transition:color .25s; white-space:nowrap;
+  }
+  #section-title {
+    position:fixed; top:62px; left:50%; transform:translateX(-50%);
+    font-size:11px; letter-spacing:.18em; color:var(--fg-1);
+    opacity:0; pointer-events:none; transition:color .25s; white-space:nowrap;
+  }
+  #scroll-driver { height:400vh; pointer-events:none; }
+
+  /* ── GPA selector bar ── */
+  #gpa-bar {
+    position:fixed; top:20px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:6px; z-index:100; opacity:0;
+    background:rgba(40,46,78,0.55); border:1px solid rgba(132,140,200,0.30);
+    border-radius:22px; padding:5px 8px;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  }
+  body.is-light #gpa-bar { background:rgba(0,0,0,.08); border-color:rgba(0,0,0,.14); }
+  .gpa-btn {
+    font-family:inherit; font-size:11px; letter-spacing:.12em;
+    color:var(--fg-1); background:transparent; border:1px solid transparent;
+    border-radius:16px; padding:4px 12px; cursor:pointer;
+    transition:background .2s,border-color .2s;
+  }
+  .gpa-btn.active { background:rgba(88,166,255,0.25); border-color:rgba(88,166,255,0.50); }
+  body.is-light .gpa-btn.active { background:rgba(0,0,0,.14); border-color:rgba(0,0,0,.22); }
+  #unit-status {
+    font-size:10px; letter-spacing:.12em; padding:3px 10px;
+    border-radius:12px; white-space:nowrap; transition:color .3s;
+  }
+  #unit-status.status-run  { color:#3FB950; }
+  #unit-status.status-stop { color:#FF5C6C; }
+  /* Светлая тема: статусы затемнены для контраста на фоне ~#e7ecf8 */
+  body.is-light #unit-status.status-run  { color:#1f8a3b; }
+  body.is-light #unit-status.status-stop { color:#d23644; }
+
+  /* ── Live parameter values on labels ── */
+  .toolbox-labels li b.pval { font-weight:700; margin-left:4px; }
+  .sev-crit { color:#FF5C6C !important; }
+  .sev-warn { color:#F5B14C !important; }
+  /* Светлая тема: уровни критичности затемнены для читаемости */
+  body.is-light .sev-crit { color:#d23644 !important; }
+  body.is-light .sev-warn { color:#bd7a14 !important; }
+
+  /* ── All-params button ── */
+  #params-btn {
+    position:fixed; top:52px; left:16px; z-index:100;
+    font-family:inherit; font-size:10px; letter-spacing:.14em;
+    color:var(--fg-1);
+    background:rgba(40,46,78,0.55); border:1px solid rgba(132,140,200,0.30);
+    border-radius:14px; padding:6px 12px; cursor:pointer;
+    transition:background .25s,border-color .25s;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    opacity:0;
+  }
+  body.is-light #params-btn { background:rgba(0,0,0,.08); border-color:rgba(0,0,0,.14); }
+
+  /* ── All-params panel ── */
+  #params-panel {
+    position:fixed; top:0; right:-380px; width:360px; height:100%;
+    background:rgba(26,31,56,0.94); border-left:1px solid rgba(132,140,200,0.18);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    z-index:200; overflow-y:auto; padding:24px 20px 40px;
+    transition:right .35s cubic-bezier(.4,0,.2,1);
+    font-size:12px; line-height:1.6; color:var(--fg-1);
+  }
+  body.is-light #params-panel {
+    background:rgba(255,255,255,0.88); border-left-color:rgba(0,0,0,.1);
+  }
+  #params-panel.open { right:0; }
+  #params-panel h2 {
+    font-size:11px; letter-spacing:.2em; opacity:.55;
+    margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;
+  }
+  #params-panel h2 button {
+    font-family:inherit; font-size:14px; background:none; border:none;
+    color:var(--fg-1); cursor:pointer; opacity:.7; padding:0 4px;
+  }
+  #params-panel h3 {
+    font-size:10px; letter-spacing:.18em; opacity:.45;
+    margin:16px 0 6px;
+  }
+  #params-panel .prow {
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:3px 0; border-bottom:1px solid rgba(132,140,200,0.12);
+  }
+  body.is-light #params-panel .prow { border-bottom-color:rgba(0,0,0,.07); }
+  #params-panel .prow-clickable {
+    cursor:pointer; padding-left:6px; padding-right:6px;
+    margin:0 -6px; border-radius:6px;
+    transition:background .15s;
+  }
+  #params-panel .prow-clickable:hover { background:rgba(88,166,255,0.12); }
+  body.is-light #params-panel .prow-clickable:hover { background:rgba(0,0,0,.07); }
+  #params-panel .ptitle { opacity:.7; font-size:11px; }
+  #params-panel .pv { font-weight:600; font-size:12px; }
+  #params-panel .sev-crit { color:#FF5C6C; }
+  #params-panel .sev-warn { color:#F5B14C; }
+  body.is-light #params-panel .sev-crit { color:#d23644; }
+  body.is-light #params-panel .sev-warn { color:#bd7a14; }
+  /* ── Выпадающее описание доменных индексов (внизу панели) ── */
+  #domain-desc { margin-top:16px; border-top:1px solid rgba(132,140,200,0.20); padding-top:10px; }
+  body.is-light #domain-desc { border-top-color:rgba(0,0,0,.10); }
+  #domain-desc summary {
+    cursor:pointer; list-style:none; user-select:none; padding:4px 0;
+    font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--fg-1); opacity:.65; transition:opacity .15s;
+  }
+  #domain-desc summary::-webkit-details-marker { display:none; }
+  #domain-desc summary:hover { opacity:1; }
+  #domain-desc[open] summary { opacity:1; margin-bottom:8px; }
+  #domain-desc .dd-row { font-size:11px; line-height:1.5; opacity:.78; margin:7px 0; text-align:justify; text-justify:inter-word; hyphens:auto; -webkit-hyphens:auto; }
+  #domain-desc .dd-row b { font-weight:600; opacity:1; }
+.caption,.specline{display:none!important}
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "animejs": "https://cdn.jsdelivr.net/npm/animejs@4/+esm"
+} }
+</script>
+</head>
+<body>
+  <div id="engine"></div>
+  <div id="labels">
+    <svg id="lines"></svg>
+    <ul class="toolbox-labels toolbox-labels-left"></ul>
+    <ul class="toolbox-labels toolbox-labels-right"></ul>
+  </div>
+  <div id="title-block"><div class="t1">НК-16-18СТ</div><div class="t2">ГАЗОТУРБИННЫЙ ПРИВОД ГПА-Ц-16</div></div>
+  <div class="caption"><b>НК-16-18СТ</b> — drag · scroll · click</div>
+  <div class="specline">18 МВт · КПД 29% · n СТ 5300 об/мин · ресурс 80 000+ ч</div>
+  <div class="loader" id="loader">СБОРКА ДВИГАТЕЛЯ…</div>
+  <button id="theme-btn" title="Тема">☀</button>
+  <label id="gpa-toggle" title="Слой установки в агрегат"><input type="checkbox" id="gpaChk"> ОБВЯЗКА ГПА-Ц-16</label>
+  <div id="scroll-hint">СКРОЛЛ — РАЗБОРКА ПО УЗЛАМ</div>
+  <div id="section-title">ПОУЗЛОВАЯ РАЗБОРКА</div>
+  <div id="focus-label"></div>
+  <div id="focus-desc"></div>
+  <div id="scroll-driver"></div>
+
+  <div id="gpa-bar">
+    <button class="gpa-btn active" data-gpa="1">ГПА-1</button>
+    <button class="gpa-btn" data-gpa="2">ГПА-2</button>
+    <button class="gpa-btn" data-gpa="3">ГПА-3</button>
+    <span id="unit-status" class="status-stop">■ ОСТАНОВЛЕН</span>
+  </div>
+  <button id="params-btn">≡ ВСЕ ПАРАМЕТРЫ</button>
+  <div id="params-panel">
+    <h2>ПАРАМЕТРЫ ГПА <button id="params-close">✕</button></h2>
+    <div id="params-body"></div>
+    <details id="domain-desc" lang="ru">
+      <summary>ⓘ Что означают доменные индексы</summary>
+      <div class="dd-row"><b>Политропный КПД η_p</b> — эффективность сжатия газа нагнетателем (норма 0.78–0.85); падение = загрязнение/износ проточной части.</div>
+      <div class="dd-row"><b>Политропный напор H_p</b> — полезная работа сжатия на единицу массы газа (кДж/кг); зависит от режима и оборотов.</div>
+      <div class="dd-row"><b>Нагрев в нагнетателе ΔT</b> — рост температуры газа от входа к выходу; высокий при той же степени сжатия = падение КПД.</div>
+      <div class="dd-row"><b>Перепад на АВО (range)</b> — сколько тепла снимает аппарат воздушного охлаждения; падение = загрязнение секций / отказ вентиляторов.</div>
+      <div class="dd-row"><b>Approach АВО</b> — недоохлаждение: насколько газ после АВО теплее наружного воздуха; рост = деградация теплообмена АВО.</div>
+      <div class="dd-row"><b>Удельный расход топлива</b> — топливо на единицу полезной работы; устойчивый рост = снижение КПД ГТД (загрязнение, износ).</div>
+      <div class="dd-row"><b>Shaft mismatch (ТНД)</b> — рассогласование оборотов каскадов ВД/НД от линии совместной работы; |откл.|&gt;20 об/мин = дисбаланс.</div>
+      <div class="dd-row"><b>Остаток СТ</b> — отклонение оборотов силовой турбины от расчётной линии (от ТВД/ТНД); рост = деградация СТ.</div>
+      <div class="dd-row"><b>Отношение ТНД/ТВД</b> — соотношение оборотов каскадов НД и ВД; дрейф от режимной линии = изменение совместной работы.</div>
+      <div class="dd-row"><b>ΔT подшипников</b> — тепловая асимметрия опор (передняя − задняя); |ΔT|&gt;5 °C = расцентровка / проблема смазки.</div>
+    </details>
+  </div>
+
+<script type="module">
+import * as THREE from 'three';
+import { animate, createTimeline, createTimer, stagger, utils } from 'animejs';
+
+THREE.ColorManagement.enabled = false;
+
+/* ── Палитры ────────────────────────────────────────────────────── */
+const DARK = {
+  backgroundColor:'#0c1222', outlineColor:'#101010',
+  rimColor:'#ffc7a8', shadowColor:'#141a30', worldColor1:'#706868',
+  outlineBlend:0.4, contourBlend:0.65,
+};
+const LIGHT = {
+  backgroundColor:'#e7ecf8', outlineColor:'#2a2520', worldColor1:'#b0a8a3',
+  shadowColor:'#8a8280', rimColor:'#f5f1ed', outlineBlend:0.28, contourBlend:0.45,
+};
+const outlineMaterialParams = { verticesNormalMix:.08, rimThreshold:.7, rimAmount:.42 };
+const outlinePassParams = {
+  resolutionScale:4, threshold:.035, outlineThickness:1,
+  outlineBlend:.4, contourBlend:.65, sourceMix:1, effectMix:1,
+  backgroundMix:1, rimIntensity:1, shadowIntensity:1,
+};
+
+/* ── Рендерер ───────────────────────────────────────────────────── */
+const viewportEl = document.getElementById('engine');
+const renderer = new THREE.WebGLRenderer({ powerPreference:'high-performance', antialias:false, alpha:false, stencil:false });
+renderer.setPixelRatio(1);
+viewportEl.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
+
+const BASE_FOV = 40;
+const camera = new THREE.PerspectiveCamera(BASE_FOV, 1, 1, 1000);
+camera.position.z = 120;
+camera.lookAt(scene.position);
+
+let W=0, H=0;
+const SS = window.devicePixelRatio > 2 ? 3 : 2;
+let renderTarget = null;
+
+/* ── Toon-материал с патчем ─────────────────────────────────────── */
+const outlineMaterial = new THREE.MeshToonMaterial({ vertexColors:true, side: THREE.DoubleSide });
+outlineMaterial.onBeforeCompile = (shader) => {
+  shader.uniforms.verticesNormalMix = { value: outlineMaterialParams.verticesNormalMix };
+  shader.uniforms.rimThreshold = { value: outlineMaterialParams.rimThreshold };
+  shader.uniforms.rimAmount = { value: outlineMaterialParams.rimAmount };
+  shader.vertexShader = shader.vertexShader.replace('void main() {', `
+    varying vec3 vFixedNormal; varying vec3 vViewDir;
+    void main() {
+      vFixedNormal = normalize(normal);
+      vViewDir = normalize(-(modelViewMatrix * vec4(position, 1.0)).xyz);
+    `);
+  shader.fragmentShader = `
+    precision highp float;
+    uniform float verticesNormalMix, rimThreshold, rimAmount;
+    varying vec3 vFixedNormal, vViewDir;
+    vec3 black=vec3(0,0,0),white=vec3(1,1,1),red=vec3(1,0,0),green=vec3(0,1,0),blue=vec3(0,0,1),
+         pink=vec3(1,0,1),yellow=vec3(1,1,0),cyan=vec3(0,1,1),ui1=vec3(1,.5,0);
+  ` + shader.fragmentShader;
+  shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', '');
+  shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `#include <opaque_fragment>
+    vec3 n = vFixedNormal;
+    vec3 normalColor = vec3(.5*(1.+n.x), .5*(1.+n.y), .5*(1.+n.z));
+    float NdotL  = dot(normalize(normal), normalize(directionalLights[0].direction));
+    float rimDot = 1. - dot(vViewDir, normal);
+    float rimPower = clamp(rimDot * pow(NdotL, rimThreshold), 0., 1.);
+    float rimC = outgoingLight.r >= .95 ? rimPower-(1.-rimAmount) : .0;
+    float lightC = outgoingLight.r < .95 ? .0 : 1.;
+    float shadowsColor = lightC + clamp(rimC, -0.05, 0.);
+    float mixNormal = verticesNormalMix;
+    if(vColor.rgb==black||vColor.rgb==red||vColor.rgb==green||vColor.rgb==blue||
+       vColor.rgb==pink||vColor.rgb==yellow||vColor.rgb==cyan||vColor.rgb==ui1) mixNormal=0.;
+    if(vColor.r==0.0) normalColor.r=0.0; if(vColor.g==0.0) normalColor.g=0.0;
+    if(vColor.b==0.0) normalColor.b=0.0; if(vColor.r==1.0) normalColor.r=1.0;
+    if(vColor.g==1.0) normalColor.g=1.0; if(vColor.b==1.0) normalColor.b=1.0;
+    float depth = gl_FragCoord.w*10.;
+    mixNormal = clamp(mixNormal*depth, 0., verticesNormalMix);
+    vec3 diffuse = mix(vColor.rgb, normalColor, mixNormal);
+    gl_FragColor = vec4(diffuse, shadowsColor);
+  `);
+  outlineMaterial.userData.shader = shader;
+};
+
+/* ── Outline постпроцесс ─────────────────────────────────────────── */
+const outlineShaderMaterial = new THREE.ShaderMaterial({
+  vertexShader: `precision highp float; varying vec2 vUv;
+    void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+  fragmentShader: `
+    precision highp float;
+    #include <packing>
+    varying vec2 vUv;
+    uniform sampler2D tDiffuse;
+    uniform float outlineThickness,outlineBlend,contourBlend,backgroundMix,threshold,sourceMix,effectMix,rimIntensity,shadowIntensity,materialMix;
+    uniform vec2 resolution;
+    uniform vec3 ambiantColor,backgroundColor,outlineColor,rimColor,shadowColor,worldColor1;
+    void main(){
+      vec4 td=texture2D(tDiffuse,vUv);
+      vec3 inColor=td.rgb, lineColor=outlineColor;
+      vec3 paintColor=mix(worldColor1,inColor,materialMix);
+      vec3 toneColor=(vec3(td.a)*ambiantColor)+(ambiantColor*.25);
+      float shadowTones=td.a, x=1./resolution.x, y=1./resolution.y;
+      vec3 s0=texture2D(tDiffuse,vUv-vec2(x,y)*outlineThickness).rgb;
+      vec3 s1=texture2D(tDiffuse,vUv+vec2(x,y)*outlineThickness).rgb;
+      vec3 s2=texture2D(tDiffuse,vUv+vec2(x*outlineThickness,-y*outlineThickness)).rgb;
+      vec3 s3=texture2D(tDiffuse,vUv+vec2(-x*outlineThickness,y*outlineThickness)).rgb;
+      float edge=sqrt(dot(s1-s0,s1-s0)+dot(s3-s2,s3-s2));
+      float outline=edge>threshold?1.:0.;
+      vec3 outColor;
+      if(inColor==vec3(1,1,1)){
+        outColor=((1.-outline)*backgroundColor)+(outline*mix(outlineColor,backgroundColor,contourBlend));
+      } else {
+        if(shadowTones>=.95) paintColor=mix(paintColor,rimColor,rimIntensity*.4);
+        else if(shadowTones<=.3) paintColor=mix(paintColor,shadowColor,shadowIntensity*.55);
+        lineColor=mix(lineColor,paintColor,outlineBlend);
+        outColor=((1.-outline)*mix(toneColor,paintColor,effectMix))+(outline*lineColor);
+      }
+      gl_FragColor=vec4(clamp(mix(inColor,outColor,sourceMix),0.,1.),1.);
+    }`,
+  uniforms: {
+    tDiffuse:{value:null}, resolution:{value:new THREE.Vector2(1,1)},
+    threshold:{value:outlinePassParams.threshold},
+    outlineThickness:{value:outlinePassParams.outlineThickness},
+    outlineBlend:{value:outlinePassParams.outlineBlend},
+    contourBlend:{value:outlinePassParams.contourBlend},
+    sourceMix:{value:outlinePassParams.sourceMix},
+    effectMix:{value:outlinePassParams.effectMix},
+    backgroundMix:{value:outlinePassParams.backgroundMix},
+    ambiantColor:{value:new THREE.Color(0x706868)},
+    backgroundColor:{value:new THREE.Color(DARK.backgroundColor)},
+    outlineColor:{value:new THREE.Color(DARK.outlineColor)},
+    rimColor:{value:new THREE.Color(DARK.rimColor)},
+    rimIntensity:{value:outlinePassParams.rimIntensity},
+    shadowColor:{value:new THREE.Color(DARK.shadowColor)},
+    shadowIntensity:{value:outlinePassParams.shadowIntensity},
+    materialMix:{value:.85},
+    worldColor1:{value:new THREE.Color(DARK.worldColor1)},
+  },
+});
+const quadScene = new THREE.Scene();
+const quadCamera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+quadScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), outlineShaderMaterial));
+
+function updateDimensions(){
+  W = viewportEl.offsetWidth & ~1;
+  H = viewportEl.offsetHeight & ~1;
+  camera.aspect = W/H;
+  camera.fov = BASE_FOV * ((H>=1000?H:1000)/1000);
+  camera.updateProjectionMatrix();
+  renderer.setSize(W,H);
+  if (renderTarget) renderTarget.dispose();
+  renderTarget = new THREE.WebGLRenderTarget(W*SS, H*SS, { depthBuffer:true });
+  outlineShaderMaterial.uniforms.tDiffuse.value = renderTarget.texture;
+  outlineShaderMaterial.uniforms.resolution.value.set(
+    W*outlinePassParams.resolutionScale, H*outlinePassParams.resolutionScale);
+}
+updateDimensions();
+window.addEventListener('resize', updateDimensions);
+
+/* ── Obj-адаптер: anime.js анимирует THREE.Object3D ────────────── */
+class Obj {
+  constructor(o){ this.object3D=o; this._scale=1; this._opacity=1; }
+  handleVisibility(){
+    const v=!(!this._opacity||!this._scale||!this.scaleX||!this.scaleY||!this.scaleZ);
+    this.object3D.visible=v; return v;
+  }
+  get x(){ return this.object3D.position.x; } set x(v){ this.object3D.position.x=v; }
+  get y(){ return this.object3D.position.y; } set y(v){ this.object3D.position.y=v; }
+  get z(){ return this.object3D.position.z; } set z(v){ this.object3D.position.z=v; }
+  get rotateX(){ return THREE.MathUtils.radToDeg(this.object3D.rotation.x); }
+  set rotateX(v){ this.object3D.rotation.x=THREE.MathUtils.degToRad(v); }
+  get rotateY(){ return THREE.MathUtils.radToDeg(this.object3D.rotation.y); }
+  set rotateY(v){ this.object3D.rotation.y=THREE.MathUtils.degToRad(v); }
+  get rotateZ(){ return THREE.MathUtils.radToDeg(this.object3D.rotation.z); }
+  set rotateZ(v){ this.object3D.rotation.z=THREE.MathUtils.degToRad(v); }
+  get scale(){ return this._scale; }
+  set scale(v){ this._scale=v; this.object3D.scale.setScalar(v); this.handleVisibility(); }
+  get scaleX(){ return this.object3D.scale.x; } set scaleX(v){ this.object3D.scale.x=v; this.handleVisibility(); }
+  get scaleY(){ return this.object3D.scale.y; } set scaleY(v){ this.object3D.scale.y=v; this.handleVisibility(); }
+  get scaleZ(){ return this.object3D.scale.z; } set scaleZ(v){ this.object3D.scale.z=v; this.handleVisibility(); }
+  get opacity(){ return this._opacity; }
+  set opacity(v){ this._opacity=v; this.handleVisibility(); }
+}
+const $obj = (o) => new Obj(o);
+
+/* ── Свет и корневые группы ─────────────────────────────────────── */
+const rootGroup   = $obj(new THREE.Group());
+const engineRoot  = $obj(new THREE.Group());
+const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(-200, 135, -80);
+rootGroup.object3D.add(ambientLight, directionalLight, directionalLight.target, engineRoot.object3D);
+scene.add(rootGroup.object3D);
+engineRoot.scale = 7;
+
+const minM = window.innerWidth >= 740;
+rootGroup.z = minM ? 46 : 84;
+
+/* ── Геометрия: помощники ───────────────────────────────────────── */
+function vcol(geo, hex){
+  const c=new THREE.Color(hex), n=geo.attributes.position.count;
+  const a=new Float32Array(n*3);
+  for(let i=0;i<n;i++){ a[i*3]=c.r; a[i*3+1]=c.g; a[i*3+2]=c.b; }
+  geo.setAttribute('color', new THREE.BufferAttribute(a,3));
+  return geo;
+}
+function mesh(parentObj, geo, hex, props){
+  const m=new THREE.Mesh(vcol(geo,hex), outlineMaterial);
+  const w=$obj(m); if(props) utils.set(w, props);
+  parentObj.object3D.add(m); return w;
+}
+const cylX = (r1,r2,len,open=false,seg=48)=> new THREE.CylinderGeometry(r1,r2,len,seg,1,open).rotateZ(Math.PI/2);
+const flangeX = (R,t=.028)=> new THREE.TorusGeometry(R,t,12,48).rotateY(Math.PI/2);
+const coneFwd = (r,len)=> new THREE.ConeGeometry(r,len,32).rotateZ(Math.PI/2);
+const coneAft = (r,len)=> new THREE.ConeGeometry(r,len,32).rotateZ(-Math.PI/2);
+
+function bladeRing(parentObj, x, rIn, rOut, n, hex, chord=.13, thick=.032, twist=28){
+  const g=$obj(new THREE.Group());
+  g.x=x; parentObj.object3D.add(g.object3D);
+  const bGeo=bladeGeo(rOut-rIn, chord, thick, twist, hex);
+  radialInstances(g, bGeo, n, rIn, 0, 0, true);
+  mesh(g, cylX(rIn+.02, rIn+.02, chord*.95, false, 24), '#878d93');
+  return g;
+}
+function shellX(prof, t=.035, hex='#8f969d', seg=64){
+  const pts=[];
+  for(const [a,r] of prof) pts.push(new THREE.Vector2(r, a));
+  for(let i=prof.length-1;i>=0;i--) pts.push(new THREE.Vector2(Math.max(prof[i][1]-t,.02), prof[i][0]));
+  pts.push(pts[0].clone());
+  const g=new THREE.LatheGeometry(pts, seg);
+  g.rotateZ(-Math.PI/2);
+  return vcol(g, hex);
+}
+function shellMesh(parentObj, prof, t, hex, seg){
+  const m=new THREE.Mesh(shellX(prof,t,hex,seg), outlineMaterial);
+  const w=$obj(m); parentObj.object3D.add(m); return w;
+}
+function radialInstances(parentObj, geo, n, R, x, phase=0, alignRadial=true){
+  const im=new THREE.InstancedMesh(geo, outlineMaterial, n);
+  const d=new THREE.Object3D();
+  for(let i=0;i<n;i++){
+    const a=Math.PI*2/n*i+phase;
+    d.position.set(x, Math.cos(a)*R, Math.sin(a)*R);
+    d.rotation.set(alignRadial?a:0, 0, 0);
+    d.updateMatrix(); im.setMatrixAt(i, d.matrix);
+  }
+  im.instanceMatrix.needsUpdate=true;
+  parentObj.object3D.add(im);
+  return im;
+}
+function bladeGeo(span, chord, thick, twistDeg, hex, taper=.72){
+  const tw=THREE.MathUtils.degToRad(twistDeg);
+  const sec=(y,c,a)=>{
+    const hx=c/2, hz=thick/2;
+    const p=[[-hx,-hz],[hx*.9,-hz*.4],[hx,hz*.4],[-hx*.85,hz]];
+    return p.map(([px,pz])=>[px*Math.cos(a)-pz*Math.sin(a), y, px*Math.sin(a)+pz*Math.cos(a)]);
+  };
+  const r=sec(0, chord, tw*.45), q=sec(span, chord*taper, -tw*.55);
+  const v=[];
+  const quads=[[r[0],r[1],q[1],q[0]],[r[1],r[2],q[2],q[1]],[r[2],r[3],q[3],q[2]],[r[3],r[0],q[0],q[3]],[q[0],q[1],q[2],q[3]],[r[3],r[2],r[1],r[0]]];
+  for(const f of quads){ v.push(...f[0],...f[1],...f[2], ...f[0],...f[2],...f[3]); }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(v,3));
+  g.computeVertexNormals();
+  return vcol(g, hex);
+}
+function pipe(parentObj, points, r, hex){
+  const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));
+  return mesh(parentObj, new THREE.TubeGeometry(curve, 40, r, 10, false), hex);
+}
+
+/* ── Модули двигателя ───────────────────────────────────────────── */
+const modules={};
+for (const name of ['inlet','knd','mid','kvd','ks','tvd','tnd','st','exh'])
+  { modules[name]=$obj(new THREE.Group()); engineRoot.object3D.add(modules[name].object3D); }
+
+/* входное устройство */
+shellMesh(modules.inlet, [[-3.5,1.17],[-3.44,1.12],[-3.34,1.05],[-3.18,1.0],[-2.96,.995],[-2.76,1.005],[-2.76,1.035],[-2.71,1.035]], .04, '#8e959c');
+mesh(modules.inlet, flangeX(1.15,.035), '#6c7177', {x:-3.46});
+mesh(modules.inlet, coneFwd(.3,.62), '#b6bdc3', {x:-3.3});
+bladeRing(modules.inlet, -2.96, .3, .94, 12, '#9aa3ab', .15, .028, 10);
+
+/* КНД — 4 ступени */
+const fanKND = bladeRing(modules.knd, -2.76, .3, .93, 24, '#c6cbd1', .15, .034, 30);
+shellMesh(modules.knd, [[-2.7,1.07],[-2.64,1.07],[-2.64,1.015],[-2.14,.985],[-2.14,1.01],[-2.03,1.01],[-2.03,.975],[-1.62,.93],[-1.62,.965],[-1.56,.965]], .035, '#8f969d');
+const gapKND = bladeRing(modules.knd, -2.08, .55, .9, 30, '#c2c7cd', .1, .028, 26);
+mesh(modules.knd, flangeX(1.04), '#6f757c', {x:-2.7});
+mesh(modules.knd, flangeX(.94), '#6f757c', {x:-1.56});
+
+/* средняя опора + коробка приводов */
+shellMesh(modules.mid, [[-1.55,.945],[-1.5,.945],[-1.5,.918],[-1.3,.905],[-1.3,.932],[-1.25,.932]], .04, '#7f868e');
+mesh(modules.mid, new THREE.BoxGeometry(.52,.36,.46), '#6e7a72', {x:-1.4, y:-1.06});
+mesh(modules.mid, cylX(.07,.07,.34,false,16).rotateX(Math.PI/2), '#b4bac0', {x:-1.52, y:-1.06});
+mesh(modules.mid, cylX(.09,.09,.3,false,16).rotateX(Math.PI/2), '#b4bac0', {x:-1.28, y:-1.08});
+mesh(modules.mid, new THREE.BoxGeometry(.16,.82,.2), '#79808a', {x:-1.4, y:-.76});
+
+/* КВД — 6 ступеней, РНА, перепуск */
+shellMesh(modules.kvd, [[-1.25,.915],[-1.2,.915],[-1.2,.885],[-.9,.872],[-.9,.894],[-.85,.894],[-.85,.866],[-.55,.852],[-.55,.874],[-.5,.874],[-.5,.846],[-.22,.815],[-.22,.84],[-.17,.84]], .033, '#99a0a7');
+mesh(modules.kvd, flangeX(.91), '#6f757c', {x:-1.24});
+mesh(modules.kvd, flangeX(.82), '#6f757c', {x:-.18});
+mesh(modules.kvd, new THREE.TorusGeometry(.93,.022,10,48).rotateY(Math.PI/2), '#5d7a63', {x:-1.12});
+mesh(modules.kvd, new THREE.BoxGeometry(.18,.12,.1), '#5d7a63', {x:-1.12, y:.97});
+radialInstances(modules.kvd, vcol(new THREE.BoxGeometry(.1,.035,.022), '#5d7a63'), 16, .945, -1.07);
+radialInstances(modules.kvd, vcol(new THREE.CylinderGeometry(.045,.045,.035,10), '#79808a'), 4, .87, -.7, .35);
+radialInstances(modules.tnd, vcol(new THREE.CylinderGeometry(.045,.045,.035,10), '#79808a'), 2, .93, 1.45, .9);
+for(let i=0;i<3;i++){
+  const a=(-25+i*38)*Math.PI/180;
+  const p=mesh(modules.kvd, new THREE.CylinderGeometry(.055,.055,.2,14), '#b4bac0');
+  p.object3D.position.set(-.5, Math.cos(a)*.93, Math.sin(a)*.93);
+  p.object3D.rotation.x=a;
+}
+const gapKVD = bladeRing(modules.kvd, -.71, .5, .78, 34, '#c4c9ce', .08, .024, 24);
+
+/* камера сгорания */
+shellMesh(modules.ks, [[-.17,.852],[-.05,1.0],[.05,1.012],[.4,1.022],[.66,1.0],[.74,.985],[.74,1.01],[.8,1.01]], .035, '#8d7f72');
+mesh(modules.ks, new THREE.TorusGeometry(1.03,.05,12,48).rotateY(Math.PI/2), '#84715f', {x:.32});
+mesh(modules.ks, new THREE.TorusGeometry(1.12,.032,10,64).rotateY(Math.PI/2), '#a8893f', {x:-.02});
+radialInstances(modules.ks, vcol(new THREE.CylinderGeometry(.026,.03,.16,8), '#b09a55'), 32, 1.03, -.02);
+radialInstances(modules.ks, vcol(new THREE.CylinderGeometry(.012,.012,.1,6), '#a8893f'), 32, 1.115, -.02);
+mesh(modules.ks, flangeX(1.0), '#6f757c', {x:-.14});
+mesh(modules.ks, flangeX(1.0), '#6f757c', {x:.78});
+
+/* ТВД — 1 ступень */
+shellMesh(modules.tvd, [[.8,.878],[.85,.878],[.85,.852],[1.15,.885],[1.15,.913],[1.2,.913]], .032, '#977a5f');
+pipe(modules.tvd, [[.84,.9,.18],[1.0,.99,.22],[1.16,.92,.18]], .03, '#b4bac0');
+mesh(modules.tvd, flangeX(.92), '#6f757c', {x:1.21});
+
+/* ТНД */
+shellMesh(modules.tnd, [[1.21,.915],[1.26,.915],[1.26,.888],[1.65,.938],[1.65,.965],[1.71,.965]], .032, '#8d7560');
+mesh(modules.tnd, flangeX(.97), '#6f757c', {x:1.72});
+
+/* свободная турбина 16СТ */
+shellMesh(modules.st, [[1.73,.988],[1.78,.988],[1.78,.96],[1.95,.985],[1.95,1.012],[2.0,1.012],[2.0,.988],[2.45,1.042],[2.45,1.07],[2.51,1.07]], .035, '#8f969d');
+mesh(modules.st, new THREE.TorusGeometry(1.08,.04,12,48).rotateY(Math.PI/2), '#767d84', {x:2.3});
+pipe(modules.st, [[1.78,1.0,.0],[1.95,1.12,.0],[2.2,1.12,.0]], .028, '#b4bac0');
+mesh(modules.st, flangeX(1.07), '#6f757c', {x:2.52});
+
+/* выхлоп */
+const stBlades = bladeRing(modules.exh, 2.62, .3, 1.0, 26, '#c5cad0', .16, .04, 32);
+shellMesh(modules.exh, [[2.57,1.07],[2.62,1.07],[2.62,1.048],[3.0,1.16],[3.3,1.25],[3.6,1.295],[3.6,1.322],[3.67,1.322]], .03, '#5f6468');
+for(let i=0;i<6;i++){
+  const a=(Math.PI*2/6)*i+Math.PI/6;
+  const s=mesh(modules.exh, new THREE.BoxGeometry(.12,.95,.07), '#565b60');
+  s.object3D.position.set(3.02, Math.cos(a)*.62, Math.sin(a)*.62);
+  s.object3D.rotation.x=a;
+}
+mesh(modules.exh, coneAft(.48,.95), '#9aa1a8', {x:3.2});
+const shaftST = mesh(modules.exh, cylX(.12,.12,.85,false,20), '#aeb4ba', {x:3.95});
+const flangeST = mesh(modules.exh, cylX(.3,.3,.12,false,28), '#8b9197', {x:4.4});
+mesh(flangeST, new THREE.BoxGeometry(.13,.05,.62), '#6c7177');
+mesh(modules.exh, flangeX(1.31,.035), '#6c7177', {x:3.67});
+
+/* ── РОТОРЫ, ПОДШИПНИКИ, ШЕСТЕРНИ ──────────────────────────────── */
+const ndSpin=[fanKND,gapKND], vdSpin=[gapKVD], stSpin=[stBlades], counterSpin=[];
+
+function bearing(parentObj, x, r, balls=10, ballR=.034){
+  mesh(parentObj, new THREE.TorusGeometry(r+.05,.02,10,36).rotateY(Math.PI/2), '#9aa1a8', {x});
+  mesh(parentObj, new THREE.TorusGeometry(r-.05,.018,10,36).rotateY(Math.PI/2), '#9aa1a8', {x});
+  const cage=$obj(new THREE.Group()); cage.x=x; parentObj.object3D.add(cage.object3D);
+  radialInstances(cage, vcol(new THREE.SphereGeometry(ballR,10,8), '#d6dade'), balls, r, 0, 0, false);
+  mesh(cage, new THREE.TorusGeometry(r,.013,8,36).rotateY(Math.PI/2), '#c6cbd1');
+  return cage;
+}
+function gear(parentObj, x, y, z, r, w, teeth, hex){
+  const g=$obj(new THREE.Group());
+  g.object3D.position.set(x,y,z); parentObj.object3D.add(g.object3D);
+  mesh(g, new THREE.CylinderGeometry(r,r,w,28).rotateZ(Math.PI/2), hex);
+  mesh(g, new THREE.CylinderGeometry(.035,.035,w*1.9,12).rotateZ(Math.PI/2), '#878d93');
+  const tGeo=vcol(new THREE.BoxGeometry(w*1.04,.05,.042), hex);
+  for(let i=0;i<teeth;i++){
+    const h=new THREE.Group(); h.rotation.x=Math.PI*2/teeth*i;
+    const t=new THREE.Mesh(tGeo, outlineMaterial); t.position.y=r+.02;
+    h.add(t); g.object3D.add(h);
+  }
+  return g;
+}
+
+ndSpin.push(bearing(modules.inlet, -3.0, .2, 9, .03));
+ndSpin.push(mesh(modules.knd, cylX(.4,.5,1.05,false,36), '#b0b6bc', {x:-2.28}));
+ndSpin.push(bladeRing(modules.knd, -2.42, .5, .93, 26, '#c6cbd1', .11, .03, 28));
+ndSpin.push(bladeRing(modules.knd, -2.14, .51, .9, 28, '#c4c9cf', .1, .028, 27));
+ndSpin.push(bladeRing(modules.knd, -1.81, .52, .88, 28, '#c2c7cd', .1, .028, 26));
+mesh(modules.knd, new THREE.TorusGeometry(.7,.02,8,36).rotateY(Math.PI/2), '#9aa1a8', {x:-2.6});
+
+mesh(modules.mid, new THREE.TorusGeometry(.68,.024,10,48).rotateY(Math.PI/2), '#79808a', {x:-1.4});
+shellMesh(modules.mid, [[-1.53,.42],[-1.27,.42]], .07, '#7f868e');
+mesh(modules.mid, new THREE.RingGeometry(.44,.87,48).rotateY(Math.PI/2), '#737a83', {x:-1.262});
+mesh(modules.mid, new THREE.RingGeometry(.44,.86,48).rotateY(Math.PI/2), '#737a83', {x:-1.543});
+ndSpin.push(mesh(modules.mid, cylX(.2,.2,.36,false,22), '#aeb4ba', {x:-1.4}));
+ndSpin.push(bearing(modules.mid, -1.49, .3, 11, .032));
+vdSpin.push(bearing(modules.mid, -1.31, .25, 9, .034));
+pipe(modules.mid, [[-1.52,-.92,.16],[-1.62,-.45,.22],[-1.49,-.04,.14]], .024, '#b4bac0');
+mesh(modules.mid, cylX(.04,.04,.78,false,10).rotateX(Math.PI/2).rotateZ(Math.PI/2), '#b4bac0', {x:-1.4, y:-.5});
+
+const g1=gear(modules.mid, -1.52,-1.06,.14, .13,.09, 12, '#cdd2c9');
+const g2=gear(modules.mid, -1.29,-1.06,.14, .10,.09, 10, '#d2d6cd');
+ndSpin.push(g1); counterSpin.push(g2);
+const g3=gear(modules.mid, -1.4,-1.06,-.16, .08,.07, 9, '#c8cec5');
+counterSpin.push(g3);
+
+vdSpin.push(mesh(modules.kvd, cylX(.48,.6,1.0,false,36), '#b0b6bc', {x:-.7}));
+vdSpin.push(bladeRing(modules.kvd, -1.0, .58, .85, 30, '#c6cad0', .085, .024, 24));
+vdSpin.push(bladeRing(modules.kvd, -.4, .56, .79, 32, '#c3c8cd', .08, .022, 22));
+vdSpin.push(mesh(modules.kvd, cylX(.2,.2,.5,false,20), '#aeb4ba', {x:.0}));
+
+mesh(modules.ks, cylX(.64,.68,.78,true,36), '#7d6a5e', {x:.34});
+shellMesh(modules.ks, [[-.13,.435],[.3,.41],[.77,.435]], .035, '#857668');
+mesh(modules.ks, new THREE.RingGeometry(.24,.4,40).rotateY(Math.PI/2), '#84715f', {x:-.13});
+mesh(modules.ks, new THREE.RingGeometry(.24,.4,40).rotateY(Math.PI/2), '#84715f', {x:.77});
+radialInstances(modules.ks, vcol(coneFwd(.035,.09), '#9c7f5e'), 32, .56, -.04, .1, false);
+pipe(modules.ks, [[-.38,-1.02,.12],[-.16,-1.16,.07],[-.02,-1.1,0]], .028, '#b09a55');
+pipe(modules.ks, [[.1,1.04,-.2],[.32,1.14,-.26],[.58,1.04,-.2]], .026, '#b4bac0');
+
+vdSpin.push(bladeRing(modules.tvd, 1.02, .42, .8, 30, '#cfa86a', .1, .03, 30));
+vdSpin.push(mesh(modules.tvd, cylX(.43,.43,.14,false,40), '#b59a72', {x:1.02}));
+vdSpin.push(mesh(modules.tvd, cylX(.18,.42,.2,false,32), '#a8906c', {x:.9}));
+ndSpin.push(mesh(modules.tvd, cylX(.12,.12,.44,false,16), '#aeb4ba', {x:1.0}));
+
+ndSpin.push(bladeRing(modules.tnd, 1.42, .44, .86, 28, '#caa46c', .11, .032, 30));
+ndSpin.push(mesh(modules.tnd, cylX(.45,.45,.14,false,40), '#b09878', {x:1.42}));
+ndSpin.push(mesh(modules.tnd, cylX(.16,.44,.22,false,32), '#a8906c', {x:1.3}));
+ndSpin.push(mesh(modules.tnd, cylX(.5,.5,.06,false,40), '#b09878', {x:1.66}));
+mesh(modules.tnd, new THREE.TorusGeometry(.56,.016,8,40).rotateY(Math.PI/2), '#9b8a76', {x:1.66});
+ndSpin.push(bearing(modules.tnd, 1.62, .22, 9, .03));
+pipe(modules.tnd, [[1.46,.98,-.18],[1.58,1.12,-.22],[1.7,.98,-.16]], .022, '#b4bac0');
+
+bladeRing(modules.st, 1.86, .46, .9, 24, '#a7aeb5', .09, .026, 16);
+stSpin.push(bladeRing(modules.st, 2.14, .48, .92, 30, '#c8cdd2', .12, .034, 30));
+stSpin.push(mesh(modules.st, cylX(.49,.49,.16,false,40), '#b0b6bc', {x:2.14}));
+stSpin.push(mesh(modules.st, cylX(.17,.48,.24,false,32), '#a3a9af', {x:2.0}));
+stSpin.push(mesh(modules.st, cylX(.15,.15,.6,false,18), '#aeb4ba', {x:2.32}));
+stSpin.push(bearing(modules.st, 2.46, .22, 9, .03));
+mesh(modules.st, new THREE.RingGeometry(.52,.94,48).rotateY(Math.PI/2), '#767d84', {x:2.49});
+pipe(modules.st, [[1.8,1.16,.24],[2.1,1.14,.22],[2.34,1.0,.14]], .026, '#b4bac0');
+
+stSpin.push(bearing(modules.exh, 3.4, .17, 8, .028));
+stSpin.push(shaftST, flangeST);
+
+pipe(modules.kvd, [[-.52,.92,.24],[-.2,1.12,.3],[.0,1.16,.3]], .032, '#b4bac0');
+mesh(modules.kvd, new THREE.BoxGeometry(.1,.08,.1), '#79808a', {x:-.52, y:.92, z:.24});
+pipe(modules.ks,  [[-.1,1.18,.3],[.4,1.2,.3],[.78,1.16,.28]], .032, '#b4bac0');
+pipe(modules.tvd, [[.82,1.14,.27],[1.0,1.12,.26],[1.2,1.1,.25]], .032, '#b4bac0');
+pipe(modules.tnd, [[1.24,1.1,.25],[1.5,1.08,.24],[1.7,1.06,.23]], .032, '#b4bac0');
+
+function endRing(parentObj, x, rOut, t=.05, hex='#7c828a'){
+  mesh(parentObj, new THREE.RingGeometry(rOut-t, rOut, 48).rotateY(Math.PI/2), hex, {x});
+}
+endRing(modules.ks, -.05, .66, .04, '#6a5a50'); endRing(modules.ks, .73, .68, .04, '#6a5a50');
+
+bladeRing(modules.knd, -2.6, .5, .92, 24, '#9aa3ab', .08, .022, -18);
+bladeRing(modules.knd, -2.28, .51, .9, 24, '#9aa3ab', .08, .022, -18);
+bladeRing(modules.knd, -1.66, .54, .86, 26, '#9aa3ab', .08, .022, -18);
+bladeRing(modules.kvd, -.85, .58, .83, 28, '#9aa3ab', .07, .02, -16);
+bladeRing(modules.kvd, -.27, .56, .78, 30, '#9aa3ab', .07, .02, -16);
+for(let i=0;i<12;i++){
+  const a=Math.PI*2/12*i;
+  const v=mesh(modules.mid, new THREE.BoxGeometry(.22,.5,.045), '#8b929a');
+  v.object3D.position.set(-1.4, Math.cos(a)*.6, Math.sin(a)*.6);
+  v.object3D.rotation.x=a;
+}
+bladeRing(modules.tvd, .9, .44, .78, 26, '#b59a72', .08, .026, -22);
+bladeRing(modules.tnd, 1.28, .46, .84, 26, '#b09878', .09, .028, -22);
+
+mesh(modules.ks, new THREE.RingGeometry(.45, .655, 48).rotateY(Math.PI/2), '#6e5c50', {x:-.04});
+radialInstances(modules.ks, vcol(new THREE.CylinderGeometry(.044,.038,.12,10).rotateZ(Math.PI/2), '#8a7563'), 32, .56, .05, .1, false);
+{
+  const hGeo=vcol(new THREE.SphereGeometry(.016,8,6), '#43403e');
+  radialInstances(modules.ks, hGeo, 26, .675, .2, .1, false);
+  radialInstances(modules.ks, hGeo, 26, .678, .38, .25, false);
+  radialInstances(modules.ks, hGeo, 26, .675, .56, .05, false);
+}
+for(let i=0;i<4;i++){
+  const a=Math.PI/2*i+.4;
+  const s=mesh(modules.ks, new THREE.BoxGeometry(.05,.28,.04), '#84715f');
+  s.object3D.position.set(.6, Math.cos(a)*.83, Math.sin(a)*.83);
+  s.object3D.rotation.x=a;
+}
+vdSpin.push(mesh(modules.ks, cylX(.2,.2,.92,false,22), '#aeb4ba', {x:.3}));
+ndSpin.push(mesh(modules.ks, cylX(.105,.105,1.02,false,16), '#9aa1a8', {x:.3}));
+
+function boltRingSpin(parentObj, x, R, n, hex='#878d93'){
+  const g=$obj(new THREE.Group()); g.x=x; parentObj.object3D.add(g.object3D);
+  radialInstances(g, vcol(new THREE.CylinderGeometry(.024,.024,.06,6).rotateZ(Math.PI/2), hex), n, R, 0);
+  return g;
+}
+vdSpin.push(boltRingSpin(modules.tvd, .94, .34, 10));
+ndSpin.push(boltRingSpin(modules.tnd, 1.34, .36, 10));
+stSpin.push(boltRingSpin(modules.st, 2.055, .4, 10));
+stSpin.push(mesh(modules.exh, new THREE.CylinderGeometry(.16,.16,.1,6).rotateZ(Math.PI/2), '#878d93', {x:3.56}));
+
+radialInstances(modules.tnd, vcol(new THREE.BoxGeometry(.16,.42,.05), '#9b8a76'), 6, .68, 1.67, .26);
+mesh(modules.mid, coneFwd(.03,.08), '#b4bac0', {x:-1.42, y:.18});
+mesh(modules.tnd, coneFwd(.03,.08), '#b4bac0', {x:1.56, y:.16});
+
+function _boltGeo(){ return vcol(new THREE.CylinderGeometry(.026,.026,.05,6).rotateZ(Math.PI/2), '#7c828a'); }
+function boltRing(parentObj, x, R, n){
+  radialInstances(parentObj, _boltGeo(), n, R, x);
+}
+boltRing(modules.knd, -2.7, 1.0, 14);
+boltRing(modules.knd, -1.56, .9, 12);
+boltRing(modules.kvd, -.18, .78, 12);
+boltRing(modules.ks,  .78, .96, 14);
+boltRing(modules.tnd, 1.72, .93, 12);
+boltRing(modules.st,  2.52, 1.03, 14);
+
+for(let i=0;i<6;i++){
+  const a=Math.PI*2/6*i+Math.PI/6;
+  const st=mesh(modules.inlet, new THREE.BoxGeometry(.09,.78,.05), '#8e959c');
+  st.object3D.position.set(-3.3, Math.cos(a)*.66, Math.sin(a)*.66);
+  st.object3D.rotation.x=a;
+}
+
+function lug(parentObj, x, R){
+  mesh(parentObj, new THREE.BoxGeometry(.18,.14,.1), '#79808a', {x, y:R+.05});
+  mesh(parentObj, new THREE.TorusGeometry(.055,.022,8,20), '#79808a', {x, y:R+.17});
+}
+lug(modules.knd, -2.1, .98);
+lug(modules.st, 2.3, 1.06);
+
+mesh(modules.mid, cylX(.12,.12,.24,false,18), '#6e7a72', {x:-1.7, y:-1.06});
+mesh(modules.mid, cylX(.05,.05,.1,false,12), '#b4bac0', {x:-1.85, y:-1.06});
+mesh(modules.mid, new THREE.BoxGeometry(.2,.16,.18), '#6e7a72', {x:-1.4, y:-1.32});
+const tra=mesh(modules.mid, new THREE.BoxGeometry(.26,.2,.2), '#5d7a63', {x:-1.12, y:-1.1});
+for(let i=0;i<3;i++) mesh(tra, new THREE.BoxGeometry(.27,.21,.012), '#4f6a55', {z:-.06+.06*i});
+pipe(modules.mid, [[-1.7,-.94,.0],[-1.6,-.7,.1],[-1.45,-.4,.1]], .02, '#b4bac0');
+pipe(modules.mid, [[-1.12,-1.0,.1],[-1.0,-.7,.16],[-1.05,-.3,.1]], .02, '#b09a55');
+
+vdSpin.push(mesh(modules.tvd, new THREE.TorusGeometry(.81,.014,8,48).rotateY(Math.PI/2), '#cfa86a', {x:1.02}));
+ndSpin.push(mesh(modules.tnd, new THREE.TorusGeometry(.87,.014,8,48).rotateY(Math.PI/2), '#caa46c', {x:1.42}));
+stSpin.push(mesh(modules.st,  new THREE.TorusGeometry(.93,.015,8,48).rotateY(Math.PI/2), '#c8cdd2', {x:2.14}));
+stSpin.push(mesh(modules.exh, new THREE.TorusGeometry(1.01,.016,8,48).rotateY(Math.PI/2), '#c5cad0', {x:2.62}));
+
+mesh(modules.ks, new THREE.TorusGeometry(.665,.012,8,36).rotateY(Math.PI/2), '#5a4a42', {x:.16});
+mesh(modules.ks, new THREE.TorusGeometry(.675,.012,8,36).rotateY(Math.PI/2), '#4e4744', {x:.55});
+
+for(const a of [0.663, -0.663]){
+  const ig=mesh(modules.ks, new THREE.CylinderGeometry(.04,.04,.26,10), '#7c828a');
+  ig.object3D.position.set(.12, Math.cos(a)*1.04, Math.sin(a)*1.04);
+  ig.object3D.rotation.x=a;
+  const ig2=mesh(modules.ks, new THREE.CylinderGeometry(.055,.055,.07,10), '#5d7a63');
+  ig2.object3D.position.set(.12, Math.cos(a)*1.18, Math.sin(a)*1.18);
+  ig2.object3D.rotation.x=a;
+  pipe(modules.ks, [[.12, Math.cos(a)*1.22, Math.sin(a)*1.22],[.0, Math.cos(a*.6)*1.26, Math.sin(a*.6)*1.26],[-.02, Math.cos(a*.3)*1.18, Math.sin(a*.3)*1.18]], .013, '#79808a');
+}
+
+for(let i=0;i<4;i++){
+  const a=Math.PI/2*i+.4;
+  const tp=mesh(modules.tnd, new THREE.CylinderGeometry(.028,.028,.1,8), '#b4bac0');
+  tp.object3D.position.set(1.34, Math.cos(a)*.96, Math.sin(a)*.96);
+  tp.object3D.rotation.x=a;
+}
+pipe(modules.tnd, [[1.34,1.0,.1],[1.3,1.06,.0],[1.34,1.0,-.1]], .014, '#79808a');
+
+pipe(modules.ks, [[-.12,-1.04,-.1],[.3,-1.1,-.12],[.72,-1.02,-.08]], .022, '#b4bac0');
+
+/* ── Слой ГПА-Ц-16 ──────────────────────────────────────────────── */
+const gpaGroup=$obj(new THREE.Group());
+engineRoot.object3D.add(gpaGroup.object3D);
+{
+  const G=gpaGroup;
+  for(const z of [-.95,.95]) mesh(G, new THREE.BoxGeometry(7.8,.14,.16), '#5d7a63', {x:0, y:-1.74, z});
+  for(const fx of [-3.5,-1.4,.6,2.4,3.6]) mesh(G, new THREE.BoxGeometry(.14,.12,2.06), '#5d7a63', {x:fx, y:-1.74});
+  for(const sx of [-1.4, 2.3]) for(const z of [-.72,.72]){
+    mesh(G, new THREE.BoxGeometry(.12,1.0,.1), '#6e7a72', {x:sx, y:-1.2, z});
+  }
+  mesh(G, new THREE.BoxGeometry(.3,.18,.3), '#56695c', {x:3.15, y:-1.62});
+  {
+    const prof=[[-1.1,1.28],[-.5,1.34],[.3,1.26],[.95,1.04],[1.3,.95]];
+    const pts=[];
+    for(const [a,r] of prof) pts.push(new THREE.Vector2(r,a));
+    for(let i=prof.length-1;i>=0;i--) pts.push(new THREE.Vector2(prof[i][1]-.04, prof[i][0]));
+    pts.push(pts[0].clone());
+    const g=vcol(new THREE.LatheGeometry(pts,48), '#5f6468');
+    const m=new THREE.Mesh(g, outlineMaterial);
+    m.position.set(3.18,.35,0);
+    G.object3D.add(m);
+  }
+  mesh(G, new THREE.CylinderGeometry(.96,.93,.7,48,1,true), '#5f6468', {x:3.18, y:2.0});
+  mesh(G, new THREE.TorusGeometry(.98,.045,10,48).rotateX(Math.PI/2), '#565b60', {x:3.18, y:2.36});
+  for(const z of [-1.05,1.05]) mesh(G, new THREE.BoxGeometry(.1,3.5,.1), '#79808a', {x:4.95, y:-.05, z});
+  mesh(G, new THREE.BoxGeometry(.1,.1,2.2), '#79808a', {x:4.95, y:1.66});
+  const pv=mesh(G, cylX(.1,.1,1.25,false,18), '#aeb4ba', {x:5.22});
+  const m1=mesh(G, new THREE.CylinderGeometry(.22,.22,.12,8).rotateZ(Math.PI/2), '#878d93', {x:4.66});
+  const m2=mesh(G, new THREE.CylinderGeometry(.22,.22,.12,8).rotateZ(Math.PI/2), '#878d93', {x:5.78});
+  stSpin.push(pv,m1,m2);
+  mesh(G, cylX(.3,.3,.95,true,28), '#79808a', {x:5.22});
+  {
+    const prof=[[5.95,.56],[6.05,.84],[6.2,.94],[6.7,.94],[6.85,.84],[6.95,.56]];
+    const pts=[];
+    for(const [a,r] of prof) pts.push(new THREE.Vector2(r,a));
+    for(let i=prof.length-1;i>=0;i--) pts.push(new THREE.Vector2(prof[i][1]-.05, prof[i][0]));
+    pts.push(pts[0].clone());
+    const g=vcol(new THREE.LatheGeometry(pts,48).rotateZ(-Math.PI/2), '#7b8794');
+    G.object3D.add(new THREE.Mesh(g, outlineMaterial));
+  }
+  mesh(G, cylX(.56,.56,.1,false,40), '#6f7984', {x:5.95});
+  mesh(G, cylX(.56,.56,.1,false,40), '#6f7984', {x:6.95});
+  boltRing(G, 6.18, .955, 18); boltRing(G, 6.72, .955, 18);
+  mesh(G, new THREE.CylinderGeometry(.34,.4,.95,32), '#7b8794', {x:6.12, y:-1.0});
+  mesh(G, new THREE.CylinderGeometry(.34,.4,.95,32), '#7b8794', {x:6.78, y:1.0});
+  mesh(G, new THREE.TorusGeometry(.43,.032,10,40).rotateX(Math.PI/2), '#6f7984', {x:6.12, y:-1.46});
+  mesh(G, new THREE.TorusGeometry(.43,.032,10,40).rotateX(Math.PI/2), '#6f7984', {x:6.78, y:1.46});
+  for(const z of [-.7,.7]) mesh(G, new THREE.BoxGeometry(.8,.5,.16), '#6f7984', {x:6.45, y:-1.45, z});
+}
+utils.set(gpaGroup,{scale:0});
+let gpaOn=false;
+
+/* ── Подписи с выносками и живыми параметрами ───────────────────── */
+const labelsLeftEl  = document.querySelector('.toolbox-labels-left');
+const labelsRightEl = document.querySelector('.toolbox-labels-right');
+const labelsLayer   = document.getElementById('labels');
+const linesSvg      = document.getElementById('lines');
+const labels = [];
+
+function createLabel(name, moduleObj, anchorX, side, colorVar, desc, param){
+  const li=document.createElement('li');
+  li.style.color=`var(${colorVar})`;
+  const nameSpan=document.createElement('span');
+  nameSpan.textContent = param ? param.title : name;
+  li.appendChild(nameSpan);
+  let vSpan=null;
+  if(param){
+    vSpan=document.createElement('b');
+    vSpan.className='pval';
+    vSpan.textContent='—';
+    li.appendChild(document.createTextNode(' '));
+    li.appendChild(vSpan);
+  }
+  (side==='left'?labelsLeftEl:labelsRightEl).appendChild(li);
+  const dot=document.createElement('div');
+  dot.className='module-label-point'; dot.style.color=`var(${colorVar})`;
+  labelsLayer.appendChild(dot);
+  const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+  line.style.stroke=`var(${colorVar})`; line.style.opacity='0';
+  linesSvg.appendChild(line);
+  const anchor=new THREE.Object3D();
+  anchor.position.set(anchorX, 1.18, 0);
+  moduleObj.object3D.add(anchor);
+  labels.push({ name: param ? param.title : name, li, dot, line, anchor, side, desc, vSpan, param });
+}
+
+createLabel('вход · ВНА',        modules.inlet, -3.1, 'left',  '--c-inlet',
+  'входной направляющий аппарат · стабилизация потока',
+  { key:'GPA-{n}.GPA-{n}.PS.PV', title:'P вход', unit:'кгс/см²' });
+
+createLabel('КНД · 4 ступени',   modules.knd,   -2.2, 'left',  '--c-knd',
+  'каскад НД · сжатие до ≈2,5 атм · титановые диски',
+  { key:'GPA-{n}.GPA-{n}.TS.PV', title:'T вход', unit:'°C' });
+
+createLabel('средняя опора',     modules.mid,   -1.4, 'left',  '--c-mid',
+  'шариковый подшипник ВД · коробка приводов агрегатов',
+  { key:'GPA-{n}.GPA-{n}.VT101.PV', title:'Вибр. перед. опоры', unit:'мм/с' });
+
+createLabel('КВД · 6 ступеней',  modules.kvd,   -.71, 'left',  '--c-kvd',
+  'РНА + КПВ · ≈10 атм за компрессором · отбор над V ст.',
+  { key:'GPA-{n}.GPA-{n}.PROGRAM:FLOWCALC.TOT_UNIT.IN', title:'Расход топл. газа', unit:'' });
+
+createLabel('камера сгорания',   modules.ks,     .32, 'right', '--c-ks',
+  'кольцевая · природный газ · дозатор ДУС-6,5',
+  { key:'GPA-{n}.GPA-{n}.PE101.PV', title:'P топл. газа', unit:'кгс/см²' });
+
+createLabel('ТВД',               modules.tvd,    1.0, 'right', '--c-tvd',
+  '1 ступень · охлаждаемые сопловые лопатки · привод КВД',
+  { key:'GT-{n}.GT-{n}.GT01.CTRL.IN[1].VALUE', title:'Обороты ТВД', unit:'об/мин' });
+
+createLabel('ТНД',               modules.tnd,    1.46,'right', '--c-tnd',
+  '1 ступень + диск III ст. без лопаток · привод КНД',
+  { key:'GT-{n}.GT-{n}.GT01.CTRL.IN[5].VALUE', title:'Обороты ТНД', unit:'об/мин' });
+
+createLabel('свободная турбина', modules.st,     2.12,'right', '--c-st',
+  'модуль 16СТ · 18 МВт · 5300 об/мин · связь газодинамическая',
+  { key:'GT-{n}.GT-{n}.GT01.CTRL.IN[2].VALUE', title:'Обороты СТ', unit:'об/мин' });
+
+createLabel('выхлоп · вал',      modules.exh,    3.3, 'right', '--c-exh',
+  'диффузор · задняя опора · вал отбора мощности на нагнетатель',
+  { key:'GPA-{n}.GPA-{n}.PD.PV', title:'P выход', unit:'кгс/см²' });
+
+const labelProj=new THREE.Vector3();
+const leftLabels  = labels.filter(l=>l.side==='left');
+const rightLabels = labels.filter(l=>l.side==='right');
+function updateLabels(){
+  // 1) Спроецировать все якоря в экранные координаты (sx, sy).
+  for(const lb of labels){
+    lb.anchor.getWorldPosition(labelProj).project(camera);
+    lb.sx=(labelProj.x*.5+.5)*W;
+    lb.sy=(-labelProj.y*.5+.5)*H;
+    lb.dot.style.transform=`translate(${lb.sx}px,${lb.sy}px)`;
+  }
+  // 2) Анти-кросс: внутри каждой стороны располагаем DOM-строки в том же
+  //    вертикальном порядке, что и спроецированные якоря по sy (верхний якорь —
+  //    верхняя строка). Делается через CSS order на flex-колонке. Это исключает
+  //    пересечение выносок одной стороны при любом угле поворота.
+  for(const group of [leftLabels, rightLabels]){
+    const sorted=group.slice().sort((a,b)=>a.sy-b.sy);
+    sorted.forEach((lb,i)=>{ lb.li.style.order=i; });
+  }
+  // 3) После переустановки order считываем актуальные прямоугольники строк
+  //    (reflow синхронный) и рисуем линии к якорям.
+  for(const lb of labels){
+    const r=lb.li.getBoundingClientRect();
+    const lx=lb.side==='left' ? r.right+8 : r.left-8;
+    const ly=r.top+r.height/2;
+    lb.line.setAttribute('x1',lx); lb.line.setAttribute('y1',ly);
+    lb.line.setAttribute('x2',lb.sx); lb.line.setAttribute('y2',lb.sy);
+  }
+}
+document.getElementById('loader').style.opacity='0';
+
+/* ── Вращение роторов — собираем в loopAnims для стоп-режима ─────── */
+let unitRunning = true;
+const loopAnims = [];
+loopAnims.push(animate(ndSpin,      { rotateX:'-=360', duration:2800, ease:'linear', loop:true }));
+loopAnims.push(animate(vdSpin,      { rotateX:'-=360', duration:1500, ease:'linear', loop:true }));
+loopAnims.push(animate(stSpin,      { rotateX:'-=360', duration:3400, ease:'linear', loop:true }));
+loopAnims.push(animate(counterSpin, { rotateX:'+=360', duration:2400, ease:'linear', loop:true }));
+
+/* ── Живые данные: ГПА-селектор ────────────────────────────────── */
+let currentGpa = 1;
+let snapshotData = null;
+let domainByGpa = {};   // вычисляемые доменные индексы по ГПА (из /api/sensors)
+
+function tagFor(tpl){ return tpl.replace(/\{n\}/g, currentGpa); }
+
+function fmtVal(v, unit){
+  if(v == null) return '—';
+  const s = typeof v === 'number' ? (Number.isInteger(v) ? String(v) : v.toFixed(2)) : String(v);
+  return unit ? s + ' ' + unit : s;
+}
+
+function setRunning(isRunning){
+  unitRunning = isRunning;
+  const badge = document.getElementById('unit-status');
+  if(isRunning){
+    loopAnims.forEach(a => a.play());
+    if(autoRotate) autoRotate.play();
+    badge.textContent = '● В РАБОТЕ';
+    badge.className = 'status-run';
+  } else {
+    loopAnims.forEach(a => a.pause());
+    if(autoRotate) autoRotate.pause();
+    badge.textContent = '■ ОСТАНОВЛЕН';
+    badge.className = 'status-stop';
+  }
+}
+
+function updateLabelValues(){
+  if(!snapshotData) return;
+  const tags = snapshotData.tags || {};
+  for(const lb of labels){
+    if(!lb.param || !lb.vSpan) continue;
+    const entry = tags[tagFor(lb.param.key)];
+    const v = entry?.v, sev = entry?.sev;
+    lb.vSpan.textContent = fmtVal(v, lb.param.unit);
+    lb.vSpan.classList.toggle('sev-crit', sev === 'crit');
+    lb.vSpan.classList.toggle('sev-warn', sev === 'warn' && sev !== 'crit');
+    lb.li.classList.toggle('sev-crit', sev === 'crit');
+    lb.li.classList.toggle('sev-warn', sev === 'warn' && sev !== 'crit');
+  }
+}
+
+function renderParamsPanel(){
+  const body = document.getElementById('params-body');
+  if(!body || !snapshotData) return;
+  const tags = snapshotData.tags || {};
+  const n = currentGpa;
+  const groups = [
+    { title:'ГАЗ — ВХОД / ВЫХОД', params:[
+      { key:`GPA-${n}.GPA-${n}.PS.PV`,  title:'Давление входа',  unit:'кгс/см²', feature:'gas_pressure_in_gpa' },
+      { key:`GPA-${n}.GPA-${n}.PD.PV`,  title:'Давление выхода', unit:'кгс/см²', feature:'gas_pressure_out_gpa' },
+      { key:`GPA-${n}.GPA-${n}.TS.PV`,  title:'Температура входа',  unit:'°C', feature:'gas_temp_in_gpa' },
+      { key:`GPA-${n}.GPA-${n}.TD.PV`,  title:'Температура выхода', unit:'°C', feature:'gas_temp_out_gpa' },
+    ]},
+    { title:'ТОПЛИВО', params:[
+      { key:`GPA-${n}.GPA-${n}.PE101.PV`,                          title:'Давление топл. газа', unit:'кгс/см²', feature:'fuel_gas_pressure_in_gtd' },
+      { key:`GPA-${n}.GPA-${n}.PROGRAM:FLOWCALC.TOT_UNIT.IN`,      title:'Расход топл. газа',   unit:'', feature:'fuel_gas_flow_rate_sec' },
+    ]},
+    { title:'ТУРБИНА — ОБОРОТЫ', params:[
+      { key:`GT-${n}.GT-${n}.GT01.CTRL.IN[1].VALUE`, title:'Обороты ТВД', unit:'об/мин', feature:'rpm_tvd' },
+      { key:`GT-${n}.GT-${n}.GT01.CTRL.IN[5].VALUE`, title:'Обороты ТНД', unit:'об/мин', feature:'rpm_tnd' },
+      { key:`GT-${n}.GT-${n}.GT01.CTRL.IN[2].VALUE`, title:'Обороты СТ',  unit:'об/мин', feature:'rpm_st' },
+    ]},
+    { title:'ВИБРАЦИЯ', params:[
+      { key:`GPA-${n}.GPA-${n}.VT101.PV`, title:'Вибрация перед. опоры', unit:'мм/с', feature:'vibro_front_support' },
+      { key:`GPA-${n}.GPA-${n}.VT102.PV`, title:'Вибрация задн. опоры',  unit:'мм/с', feature:'vibro_rear_support' },
+    ]},
+    { title:'ПОДШИПНИКИ', params:[
+      { key:`GPA-${n}.GPA-${n}.TE221.PV`, title:'Т подшипника переднего', unit:'°C', feature:'temp_front_bearing_pads' },
+      { key:`GPA-${n}.GPA-${n}.TE222.PV`, title:'Т подшипника заднего',   unit:'°C', feature:'temp_rear_bearing_pads' },
+      { key:`GPA-${n}.GPA-${n}.TE223.PV`, title:'Т подш. нагнетателя',    unit:'°C', feature:'temp_active_pads_front_bearing' },
+    ]},
+    { title:'МАСЛО', params:[
+      { key:`GPA-${n}.GPA-${n}.TE51.PV`, title:'Т масла на входе',    unit:'°C', feature:'oil_temp_in_pod' },
+      { key:`GPA-${n}.GPA-${n}.TE52.PV`, title:'Т масла выход. СТ',   unit:'°C', feature:'oil_temp_out_st' },
+      { key:`GPA-${n}.GPA-${n}.TE54.PV`, title:'Т масла в корпусе',   unit:'°C', feature:'oil_temp_out_zod' },
+    ]},
+    { title:'АВО — ОХЛАЖДЕНИЕ ГАЗА', params:[
+      { key:`GPA-${n}.GPA-${n}.PG_AIRC.PV`,    title:'P после АВО', unit:'кгс/см²', feature:'gas_pressure_out_avo' },
+      { key:`GPA-${n}.GPA-${n}.T_AIRC_OUT.PV`, title:'Т после АВО', unit:'°C', feature:'gas_temp_out_avo' },
+    ]},
+    // Вычисляемые доменные индексы здоровья (не сырые сигналы) — приходят из
+    // pvsnapshot.domain[ГПА]. Те же 10, что и во вкладке «Доменные индексы» дашборда.
+    { title:'ДОМЕННЫЕ ИНДЕКСЫ ЗДОРОВЬЯ', params:[
+      { domainKey:'polytropic_eff',  title:'Политропный КПД η_p',    unit:'',       digits:3 },
+      { domainKey:'polytropic_head', title:'Политропный напор H_p',  unit:'кДж/кг', digits:1 },
+      { domainKey:'dT_disch',        title:'Нагрев в нагнетателе ΔT', unit:'°C',     digits:1 },
+      { domainKey:'dT_cooler',       title:'Перепад на АВО (range)',  unit:'°C',     digits:1 },
+      { domainKey:'avo_approach',    title:'Approach АВО',            unit:'°C',     digits:1 },
+      { domainKey:'specific_fuel',   title:'Удельный расход топлива', unit:'',       digits:4 },
+      { domainKey:'shaft_resid_tnd', title:'Shaft mismatch (ТНД)',    unit:'об/мин', digits:1 },
+      { domainKey:'shaft_resid_st',  title:'Остаток СТ',              unit:'об/мин', digits:1 },
+      { domainKey:'shaft_ratio',     title:'Отношение ТНД/ТВД',       unit:'',       digits:3 },
+      { domainKey:'dT_bearings',     title:'ΔT подшипников',          unit:'°C',     digits:1 },
+    ]},
+  ];
+  const domainOf = domainByGpa || {};
+  body.innerHTML = groups.map(g => `
+    <h3>${g.title}</h3>
+    ${g.params.map(p => {
+      // Доменные индексы — вычисляемые значения из pvsnapshot.domain[ГПА], своя точность
+      if (p.domainKey) {
+        const dv = domainOf[n]?.[p.domainKey];
+        const txt = (typeof dv === 'number' && isFinite(dv))
+          ? dv.toFixed(p.digits ?? 2) + (p.unit ? ' ' + p.unit : '')
+          : '—';
+        return `<div class="prow"><span class="ptitle">${p.title}</span><span class="pv">${txt}</span></div>`;
+      }
+      const entry = tags[p.key];
+      const sev = entry?.sev;
+      const cls = sev === 'crit' ? 'sev-crit' : sev === 'warn' ? 'sev-warn' : '';
+      const clickable = p.feature ? ` prow-clickable" data-feature="${p.feature}` : '';
+      return `<div class="prow${clickable}"><span class="ptitle">${p.title}</span><span class="pv ${cls}">${fmtVal(entry?.v, p.unit)}</span></div>`;
+    }).join('')}
+  `).join('');
+}
+
+async function fetchSnapshot(){
+  try {
+    const res = await fetch('/api/pvsnapshot');
+    if(!res.ok) return;
+    snapshotData = await res.json();
+    const stateKey = `GPA-${currentGpa}.GPA-${currentGpa}.STATES_GTD.5`;
+    const running = (snapshotData.tags?.[stateKey]?.v ?? 0) == 1;
+    setRunning(running);
+    updateLabelValues();
+    renderParamsPanel();
+  } catch(e) {}
+}
+fetchSnapshot();
+setInterval(fetchSnapshot, 30000);
+
+// Доменные индексы здоровья (вычисляемые) берём из /api/sensors по каждому ГПА —
+// работает на текущем бэкенде без рестарта. Кладём в domainByGpa, панель читает его.
+async function fetchDomain(){
+  try {
+    const res = await fetch('/api/sensors');
+    if(!res.ok) return;
+    const arr = await res.json();
+    const map = {};
+    for(const s of (Array.isArray(arr) ? arr : [])){
+      const dom = s && s.domain;
+      if(!dom) continue;
+      const g = String(s.gpa||'').replace('GPA','').replace('-','').trim();
+      if(g && !map[g]) map[g] = dom;
+    }
+    domainByGpa = map;
+    renderParamsPanel();
+  } catch(e) {}
+}
+fetchDomain();
+setInterval(fetchDomain, 30000);
+
+/* ── ГПА-селектор: переключение ────────────────────────────────── */
+document.querySelectorAll('.gpa-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.gpa-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentGpa = parseInt(btn.dataset.gpa);
+    // СРАЗУ перерисовываем панель из уже имеющегося снимка (snapshotData есть по всем
+    // ГПА) — иначе значения обновлялись только после сетевого fetchSnapshot (лаг ~10с).
+    try { const _sk=`GPA-${currentGpa}.GPA-${currentGpa}.STATES_GTD.5`; setRunning((snapshotData?.tags?.[_sk]?.v ?? 0)==1); updateLabelValues(); renderParamsPanel(); } catch (e) {}
+    fetchSnapshot();   // и фоном тянем свежий снимок
+  });
+});
+
+/* ── Панель всех параметров ─────────────────────────────────────── */
+document.getElementById('params-btn').addEventListener('click', () => {
+  renderParamsPanel();
+  document.getElementById('params-panel').classList.add('open');
+});
+document.getElementById('params-close').addEventListener('click', () => {
+  document.getElementById('params-panel').classList.remove('open');
+});
+// Прокрутка колесом над панелью параметров НЕ должна управлять разборкой 3D-модели:
+// гасим всплытие до window-обработчика взрыв-схемы (нативный скролл панели сохраняется).
+document.getElementById('params-panel').addEventListener('wheel', e => e.stopPropagation(), { passive: true });
+/* клик по строке параметра → открыть график датчика в дашборде */
+document.getElementById('params-body').addEventListener('click', (e) => {
+  const row = e.target.closest('.prow-clickable');
+  if(!row) return;
+  const feature = row.dataset.feature;
+  if(!feature) return;
+  window.dispatchEvent(new CustomEvent('engine-select-sensor', { detail: `${feature}__GPA${currentGpa}` }));
+});
+
+/* ── Интро ──────────────────────────────────────────────────────── */
+rootGroup.rotateY=86; rootGroup.rotateX=2;
+
+const startColors={};
+for (const k of ['outlineColor','rimColor','shadowColor','worldColor1','backgroundColor']){
+  startColors[k]=outlineShaderMaterial.uniforms[k].value.clone();
+  outlineShaderMaterial.uniforms[k].value.setRGB(0,0,0);
+}
+document.body.style.backgroundColor='#0c1222';
+
+let autoRotate=null;
+let focusRotate=null;
+let focusRotateTimer=null;
+
+function startAutoRotate(){
+  if(!unitRunning) return;
+  autoRotate=animate(rootGroup,{ rotateY:'+=360', duration:140000, ease:'linear', loop:true });
+}
+function startFocusRotate(name){
+  if(focusRotateTimer) clearTimeout(focusRotateTimer);
+  focusRotateTimer = setTimeout(()=>{
+    if(focusedModule !== name) return;
+    focusRotate = animate(rootGroup,{ rotateY:'+=360', duration:22000, ease:'linear', loop:true });
+  }, 760);
+}
+function stopFocusRotate(){
+  if(focusRotateTimer){ clearTimeout(focusRotateTimer); focusRotateTimer=null; }
+  if(focusRotate){ focusRotate.cancel(); focusRotate=null; }
+}
+const lightObj={ get x(){return directionalLight.position.x;},
+                 set x(v){directionalLight.position.x=v;} };
+
+let explodeTl=null, scrollReady=false;
+
+const tl=createTimeline({defaults:{ease:'inOut(3)'}})
+  .label('INTRO',0)
+  .add(outlineShaderMaterial.uniforms.outlineColor.value,
+    {r:startColors.outlineColor.r,g:startColors.outlineColor.g,b:startColors.outlineColor.b},'INTRO+=1000')
+  .add(outlineShaderMaterial.uniforms.rimColor.value,
+    {r:startColors.rimColor.r,g:startColors.rimColor.g,b:startColors.rimColor.b,duration:2500},'INTRO+=500')
+  .add(outlineShaderMaterial.uniforms.shadowColor.value,
+    {r:startColors.shadowColor.r,g:startColors.shadowColor.g,b:startColors.shadowColor.b,duration:3000},'INTRO')
+  .add(outlineShaderMaterial.uniforms.worldColor1.value,
+    {r:startColors.worldColor1.r,g:startColors.worldColor1.g,b:startColors.worldColor1.b,duration:3000},'INTRO')
+  .add(outlineShaderMaterial.uniforms.backgroundColor.value,
+    {r:startColors.backgroundColor.r,g:startColors.backgroundColor.g,b:startColors.backgroundColor.b,duration:3000},'INTRO')
+  .add(document.body,{backgroundColor:DARK.backgroundColor,duration:3000},'INTRO')
+  .add(lightObj,{x:{from:100},duration:3000},'INTRO')
+  .add(rootGroup,{z:minM?52:94,duration:1500},900)
+  .label('HEADING',2400)
+  .add(rootGroup,{
+    rotateY:{to:26,ease:'outBack(1.2)',duration:3200},
+    rotateX:{to:13,ease:'outQuart',duration:3200},
+    z:{to:minM?46:84,ease:'outQuart',duration:3200},
+  },'HEADING')
+  .add(labels.map(l=>l.li), {opacity:[0,1],duration:350,ease:'outCubic',delay:stagger(80)},'HEADING+=2300')
+  .add(labels.map(l=>l.dot),{opacity:[0,1],duration:350,ease:'outCubic',delay:stagger(80)},'HEADING+=2300')
+  .add(labels.map(l=>l.line),{opacity:[0,.75],duration:350,ease:'outCubic',delay:stagger(80)},'HEADING+=2400')
+  .add('#title-block',{opacity:[0,1],duration:500},'HEADING+=1800')
+  .add('.specline',{opacity:[0,.6],duration:500},'HEADING+=2200')
+  .add('#theme-btn',{opacity:1,duration:300},'HEADING+=2600')
+  .add('#gpa-toggle',{opacity:1,duration:300},'HEADING+=2800')
+  .add('#gpa-bar',{opacity:1,duration:300},'HEADING+=2600')
+  .add('#params-btn',{opacity:1,duration:300},'HEADING+=2800')
+  .add('#scroll-hint',{opacity:.45,duration:400},'HEADING+=2900')
+  .call(()=>{ startAutoRotate(); buildExplodeTl(); scrollReady=true; },'HEADING+=3400');
+
+/* ── Scroll: поузловая разборка ─────────────────────────────────── */
+function buildExplodeTl(){
+  explodeTl=createTimeline({ autoplay:false, defaults:{ease:'inOut(2)'} });
+  const spread=[['inlet',-1.7],['knd',-1.05],['mid',-.55],['kvd',-.15],
+                ['ks',.32],['tvd',.72],['tnd',1.08],['st',1.65],['exh',2.45]];
+  explodeTl.add(rootGroup,{ z:(minM?60:104), duration:2500 },0);
+  spread.forEach(([n,dx],i)=>{
+    explodeTl.add(modules[n], { x:dx, duration:2200 }, 80*i);
+  });
+  explodeTl.add(rootGroup,{ z:(minM?72:118), rotateX:'+=4', duration:2500 },2500);
+  spread.forEach(([n],i)=>{
+    explodeTl.add(modules[n], { y:(i%2? .55 : -.55), duration:2000 }, 2500+70*i);
+  });
+}
+
+const sectionTitleEl=document.getElementById('section-title');
+const scrollHintEl=document.getElementById('scroll-hint');
+
+// Прогресс разборки [0..1] → таймлайн взрыв-схемы. Работает и от скролла страницы
+// (standalone), и от колеса мыши (встроенный режим: оверлей без скролла окна).
+let _vScroll = 0, _vTarget = 0, _vRaf = null;   // виртуальный скролл (встроенный режим)
+const _V_MAX = 2600;                    // px колеса на полную разборку
+function _pageScrollable(){ return (document.documentElement.scrollHeight - window.innerHeight) > 4; }
+function _scrolled(){ return _pageScrollable() ? window.scrollY : _vScroll; }
+// Плавная инерция колеса → разборка не дёргается (rAF-интерполяция к цели)
+function _vEase(){
+  const d = _vTarget - _vScroll;
+  if(Math.abs(d) < 0.5){ _vScroll = _vTarget; applyDisasm(_vScroll/_V_MAX); _vRaf = null; return; }
+  _vScroll += d * 0.16;
+  applyDisasm(_vScroll/_V_MAX);
+  _vRaf = requestAnimationFrame(_vEase);
+}
+function applyDisasm(progress){
+  if(!scrollReady||!explodeTl||focusedModule) return;
+  progress=Math.max(0,Math.min(progress,1));
+  if(progress*_V_MAX>20){
+    if(autoRotate) autoRotate.pause();
+    sectionTitleEl.style.opacity=Math.min(progress*4,1).toString();
+    scrollHintEl.style.opacity='0';
+  }else{
+    if(autoRotate && unitRunning) autoRotate.play();
+    sectionTitleEl.style.opacity='0';
+    scrollHintEl.style.opacity='.45';
+  }
+  explodeTl.seek(progress*explodeTl.duration);
+}
+window.addEventListener('scroll', ()=>{
+  if(!_pageScrollable()) return;        // встроенный режим — управляет колесо
+  const maxScroll=document.documentElement.scrollHeight-window.innerHeight;
+  applyDisasm(window.scrollY/maxScroll);
+},{passive:true});
+window.addEventListener('wheel', (e)=>{
+  if(_pageScrollable()) return;         // обычная страница — нативный скролл
+  if(!scrollReady||focusedModule) return;
+  _vTarget=Math.max(0,Math.min(_V_MAX,_vTarget+e.deltaY));
+  if(_vRaf==null) _vRaf=requestAnimationFrame(_vEase);   // плавно догоняем цель
+},{passive:true});
+
+/* ── Тема ───────────────────────────────────────────────────────── */
+// Тема движка СЛЕДУЕТ глобальной теме системы (themeStore в React). React шлёт
+// 'engine-set-theme' (detail=true для светлой) → применяем CSS + WebGL-шейдер.
+// Своя кнопка ☀/☾ не переключает локально, а флипает ГЛОБАЛЬНУЮ тему через
+// 'engine-toggle-theme' → React меняет тему, сохраняет и присылает обратно.
+const themeBtn=document.getElementById('theme-btn');
+let isLight=false, themeTl=null;
+const u=outlineShaderMaterial.uniforms;
+function setEngineTheme(light){
+  light=!!light;
+  if(light===isLight && themeTl) return;   // уже в этой теме
+  if(themeTl){ themeTl.cancel(); themeTl=null; }
+  isLight=light;
+  const P=isLight?LIGHT:DARK;
+  document.body.classList.toggle('is-light', isLight);
+  themeBtn.textContent=isLight?'☾':'☀';
+  const c={ bg:new THREE.Color(P.backgroundColor), wc:new THREE.Color(P.worldColor1),
+            sh:new THREE.Color(P.shadowColor), rim:new THREE.Color(P.rimColor), oc:new THREE.Color(P.outlineColor) };
+  themeTl=createTimeline({defaults:{duration:300,ease:'inOutQuad'}})
+    .add(document.body,{backgroundColor:P.backgroundColor},0)
+    .add(u.outlineBlend,{value:P.outlineBlend},0)
+    .add(u.contourBlend,{value:P.contourBlend},0)
+    .add(u.backgroundColor.value,{r:c.bg.r,g:c.bg.g,b:c.bg.b},0)
+    .add(u.worldColor1.value,{r:c.wc.r,g:c.wc.g,b:c.wc.b},0)
+    .add(u.shadowColor.value,{r:c.sh.r,g:c.sh.g,b:c.sh.b},0)
+    .add(u.rimColor.value,{r:c.rim.r,g:c.rim.g,b:c.rim.b},0)
+    .add(u.outlineColor.value,{r:c.oc.r,g:c.oc.g,b:c.oc.b},0)
+    .add(u.ambiantColor.value,{r:c.wc.r,g:c.wc.g,b:c.wc.b},0);
+}
+themeBtn.addEventListener('click', ()=> window.dispatchEvent(new CustomEvent('engine-toggle-theme')) );
+window.addEventListener('engine-set-theme', e => setEngineTheme(!!(e && e.detail)));
+
+/* ── Тоггл слоя ГПА-Ц-16 ────────────────────────────────────────── */
+const gpaChk=document.getElementById('gpaChk');
+gpaChk.addEventListener('change', ()=>{
+  gpaOn=gpaChk.checked;
+  if(gpaOn){
+    window.scrollTo({top:0}); _vScroll=0; applyDisasm(0);
+    if(focusedModule) unfocusModule();
+    animate(gpaGroup,{scale:[0,1],duration:900,ease:'out(3)'});
+    animate(rootGroup,{z:(minM?62:104),x:'-=4',duration:900,ease:'inOut(2)'});
+  }else{
+    animate(gpaGroup,{scale:0,duration:450,ease:'in(2)'});
+    animate(rootGroup,{z:(minM?46:84),x:0,duration:700,ease:'inOut(2)'});
+  }
+});
+
+/* ── Клик: изоляция и приближение узла ──────────────────────────── */
+const raycaster=new THREE.Raycaster();
+const mouseNDC=new THREE.Vector2();
+const meshToMod=new Map();
+let focusedModule=null;
+const modBaseScale={};
+for(const [n,m] of Object.entries(modules)){
+  modBaseScale[n]=m._scale;
+  m.object3D.traverse(ch=>{ if(ch.isMesh) meshToMod.set(ch,n); });
+}
+let savedRGx=0, savedRGy=0, savedRGz=0;
+const focusLabelEl=document.getElementById('focus-label');
+const focusDescEl=document.getElementById('focus-desc');
+
+function focusModule(name){
+  if(focusedModule===name){ unfocusModule(); return; }
+  if(focusedModule){
+    for(const [n,m] of Object.entries(modules)) utils.set(m,{scale:modBaseScale[n]});
+  }else{
+    savedRGx=rootGroup.x; savedRGy=rootGroup.y; savedRGz=rootGroup.z;
+  }
+  focusedModule=name;
+  if(autoRotate) autoRotate.pause();
+  stopFocusRotate();
+  const mod=modules[name];
+  const wp=new THREE.Vector3();
+  mod.object3D.getWorldPosition(wp);
+  animate(rootGroup,{ x:rootGroup.x-wp.x, y:rootGroup.y-wp.y, z:rootGroup.z+30, duration:700, ease:'out(3)' });
+  for(const [n,m] of Object.entries(modules)){
+    if(n===name) animate(m,{scale:modBaseScale[n]*1.15,duration:700,ease:'out(3)'});
+    else animate(m,{scale:0,duration:350,ease:'in(2)'});
+  }
+  for(const lb of labels){
+    const own = lb.anchor.parent===modules[name].object3D;
+    if(own){ animate([lb.li,lb.dot],{opacity:1,duration:250}); animate(lb.line,{opacity:.75,duration:250}); }
+    else   { animate([lb.li,lb.dot,lb.line],{opacity:0,duration:200}); }
+  }
+  const lb=labels.find(l=>l.anchor.parent===modules[name].object3D);
+  animate(sectionTitleEl,{opacity:0,duration:150});
+  focusLabelEl.textContent=(lb ? lb.name.toUpperCase() : name.toUpperCase())+'  ·  клик — выход';
+  focusDescEl.textContent=lb?lb.desc:'';
+  animate(focusLabelEl,{opacity:1,duration:250});
+  animate(focusDescEl,{opacity:.6,duration:250});
+  if(gpaOn) animate(gpaGroup,{scale:0,duration:300,ease:'in(2)'});
+  document.body.style.cursor='zoom-in';
+  startFocusRotate(name);
+}
+function unfocusModule(){
+  if(!focusedModule) return;
+  stopFocusRotate();
+  focusedModule=null;
+  animate(rootGroup,{x:savedRGx,y:savedRGy,z:savedRGz,duration:650,ease:'out(3)'});
+  for(const [n,m] of Object.entries(modules))
+    animate(m,{scale:modBaseScale[n],duration:550,ease:'out(3)'});
+  for(const lb of labels){
+    animate([lb.li,lb.dot],{opacity:1,duration:300});
+    animate(lb.line,{opacity:.75,duration:300});
+  }
+  animate(focusLabelEl,{opacity:0,duration:200});
+  animate(focusDescEl,{opacity:0,duration:200});
+  if(gpaOn) animate(gpaGroup,{scale:1,duration:500,ease:'out(3)'});
+  if(_scrolled()>20) animate(sectionTitleEl,{opacity:1,duration:250});
+  document.body.style.cursor='';
+  if(!autoRotate && _scrolled()<20) startAutoRotate();
+}
+
+/* ── Drag для вращения ──────────────────────────────────────────── */
+let dragging=false, lastX=0, lastY=0;
+let ptrDownX=0, ptrDownY=0, dragDist=0;
+
+renderer.domElement.addEventListener('pointerdown',(e)=>{
+  ptrDownX=e.clientX; ptrDownY=e.clientY; dragDist=0;
+  if(tl.currentTime<3400) return;
+  dragging=true; lastX=e.clientX; lastY=e.clientY;
+  document.body.classList.add('dragging');
+  if(autoRotate){ autoRotate.cancel(); autoRotate=null; }
+  stopFocusRotate();
+});
+window.addEventListener('pointermove',(e)=>{
+  if(!dragging) return;
+  const dx=e.clientX-ptrDownX, dy=e.clientY-ptrDownY;
+  dragDist=Math.sqrt(dx*dx+dy*dy);
+  rootGroup.rotateY += (e.clientX-lastX)*.35;
+  rootGroup.rotateX += (e.clientY-lastY)*.35;
+  lastX=e.clientX; lastY=e.clientY;
+  if(focusedModule){
+    rootGroup.object3D.updateWorldMatrix(true,true);
+    const fwp=new THREE.Vector3();
+    modules[focusedModule].object3D.getWorldPosition(fwp);
+    rootGroup.x-=fwp.x; rootGroup.y-=fwp.y;
+  }
+});
+window.addEventListener('pointerup',()=>{
+  if(!dragging) return;
+  dragging=false; document.body.classList.remove('dragging');
+  if(focusedModule) startFocusRotate(focusedModule);
+  else if(!autoRotate && _scrolled()<20) startAutoRotate();
+});
+let _meshCache=null;
+renderer.domElement.addEventListener('click',(e)=>{
+  if(dragDist>8) return;
+  if(tl.currentTime<3400) return;
+  const rect=renderer.domElement.getBoundingClientRect();
+  mouseNDC.x= ((e.clientX-rect.left)/rect.width)*2-1;
+  mouseNDC.y=-((e.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(mouseNDC,camera);
+  // меши сцены не меняются после построения → собираем список один раз
+  if(!_meshCache){ _meshCache=[]; scene.traverse(o=>{ if(o.isMesh) _meshCache.push(o); }); }
+  const hits=raycaster.intersectObjects(_meshCache,false);
+  const name=hits.length?meshToMod.get(hits[0].object):null;
+  name?focusModule(name):unfocusModule();
+});
+
+/* ── Рендер-цикл ────────────────────────────────────────────────── */
+// Пауза при скрытой панели/вкладке: иначе двухпроходный WebGL-рендер крутится
+// 60fps ВЕЧНО, даже когда «Двигатель» закрыт (EngineView держит сцену в DOM)
+// → фоновый лаг для всего приложения. EngineView шлёт 'engine-visibility'.
+let _panelVisible = true;
+let _tabVisible = !document.hidden;
+const _renderActive = () => _panelVisible && _tabVisible;
+const _renderTimer = createTimer({ frameRate:60, onUpdate:()=>{
+  if(!_renderActive()) return;            // скрыто → пропускаем дорогие проходы
+  renderer.setRenderTarget(renderTarget);
+  renderer.render(scene,camera);
+  renderer.setRenderTarget(null);
+  renderer.render(quadScene,quadCamera);
+  updateLabels();
+}});
+function _applyRenderState(){
+  if(_renderActive()){ if(_renderTimer && _renderTimer.play) _renderTimer.play(); }
+  else { if(_renderTimer && _renderTimer.pause) _renderTimer.pause(); }
+}
+window.addEventListener('engine-visibility',(e)=>{ _panelVisible=!!(e && e.detail); _applyRenderState(); });
+document.addEventListener('visibilitychange',()=>{ _tabVisible=!document.hidden; _applyRenderState(); });
+</script>
+</body>
+</html>

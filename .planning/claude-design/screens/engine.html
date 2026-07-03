@@ -1,0 +1,355 @@
+<!-- @dsCard group="Экраны" name="Двигатель · 3D-режим" -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Двигатель · 3D-режим — CS Monitor AI</title>
+<style>
+:root{
+  --bg:#0d1426;
+  --app-grad:radial-gradient(1100px 620px at 12% -12%,rgba(96,66,168,.34),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(40,86,168,.22),transparent 55%),linear-gradient(150deg,#1a1533 0%,#141b30 52%,#0c1222 100%);
+  --surface:rgba(26,31,56,.78);--surface-2:rgba(38,44,74,.82);--surface-3:rgba(52,58,94,.88);
+  --line:rgba(132,140,200,.16);--line-2:rgba(132,140,200,.30);
+  --text:#E6ECF6;--text-1:#fff;--text-2:#B7C0D6;--text-3:#9BA5BC;
+  --accent:#58A6FF;--accent-2:#7CC0FF;--accent-strong:#2563c4;--on-accent:#fff;--accent-glow:rgba(88,166,255,.16);
+  --crit:#FF5C6C;--warn:#F5B14C;--info:#8C93B0;--ok:#3FB950;--teal:#3FB8AF;
+  --crit-ink:#FF8893;--warn-ink:#F7C06B;--ok-ink:#6EE67D;--info-ink:#C5CBDF;--tl-ok:#22351f;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+  --fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:30px;--fs-2xl:56px;
+  --shadow-md:0 8px 30px rgba(0,0,0,.35);
+  --font-display:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',ui-monospace,'Cascadia Code',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--font-display);font-size:var(--fs-sm);color:var(--text);background:#000;-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono)}
+.sev-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sev-dot.crit{background:var(--crit);box-shadow:0 0 4px var(--crit)}
+.sev-dot.warn{background:var(--warn)}.sev-dot.info{background:var(--info)}.sev-dot.ok{background:var(--ok)}
+.badge-sev{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono)}
+.badge-sev.crit{background:color-mix(in srgb,var(--crit) 20%,transparent);color:var(--crit-ink)}
+.badge-sev.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)}
+.badge-sev.info{background:color-mix(in srgb,var(--info) 20%,transparent);color:var(--info-ink)}
+.badge-sev.ok{background:color-mix(in srgb,var(--ok) 20%,transparent);color:var(--ok-ink)}
+
+/* ── Layer shell ────────────────────────────── */
+.layer{position:relative;height:100vh;min-height:720px;background:#000;overflow:hidden;display:flex;flex-direction:column}
+.layer-top{display:flex;align-items:center;gap:10px;padding:0 12px;height:36px;flex:none;
+  background:var(--surface);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.lt-title{font-weight:600;color:var(--text-1)}
+.lt-sub{font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.spacer{flex:1}
+.exit-btn{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:6px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--text-1);font-size:12px;cursor:pointer}
+.exit-btn:hover{border-color:var(--crit);color:var(--crit-ink)}
+
+.stage{flex:1;display:grid;grid-template-columns:1fr 280px;min-height:0}
+
+/* ── Viewport (SVG cutaway) ─────────────────── */
+.viewport{position:relative;min-width:0;background:
+  radial-gradient(900px 500px at 50% 20%,rgba(88,166,255,.08),transparent 60%),
+  repeating-linear-gradient(90deg,rgba(132,140,200,.05) 0,rgba(132,140,200,.05) 1px,transparent 1px,transparent 48px),
+  repeating-linear-gradient(0deg,rgba(132,140,200,.05) 0,rgba(132,140,200,.05) 1px,transparent 1px,transparent 48px),
+  #04060d;}
+.vp-hud{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.vp-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);font-size:11px;color:var(--text-2)}
+.vp-axis{position:absolute;bottom:10px;left:12px;right:12px;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text-3);letter-spacing:.06em;z-index:2}
+.vp-tools{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:3px;z-index:2}
+.vp-tools button{width:24px;height:24px;border:none;background:transparent;color:var(--text-2);cursor:pointer;border-radius:4px;font-size:12px}
+.vp-tools button:hover{background:var(--surface-3);color:var(--text)}
+
+.rig{width:100%;height:100%;display:block}
+.shell{fill:#171d30;stroke:var(--line-2);stroke-width:1.4}
+.shell-2{fill:#1d2440;stroke:var(--line-2);stroke-width:1}
+.blade{fill:#2a3358;stroke:rgba(132,140,200,.35);stroke-width:.8}
+.blade-hot{fill:#3a2a2a;stroke:rgba(255,140,140,.30);stroke-width:.8}
+.shaft{fill:#0c1020;stroke:var(--line-2);stroke-width:1}
+.flame{fill:url(#flameGrad);opacity:.85}
+.lbl-part{font-family:var(--font-display);font-size:10px;fill:var(--text-3);letter-spacing:.02em}
+.flow-arrow{stroke:var(--accent-2);stroke-width:1.2;fill:none;marker-end:url(#arrow)}
+
+/* Inline parameter tags on the cutaway */
+.ptag{position:absolute;display:flex;flex-direction:column;gap:1px;padding:5px 8px;border-radius:8px;
+  background:var(--surface-2);border:1px solid var(--line);box-shadow:var(--shadow-md);min-width:118px;z-index:3}
+.ptag .p-lab{font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+.ptag .p-val{font-family:var(--font-mono);font-weight:700;font-size:14px;color:var(--text-1);line-height:1.15}
+.ptag .p-val .u{font-size:10px;font-weight:400;color:var(--text-3);margin-left:3px}
+.ptag.ok{border-left:3px solid var(--ok)}
+.ptag.warn{border-left:3px solid var(--warn);box-shadow:0 0 0 1px color-mix(in srgb,var(--warn) 45%,transparent),var(--shadow-md)}
+.ptag.crit{border-left:3px solid var(--crit);box-shadow:0 0 0 1px color-mix(in srgb,var(--crit) 55%,transparent),var(--shadow-md);animation:tagPulse 1.8s infinite}
+@keyframes tagPulse{0%,100%{box-shadow:0 0 0 1px color-mix(in srgb,var(--crit) 55%,transparent),var(--shadow-md)}50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--crit) 35%,transparent),var(--shadow-md)}}
+.ptag .p-conn{position:absolute;width:1px;background:var(--line-2)}
+
+/* leader lines drawn via svg overlay instead where noted */
+
+/* ── Side panel ─────────────────────────────── */
+.panel{border-left:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);
+  display:flex;flex-direction:column;min-height:0;overflow:auto}
+.p-sec{padding:12px;border-bottom:1px solid var(--line)}
+.p-sec-t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.gpa-select{display:flex;gap:6px}
+.gpa-opt{flex:1;text-align:center;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);font-size:12px;font-weight:600;cursor:pointer}
+.gpa-opt.on{border-color:var(--accent);color:var(--text-1);background:var(--accent-glow);box-shadow:inset 0 0 0 1px var(--accent)}
+.gpa-opt .d{display:block;margin:3px auto 0;width:6px;height:6px;border-radius:50%}
+.status-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 10px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line)}
+.status-row b{color:var(--text-1);font-size:13px}
+.status-row .since{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.metric{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-bottom:1px solid var(--line)}
+.metric:last-child{border-bottom:none}
+.metric .lab{color:var(--text-2)}
+.metric .v{font-family:var(--font-mono);color:var(--text-1)}
+.metric .v.warn{color:var(--warn-ink)}
+.metric .v.crit{color:var(--crit-ink)}
+.stage-list{display:flex;flex-direction:column;gap:6px}
+.stage-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-2);padding:5px 8px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line)}
+.stage-item .n{width:16px;height:16px;border-radius:4px;display:grid;place-items:center;font-family:var(--font-mono);font-size:9px;font-weight:700;background:var(--surface-3);color:var(--text-2);flex-shrink:0}
+.stage-item.crit{border-left:3px solid var(--crit)}
+.stage-item .tval{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.legend-mini{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--text-2)}
+.legend-mini span{display:inline-flex;align-items:center;gap:6px}
+</style>
+</head>
+<body>
+<div class="layer">
+
+  <!-- ── TOP BAR ── -->
+  <div class="layer-top">
+    <span class="lt-title">Двигатель · 3D-режим</span>
+    <span class="lt-sub">НК-16-18СТ · продольный разрез тракта</span>
+    <span class="spacer"></span>
+    <span class="badge-sev ok">В работе</span>
+    <button class="exit-btn">↓ Выход</button>
+  </div>
+
+  <div class="stage">
+
+    <!-- ── VIEWPORT: engine cutaway ── -->
+    <div class="viewport">
+      <div class="vp-hud">
+        <span class="vp-chip"><span class="sev-dot ok"></span>ГПА-1 · НК-16-18СТ</span>
+        <span class="vp-chip mono">режим: номинал · 96%</span>
+      </div>
+      <div class="vp-tools">
+        <button title="Вращать">↻</button>
+        <button title="Панорама">✋</button>
+        <button title="Увеличить">+</button>
+        <button title="Уменьшить">−</button>
+        <button title="Сброс вида">⤢</button>
+      </div>
+
+      <svg class="rig" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="flameGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ffb35c"/>
+            <stop offset="55%" stop-color="#ff7a45"/>
+            <stop offset="100%" stop-color="#ff5c6c" stop-opacity=".2"/>
+          </linearGradient>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <!-- centerline shaft -->
+        <rect class="shaft" x="60" y="272" width="880" height="16" rx="3"/>
+
+        <!-- === Воздухозаборник === -->
+        <path class="shell" d="M40,190 L120,210 L120,350 L40,370 C30,320 30,240 40,190 Z"/>
+        <g stroke="rgba(132,140,200,.35)" stroke-width="1">
+          <line x1="55" y1="215" x2="55" y2="345"/>
+          <line x1="70" y1="205" x2="70" y2="355"/>
+          <line x1="85" y1="200" x2="85" y2="360"/>
+          <line x1="100" y1="205" x2="100" y2="355"/>
+        </g>
+        <text class="lbl-part" x="45" y="185">ВОЗДУХОЗАБОРНИК</text>
+        <path class="flow-arrow" d="M2,280 L36,280"/>
+
+        <!-- === Компрессор (ступени) === -->
+        <path class="shell-2" d="M120,210 L120,350 L300,338 L300,222 Z"/>
+        <g>
+          <!-- rotor blade rows -->
+          <g class="blade">
+            <path d="M138,214 L146,340 L154,340 L146,214 Z"/>
+            <path d="M168,216 L176,336 L184,336 L176,216 Z"/>
+            <path d="M198,217 L204,332 L212,332 L206,217 Z"/>
+            <path d="M228,219 L233,328 L241,328 L236,219 Z"/>
+            <path d="M258,220 L262,324 L270,324 L266,220 Z"/>
+            <path d="M286,221 L289,320 L297,320 L294,221 Z"/>
+          </g>
+        </g>
+        <text class="lbl-part" x="150" y="205">КОМПРЕССОР НД</text>
+        <text class="lbl-part" x="230" y="205">КОМПРЕССОР ВД</text>
+        <path class="flow-arrow" d="M116,280 L296,262"/>
+
+        <!-- === Камера сгорания === -->
+        <path class="shell" d="M300,222 L300,338 L400,352 L400,208 Z"/>
+        <ellipse class="flame" cx="350" cy="280" rx="42" ry="46"/>
+        <ellipse cx="350" cy="280" rx="24" ry="28" fill="#fff4d6" opacity=".55"/>
+        <text class="lbl-part" x="308" y="200">КАМЕРА СГОРАНИЯ</text>
+        <path class="flow-arrow" d="M298,280 L402,280"/>
+
+        <!-- === Турбина ВД === -->
+        <path class="shell-2" d="M400,208 L400,352 L470,344 L470,216 Z"/>
+        <g class="blade-hot">
+          <path d="M412,214 L418,344 L424,344 L419,214 Z"/>
+          <path d="M436,215 L441,341 L447,341 L443,215 Z"/>
+          <path d="M458,216 L462,338 L468,338 L465,216 Z"/>
+        </g>
+        <text class="lbl-part" x="404" y="205">ТУРБИНА ВД</text>
+
+        <!-- === Турбина НД === -->
+        <path class="shell-2" d="M470,216 L470,344 L540,336 L540,224 Z"/>
+        <g class="blade-hot">
+          <path d="M482,220 L487,338 L493,338 L489,220 Z"/>
+          <path d="M505,221 L509,335 L515,335 L512,221 Z"/>
+          <path d="M528,222 L531,332 L537,332 L534,222 Z"/>
+        </g>
+        <text class="lbl-part" x="474" y="212">ТУРБИНА НД</text>
+        <path class="flow-arrow" d="M398,280 L538,272"/>
+
+        <!-- === Силовая турбина === -->
+        <path class="shell-2" d="M540,224 L540,336 L660,326 L660,234 Z"/>
+        <g class="blade">
+          <path d="M556,228 L561,330 L567,330 L563,228 Z"/>
+          <path d="M584,229 L588,327 L594,327 L591,229 Z"/>
+          <path d="M612,230 L615,324 L621,324 L619,230 Z"/>
+          <path d="M640,231 L642,321 L648,321 L647,231 Z"/>
+        </g>
+        <text class="lbl-part" x="548" y="220">СИЛОВАЯ ТУРБИНА (СТ)</text>
+        <path class="flow-arrow" d="M538,280 L658,280"/>
+
+        <!-- === Выхлопной диффузор === -->
+        <path class="shell" d="M660,234 L660,326 L740,300 L740,260 Z" opacity=".9"/>
+        <text class="lbl-part" x="662" y="230">ВЫХЛОП</text>
+        <path class="flow-arrow" d="M658,280 L742,280"/>
+        <g stroke="rgba(245,177,76,.35)" stroke-width="1.4" fill="none">
+          <path d="M748,270 q14,10 0,20"/>
+          <path d="M760,265 q18,15 0,30"/>
+          <path d="M772,260 q22,20 0,40"/>
+        </g>
+
+        <!-- === Соединительная муфта === -->
+        <rect class="shaft" x="740" y="266" width="34" height="28" rx="4"/>
+
+        <!-- === Нагнетатель === -->
+        <path class="shell" d="M780,196 L940,214 L940,346 L780,364 Z"/>
+        <circle cx="860" cy="280" r="76" fill="none" stroke="var(--line-2)" stroke-width="1.4" stroke-dasharray="4 4"/>
+        <g class="blade" transform="translate(860,280)">
+          <path d="M0,-58 L6,-2 L-6,-2 Z"/>
+          <path d="M0,-58 L6,-2 L-6,-2 Z" transform="rotate(51)"/>
+          <path d="M0,-58 L6,-2 L-6,-2 Z" transform="rotate(102)"/>
+          <path d="M0,-58 L6,-2 L-6,-2 Z" transform="rotate(153)"/>
+          <path d="M0,-58 L6,-2 L-6,-2 Z" transform="rotate(204)"/>
+          <path d="M0,-58 L6,-2 L-6,-2 Z" transform="rotate(255)"/>
+          <path d="M0,-58 L6,-2 L-6,-2 Z" transform="rotate(306)"/>
+        </g>
+        <circle cx="860" cy="280" r="10" fill="#0c1020" stroke="var(--line-2)"/>
+        <text class="lbl-part" x="800" y="192">ЦЕНТРОБЕЖНЫЙ НАГНЕТАТЕЛЬ</text>
+        <path class="flow-arrow" d="M778,280 L800,280"/>
+        <path class="flow-arrow" d="M940,280 L974,280"/>
+
+        <!-- bearing markers along shaft -->
+        <g>
+          <rect x="112" y="262" width="14" height="36" rx="2" fill="#20263f" stroke="var(--line-2)"/>
+          <rect x="530" y="262" width="14" height="36" rx="2" fill="#20263f" stroke="var(--line-2)"/>
+          <rect x="770" y="262" width="14" height="36" rx="2" fill="#20263f" stroke="var(--line-2)"/>
+        </g>
+
+        <!-- leader lines to tags -->
+        <g stroke="var(--line-2)" stroke-width="1" stroke-dasharray="2 3">
+          <line x1="500" y1="216" x2="500" y2="90"/>
+          <line x1="600" y1="234" x2="600" y2="130"/>
+          <line x1="119" y1="280" x2="119" y2="440"/>
+          <line x1="777" y1="280" x2="777" y2="460"/>
+          <line x1="350" y1="330" x2="350" y2="470"/>
+          <line x1="860" y1="280" x2="860" y2="460"/>
+        </g>
+      </svg>
+
+      <!-- Inline parameter tags (absolute over viewport) -->
+      <div class="ptag ok" style="left:6.5%; top:71%;">
+        <span class="p-lab">Подш. №1 (компр.)</span>
+        <span class="p-val">62<span class="u">°C</span></span>
+      </div>
+
+      <div class="ptag crit" style="left:44%; top:9%;">
+        <span class="p-lab">Темп. газа за ТВД</span>
+        <span class="p-val">648<span class="u">°C</span></span>
+      </div>
+
+      <div class="ptag warn" style="left:55%; top:19%;">
+        <span class="p-lab">Обороты ТНД</span>
+        <span class="p-val">7 940<span class="u">об/мин</span></span>
+      </div>
+
+      <div class="ptag ok" style="left:31%; top:80%;">
+        <span class="p-lab">Давление за КС</span>
+        <span class="p-val">1.62<span class="u">МПа</span></span>
+      </div>
+
+      <div class="ptag ok" style="left:74%; top:78%;">
+        <span class="p-lab">Подш. №3 (СТ/муфта)</span>
+        <span class="p-val">58<span class="u">°C</span></span>
+      </div>
+
+      <div class="ptag ok" style="left:82%; top:78%;">
+        <span class="p-lab">Вибрация нагнетателя</span>
+        <span class="p-val">1.8<span class="u">мм/с</span></span>
+      </div>
+
+      <div class="vp-axis">
+        <span>ВОЗДУХОЗАБОРНИК</span><span>КОМПРЕССОР</span><span>КАМЕРА СГОРАНИЯ</span><span>ТВД / ТНД</span><span>СИЛОВАЯ ТУРБИНА</span><span>НАГНЕТАТЕЛЬ</span>
+      </div>
+    </div>
+
+    <!-- ── SIDE PANEL ── -->
+    <aside class="panel">
+      <div class="p-sec">
+        <div class="p-sec-t">Агрегат</div>
+        <div class="gpa-select">
+          <div class="gpa-opt on">ГПА-1<span class="d" style="background:var(--ok)"></span></div>
+          <div class="gpa-opt">ГПА-2<span class="d" style="background:var(--warn)"></span></div>
+          <div class="gpa-opt">ГПА-3<span class="d" style="background:var(--ok)"></span></div>
+        </div>
+        <div class="status-row">
+          <span class="sev-dot ok"></span>
+          <b>В РАБОТЕ</b>
+          <span class="since mono">14:32 · 6ч 12м</span>
+        </div>
+      </div>
+
+      <div class="p-sec">
+        <div class="p-sec-t">Метрики тракта</div>
+        <div class="metric"><span class="lab">Обороты ТВД</span><span class="v">14 210 об/мин</span></div>
+        <div class="metric"><span class="lab">Обороты ТНД</span><span class="v warn">7 940 об/мин</span></div>
+        <div class="metric"><span class="lab">Темп. газа за ТВД</span><span class="v crit">648 °C</span></div>
+        <div class="metric"><span class="lab">Давление за КС</span><span class="v">1.62 МПа</span></div>
+        <div class="metric"><span class="lab">Расход топливного газа</span><span class="v">0.87 кг/с</span></div>
+        <div class="metric"><span class="lab">Вибрация ОК (общая)</span><span class="v">2.1 мм/с</span></div>
+        <div class="metric"><span class="lab">Вибрация нагнетателя</span><span class="v">1.8 мм/с</span></div>
+      </div>
+
+      <div class="p-sec">
+        <div class="p-sec-t">Подшипники</div>
+        <div class="stage-list">
+          <div class="stage-item"><span class="n">1</span>Опора компрессора<span class="tval">62 °C</span></div>
+          <div class="stage-item"><span class="n">2</span>Опора турбины<span class="tval">71 °C</span></div>
+          <div class="stage-item crit"><span class="n">3</span>Опора СТ / муфта<span class="tval">58 °C</span></div>
+          <div class="stage-item"><span class="n">4</span>Опора нагнетателя<span class="tval">55 °C</span></div>
+        </div>
+      </div>
+
+      <div class="p-sec" style="border-bottom:none">
+        <div class="p-sec-t">Индикация</div>
+        <div class="legend-mini">
+          <span><span class="sev-dot ok"></span>Норма — в допуске коридора</span>
+          <span><span class="sev-dot warn"></span>Внимание — приближение к порогу</span>
+          <span><span class="sev-dot crit"></span>Критично — превышение порога модели</span>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+</body>
+</html>

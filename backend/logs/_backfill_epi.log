@@ -1,0 +1,110 @@
+🏭 Станция: Охангаронская КС (ohangaron)
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+🔁 reprocess_history: 2026-02-02 00:00:00+00:00 → 2026-07-01 08:51:32.044546+00:00, окно 2д, перекрытие 1д
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+ℹ️ MODEL DRIFT (информационно): 7 моделей с ошибкой >2× валидационной (compressor_rotor_axial_shift_t1__GPA3, compressor_rotor_axial_shift_t2__GPA3, gas_temp_out_gpa__GPA3, polytropic_head__GPA3, vibro_disp_rotor_rear_vert__GPA3...)
+💾 health: обновлено 11855 точек
+💾 domain: upsert 1404 строк
+  ✓ 2026-02-02..2026-02-04: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['02-04 09:35']
+ℹ️ MODEL DRIFT (информационно): 5 моделей с ошибкой >2× валидационной (compressor_rotor_axial_shift_t1__GPA3, compressor_rotor_axial_shift_t2__GPA3, gas_temp_out_gpa__GPA3, polytropic_head__GPA3, vibro_disp_rotor_rear_vert__GPA3)
+💾 health: обновлено 26700 точек
+💾 domain: upsert 2415 строк
+  ✓ 2026-02-04..2026-02-06: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+💾 health: обновлено 32736 точек
+💾 domain: upsert 2412 строк
+  ✓ 2026-02-06..2026-02-08: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+💾 health: обновлено 33720 точек
+💾 domain: upsert 2517 строк
+  ✓ 2026-02-08..2026-02-10: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+💾 health: обновлено 34975 точек
+💾 domain: upsert 2574 строк
+  ✓ 2026-02-10..2026-02-12: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+💾 health: обновлено 31296 точек
+💾 domain: upsert 2313 строк
+  ✓ 2026-02-12..2026-02-14: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['02-14 15:35']
+ℹ️ MODEL DRIFT (информационно): 1 моделей с ошибкой >2× валидационной (vibro_disp_rotor_rear_vert__GPA3)
+💾 health: обновлено 34194 точек
+💾 domain: upsert 2436 строк
+  ✓ 2026-02-14..2026-02-16: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+💾 health: обновлено 36734 точек
+💾 domain: upsert 2562 строк
+  ✓ 2026-02-16..2026-02-18: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+💾 health: обновлено 36609 точек
+💾 domain: upsert 2553 строк
+  ✓ 2026-02-18..2026-02-20: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['02-20 19:30']

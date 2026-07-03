@@ -1,0 +1,456 @@
+<!-- @dsCard group="Экраны" name="Схема КС" -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Схема КС — CS Monitor AI</title>
+<style>
+:root{
+  --bg:#0d1426;
+  --app-grad:radial-gradient(1100px 620px at 12% -12%,rgba(96,66,168,.34),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(40,86,168,.22),transparent 55%),linear-gradient(150deg,#1a1533 0%,#141b30 52%,#0c1222 100%);
+  --surface:rgba(26,31,56,.78);--surface-2:rgba(38,44,74,.82);--surface-3:rgba(52,58,94,.88);
+  --line:rgba(132,140,200,.16);--line-2:rgba(132,140,200,.30);
+  --text:#E6ECF6;--text-1:#fff;--text-2:#B7C0D6;--text-3:#9BA5BC;
+  --accent:#58A6FF;--accent-2:#7CC0FF;--accent-strong:#2563c4;--on-accent:#fff;--accent-glow:rgba(88,166,255,.16);
+  --crit:#FF5C6C;--warn:#F5B14C;--info:#8C93B0;--ok:#3FB950;--teal:#3FB8AF;
+  --crit-ink:#FF8893;--warn-ink:#F7C06B;--ok-ink:#6EE67D;--info-ink:#C5CBDF;--tl-ok:#22351f;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+  --fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:30px;--fs-2xl:56px;
+  --shadow-md:0 8px 30px rgba(0,0,0,.35);
+  --font-display:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',ui-monospace,'Cascadia Code',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--font-display);font-size:var(--fs-sm);color:var(--text);background:var(--app-grad) fixed,var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono)}
+.sev-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sev-dot.crit{background:var(--crit);box-shadow:0 0 4px var(--crit)}
+.sev-dot.warn{background:var(--warn)}.sev-dot.info{background:var(--info)}.sev-dot.ok{background:var(--ok)}
+.badge-sev{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono)}
+.badge-sev.crit{background:color-mix(in srgb,var(--crit) 20%,transparent);color:var(--crit-ink)}
+.badge-sev.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)}
+.badge-sev.info{background:color-mix(in srgb,var(--info) 20%,transparent);color:var(--info-ink)}
+.card{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px)}
+
+/* ── App grid ───────────────────────────────── */
+.app{display:grid;grid-template-rows:36px 1fr;height:100vh;min-height:720px}
+.topbar{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:0 12px;height:36px;
+  background:var(--surface);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.content{display:grid;grid-template-columns:1fr 300px;min-height:0}
+
+/* topbar bits (shared) */
+.tb-clock{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);color:var(--text-1)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.tb-stat{display:inline-flex;align-items:center;gap:4px;color:var(--text-2);font-family:var(--font-mono);font-size:12px}
+.spacer{flex:1}
+.tb-btn{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);font-size:12px;cursor:pointer}
+.tb-pill{background:var(--crit);color:#fff;border-radius:9px;padding:0 6px;font-size:11px;font-weight:700;font-family:var(--font-mono)}
+.tb-ico{width:26px;height:24px;display:grid;place-items:center;border-radius:6px;border:1px solid transparent;color:var(--text-2);cursor:pointer;font-size:14px}
+.tb-ico:hover{border-color:var(--line-2);color:var(--text)}
+.tb-ico.active{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
+.sep{width:1px;height:18px;background:var(--line)}
+.fresh{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-2)}
+.fresh .chipm{display:inline-flex;align-items:center;gap:4px;padding:1px 6px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);font-size:10px}
+
+/* ── Schema canvas (center) ─────────────────── */
+.schema-wrap{position:relative;min-width:0;overflow:hidden;background:
+  linear-gradient(rgba(132,140,200,.07) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(132,140,200,.07) 1px,transparent 1px);
+  background-size:28px 28px;background-position:-1px -1px}
+
+.schema-toolbar{position:absolute;top:12px;right:12px;z-index:5;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.zoom-grp{display:flex;flex-direction:column;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.zoom-grp button{width:30px;height:28px;border:none;background:transparent;color:var(--text-2);cursor:pointer;font-size:15px;font-family:var(--font-mono)}
+.zoom-grp button:hover{background:var(--surface-3);color:var(--text)}
+.zoom-grp button+button{border-top:1px solid var(--line)}
+.zoom-reset{width:30px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);cursor:pointer;font-size:12px}
+.zoom-reset:hover{border-color:var(--line-2);color:var(--text)}
+.toggle-anom{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px;border-radius:8px;border:1px solid var(--accent);background:var(--accent-glow);color:var(--accent);font-size:12px;cursor:pointer}
+.sw{width:26px;height:15px;border-radius:8px;background:var(--accent-strong);position:relative;flex-shrink:0}
+.sw i{position:absolute;top:1.5px;right:1.5px;width:12px;height:12px;border-radius:50%;background:#fff}
+
+.crumb{position:absolute;top:12px;left:14px;z-index:5;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-3);font-family:var(--font-mono)}
+.crumb b{color:var(--text-2);font-weight:600}
+
+/* ── P&ID drawing ───────────────────────────── */
+.pid-svg{display:block;width:100%;height:100%}
+.pipe{fill:none;stroke:var(--text-3);stroke-width:3}
+.pipe-in{fill:none;stroke:var(--text-3);stroke-width:3;stroke-dasharray:2 0}
+.flow-arrow{fill:var(--text-3)}
+.equip-outline{fill:var(--surface-2);stroke:var(--line-2);stroke-width:1.4}
+.equip-outline.crit{stroke:var(--crit);stroke-width:1.8}
+.equip-outline.warn{stroke:var(--warn);stroke-width:1.6}
+.equip-label{fill:var(--text-1);font-family:var(--font-display);font-size:13px;font-weight:700}
+.equip-sub{fill:var(--text-3);font-family:var(--font-mono);font-size:9.5px;letter-spacing:.03em}
+.valve{fill:var(--surface-3);stroke:var(--text-3);stroke-width:1.6}
+.aco-fin{stroke:var(--line-2);stroke-width:1}
+.node-title{fill:var(--text-3);font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em}
+
+/* measurement glass tags */
+.mtag{cursor:pointer}
+.mtag rect{rx:5;ry:5;stroke-width:1.3;fill:var(--surface-2);stroke:var(--line-2)}
+.mtag .v{font-family:var(--font-mono);font-weight:700;font-size:11.5px;fill:var(--text-1)}
+.mtag .u{font-family:var(--font-mono);font-size:8px;fill:var(--text-3)}
+.mtag .tag{font-family:var(--font-mono);font-size:7.5px;fill:var(--text-3);letter-spacing:.02em}
+.mtag.ok rect{stroke:color-mix(in srgb,var(--ok) 55%,var(--line-2))}
+.mtag.ok .v{fill:var(--ok-ink)}
+.mtag.info rect{stroke:color-mix(in srgb,var(--info) 55%,var(--line-2))}
+.mtag.warn rect{fill:color-mix(in srgb,var(--warn) 14%,var(--surface-2));stroke:var(--warn)}
+.mtag.warn .v{fill:var(--warn-ink)}
+.mtag.crit rect{fill:color-mix(in srgb,var(--crit) 18%,var(--surface-2));stroke:var(--crit)}
+.mtag.crit .v{fill:var(--crit-ink)}
+.mtag.crit{animation:tagpulse 1.8s ease-in-out infinite}
+@keyframes tagpulse{0%,100%{filter:drop-shadow(0 0 0 rgba(255,92,108,0))}50%{filter:drop-shadow(0 0 6px rgba(255,92,108,.65))}}
+.crit-ring{fill:none;stroke:var(--crit);stroke-width:1.4;opacity:.6;animation:ringpulse 1.8s ease-out infinite}
+@keyframes ringpulse{0%{r:16;opacity:.6}100%{r:30;opacity:0}}
+
+/* ── Legend sidebar ─────────────────────────── */
+.legend-side{border-left:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);display:flex;flex-direction:column;min-height:0;overflow:auto}
+.ls-head{padding:12px;border-bottom:1px solid var(--line);font-weight:600;color:var(--text-1)}
+.ls-sec{padding:12px}
+.ls-sec+.ls-sec{border-top:1px solid var(--line)}
+.sec-t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:0 0 10px}
+.sev-row{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:12px;color:var(--text-2)}
+.sev-row .sq{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.sev-row .sq.crit{background:color-mix(in srgb,var(--crit) 60%,transparent);border:1px solid var(--crit)}
+.sev-row .sq.warn{background:color-mix(in srgb,var(--warn) 55%,transparent);border:1px solid var(--warn)}
+.sev-row .sq.info{background:color-mix(in srgb,var(--info) 45%,transparent);border:1px solid var(--info)}
+.sev-row .sq.ok{background:color-mix(in srgb,var(--ok) 40%,transparent);border:1px solid var(--ok)}
+.sev-row .cnt{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+
+.alarm-item{display:flex;flex-direction:column;gap:3px;padding:9px 10px;border-radius:8px;border:1px solid var(--line);margin-bottom:8px;cursor:pointer}
+.alarm-item:hover{border-color:var(--line-2);background:var(--surface-2)}
+.alarm-item.crit{border-color:color-mix(in srgb,var(--crit) 50%,var(--line));background:color-mix(in srgb,var(--crit) 10%,var(--surface))}
+.alarm-item .row1{display:flex;align-items:center;gap:6px}
+.alarm-item .gpa{font-weight:700;color:var(--text-1);font-size:12px}
+.alarm-item .time{margin-left:auto;font-family:var(--font-mono);font-size:10px;color:var(--text-3)}
+.alarm-item .desc{font-size:11.5px;color:var(--text-2)}
+.alarm-item .val{font-family:var(--font-mono);font-size:11px;color:var(--crit-ink)}
+.alarm-empty{font-size:12px;color:var(--text-3);padding:4px 0}
+
+.legend-note{font-size:11px;color:var(--text-3);line-height:1.5;padding:10px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line)}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:16px;padding:0 4px;border-radius:4px;border:1px solid var(--line-2);background:var(--surface-3);font-family:var(--font-mono);font-size:10px;color:var(--text-2)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── TOP BAR ── -->
+  <div class="topbar">
+    <div class="tb-clock"><span class="pulse"></span><span>14:32</span></div>
+    <span class="sep"></span>
+    <span class="tb-stat" title="Датчиков на станции">⚟ 128</span>
+    <span class="tb-stat" title="Аномалий за период">△ 34</span>
+    <span class="spacer"></span>
+    <button class="tb-btn"><span class="tb-pill">7</span> Журнал (J) ↗</button>
+    <span class="sep"></span>
+    <span class="fresh">🕒 14:30
+      <span class="chipm"><span class="sev-dot ok"></span>ML</span>
+      <span class="chipm"><span class="sev-dot ok"></span>БД</span>
+    </span>
+    <span class="sep"></span>
+    <span class="tb-ico" title="Мониторинг">▦</span>
+    <span class="tb-ico active" title="Схема КС">⌗</span>
+    <span class="tb-ico" title="Двигатель · 3D-режим">⚙</span>
+    <span class="tb-ico" title="Отчёт смены">🗎</span>
+    <span class="tb-ico" title="Дежурный режим (K)">◱</span>
+    <span class="tb-ico" title="Тема: dark (T)">☾</span>
+  </div>
+
+  <div class="content">
+
+    <!-- ── SCHEMA CANVAS ── -->
+    <section class="schema-wrap">
+
+      <div class="crumb">Схема КС · <b>КС «Северная»</b> · технологическая нитка №1</div>
+
+      <div class="schema-toolbar">
+        <div class="zoom-grp">
+          <button title="Увеличить">+</button>
+          <button title="Уменьшить">−</button>
+        </div>
+        <button class="zoom-reset" title="Сбросить масштаб">⤢</button>
+        <button class="toggle-anom" title="Показывать только точки с активными аномалиями">
+          <span class="sw"><i></i></span>Только аномалии
+        </button>
+      </div>
+
+      <svg class="pid-svg" viewBox="0 0 1180 760" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 Z" class="flow-arrow"/>
+          </marker>
+        </defs>
+
+        <!-- ══ Main header pipes: inlet manifold → outlet manifold ══ -->
+        <!-- Inlet manifold (top) -->
+        <path class="pipe" d="M40,90 L1140,90" marker-end="url(#arrow)"/>
+        <text x="46" y="76" class="node-title">Вход газа · КЦ-1 (магистраль)</text>
+
+        <!-- Outlet manifold (bottom) -->
+        <path class="pipe" d="M1140,690 L40,690" marker-end="url(#arrow)"/>
+        <text x="46" y="712" class="node-title">Выход газа · в магистраль</text>
+
+        <!-- ══ GPA-1 branch (x≈150-430) ══ -->
+        <g>
+          <!-- inlet drop + valve -->
+          <path class="pipe" d="M180,90 L180,150" marker-end="url(#arrow)"/>
+          <rect class="valve" x="168" y="150" width="24" height="16" rx="2"/>
+          <path class="pipe" d="M180,166 L180,210" marker-end="url(#arrow)"/>
+
+          <!-- inlet pressure/temp tags -->
+          <g class="mtag ok" transform="translate(96,178)">
+            <rect width="70" height="30"/>
+            <text x="8" y="13" class="v">4.82</text><text x="38" y="13" class="u">МПа</text>
+            <text x="8" y="24" class="tag">P_вх ГПА-1</text>
+          </g>
+
+          <!-- compressor block -->
+          <rect class="equip-outline crit" x="120" y="210" width="120" height="150" rx="10"/>
+          <text x="180" y="252" class="equip-label" text-anchor="middle">ГПА-1</text>
+          <text x="180" y="268" class="equip-sub" text-anchor="middle">компрессор БЦ</text>
+          <!-- rotor glyph -->
+          <circle cx="180" cy="305" r="22" fill="none" stroke="var(--line-2)" stroke-width="1.4"/>
+          <path d="M180,283 a22,22 0 0 1 22,22" fill="none" stroke="var(--crit)" stroke-width="2"/>
+          <circle class="crit-ring" cx="180" cy="305" r="16"/>
+
+          <!-- crit tag: bearing temp -->
+          <g class="mtag crit" transform="translate(246,268)">
+            <rect width="86" height="32"/>
+            <text x="8" y="14" class="v">98.4</text><text x="46" y="14" class="u">°C</text>
+            <text x="8" y="26" class="tag">Tподш. ГПА-1</text>
+          </g>
+          <!-- vibration tag -->
+          <g class="mtag warn" transform="translate(246,306)">
+            <rect width="86" height="30"/>
+            <text x="8" y="13" class="v">7.1</text><text x="38" y="13" class="u">мм/с</text>
+            <text x="8" y="24" class="tag">Вибр. ОС</text>
+          </g>
+
+          <!-- outlet + valve -->
+          <path class="pipe" d="M180,360 L180,404" marker-end="url(#arrow)"/>
+          <rect class="valve" x="168" y="404" width="24" height="16" rx="2"/>
+          <path class="pipe" d="M180,420 L180,452" marker-end="url(#arrow)"/>
+
+          <!-- outlet pressure tag (crit — headline anomaly) -->
+          <g class="mtag crit" transform="translate(96,430)">
+            <rect width="88" height="32"/>
+            <text x="8" y="14" class="v">5.81</text><text x="46" y="14" class="u">МПа</text>
+            <text x="8" y="26" class="tag">P_вых ГПА-1</text>
+          </g>
+
+          <!-- ACO (air cooler) for GPA-1 -->
+          <path class="pipe" d="M180,452 L180,486"/>
+          <rect class="equip-outline" x="110" y="486" width="140" height="60" rx="8"/>
+          <text x="180" y="506" class="equip-label" text-anchor="middle" style="font-size:11px">АВО газа №1</text>
+          <line class="aco-fin" x1="122" y1="518" x2="238" y2="518"/>
+          <line class="aco-fin" x1="122" y1="526" x2="238" y2="526"/>
+          <line class="aco-fin" x1="122" y1="534" x2="238" y2="534"/>
+          <path d="M136,486 v60 M156,486 v60 M180,486 v60 M204,486 v60 M224,486 v60" stroke="var(--line)" stroke-width="1"/>
+
+          <g class="mtag ok" transform="translate(20,500)">
+            <rect width="78" height="30"/>
+            <text x="8" y="13" class="v">41.2</text><text x="42" y="13" class="u">°C</text>
+            <text x="8" y="24" class="tag">Перепад АВО</text>
+          </g>
+
+          <path class="pipe" d="M180,546 L180,600" marker-end="url(#arrow)"/>
+          <path class="pipe" d="M180,600 L180,690" marker-end="url(#arrow)"/>
+        </g>
+
+        <!-- ══ GPA-2 branch (x≈480-760) ══ -->
+        <g>
+          <path class="pipe" d="M540,90 L540,150" marker-end="url(#arrow)"/>
+          <rect class="valve" x="528" y="150" width="24" height="16" rx="2"/>
+          <path class="pipe" d="M540,166 L540,210" marker-end="url(#arrow)"/>
+
+          <g class="mtag ok" transform="translate(456,178)">
+            <rect width="70" height="30"/>
+            <text x="8" y="13" class="v">4.79</text><text x="38" y="13" class="u">МПа</text>
+            <text x="8" y="24" class="tag">P_вх ГПА-2</text>
+          </g>
+
+          <rect class="equip-outline warn" x="480" y="210" width="120" height="150" rx="10"/>
+          <text x="540" y="252" class="equip-label" text-anchor="middle">ГПА-2</text>
+          <text x="540" y="268" class="equip-sub" text-anchor="middle">компрессор БЦ</text>
+          <circle cx="540" cy="305" r="22" fill="none" stroke="var(--line-2)" stroke-width="1.4"/>
+          <path d="M540,283 a22,22 0 0 1 22,22" fill="none" stroke="var(--warn)" stroke-width="2"/>
+
+          <g class="mtag warn" transform="translate(606,268)">
+            <rect width="86" height="32"/>
+            <text x="8" y="14" class="v">86.0</text><text x="46" y="14" class="u">°C</text>
+            <text x="8" y="26" class="tag">Tподш. ГПА-2</text>
+          </g>
+          <g class="mtag ok" transform="translate(606,306)">
+            <rect width="86" height="30"/>
+            <text x="8" y="13" class="v">3.4</text><text x="38" y="13" class="u">мм/с</text>
+            <text x="8" y="24" class="tag">Вибр. ОС</text>
+          </g>
+
+          <path class="pipe" d="M540,360 L540,404" marker-end="url(#arrow)"/>
+          <rect class="valve" x="528" y="404" width="24" height="16" rx="2"/>
+          <path class="pipe" d="M540,420 L540,452" marker-end="url(#arrow)"/>
+
+          <g class="mtag ok" transform="translate(456,430)">
+            <rect width="88" height="32"/>
+            <text x="8" y="14" class="v">5.74</text><text x="46" y="14" class="u">МПа</text>
+            <text x="8" y="26" class="tag">P_вых ГПА-2</text>
+          </g>
+
+          <path class="pipe" d="M540,452 L540,486"/>
+          <rect class="equip-outline" x="470" y="486" width="140" height="60" rx="8"/>
+          <text x="540" y="506" class="equip-label" text-anchor="middle" style="font-size:11px">АВО газа №2</text>
+          <line class="aco-fin" x1="482" y1="518" x2="598" y2="518"/>
+          <line class="aco-fin" x1="482" y1="526" x2="598" y2="526"/>
+          <line class="aco-fin" x1="482" y1="534" x2="598" y2="534"/>
+          <path d="M496,486 v60 M516,486 v60 M540,486 v60 M564,486 v60 M584,486 v60" stroke="var(--line)" stroke-width="1"/>
+
+          <g class="mtag ok" transform="translate(618,500)">
+            <rect width="78" height="30"/>
+            <text x="8" y="13" class="v">39.8</text><text x="42" y="13" class="u">°C</text>
+            <text x="8" y="24" class="tag">Перепад АВО</text>
+          </g>
+
+          <path class="pipe" d="M540,546 L540,600" marker-end="url(#arrow)"/>
+          <path class="pipe" d="M540,600 L540,690" marker-end="url(#arrow)"/>
+        </g>
+
+        <!-- ══ GPA-3 branch (x≈840-1120) ══ -->
+        <g>
+          <path class="pipe" d="M960,90 L960,150" marker-end="url(#arrow)"/>
+          <rect class="valve" x="948" y="150" width="24" height="16" rx="2"/>
+          <path class="pipe" d="M960,166 L960,210" marker-end="url(#arrow)"/>
+
+          <g class="mtag ok" transform="translate(876,178)">
+            <rect width="70" height="30"/>
+            <text x="8" y="13" class="v">4.85</text><text x="38" y="13" class="u">МПа</text>
+            <text x="8" y="24" class="tag">P_вх ГПА-3</text>
+          </g>
+
+          <rect class="equip-outline" x="900" y="210" width="120" height="150" rx="10"/>
+          <text x="960" y="252" class="equip-label" text-anchor="middle">ГПА-3</text>
+          <text x="960" y="268" class="equip-sub" text-anchor="middle">компрессор БЦ</text>
+          <circle cx="960" cy="305" r="22" fill="none" stroke="var(--line-2)" stroke-width="1.4"/>
+          <path d="M960,283 a22,22 0 0 1 22,22" fill="none" stroke="var(--ok)" stroke-width="2"/>
+
+          <g class="mtag ok" transform="translate(1026,268)">
+            <rect width="86" height="32"/>
+            <text x="8" y="14" class="v">71.2</text><text x="46" y="14" class="u">°C</text>
+            <text x="8" y="26" class="tag">Tподш. ГПА-3</text>
+          </g>
+          <g class="mtag ok" transform="translate(1026,306)">
+            <rect width="86" height="30"/>
+            <text x="8" y="13" class="v">2.9</text><text x="38" y="13" class="u">мм/с</text>
+            <text x="8" y="24" class="tag">Вибр. ОС</text>
+          </g>
+
+          <path class="pipe" d="M960,360 L960,404" marker-end="url(#arrow)"/>
+          <rect class="valve" x="948" y="404" width="24" height="16" rx="2"/>
+          <path class="pipe" d="M960,420 L960,452" marker-end="url(#arrow)"/>
+
+          <g class="mtag ok" transform="translate(876,430)">
+            <rect width="88" height="32"/>
+            <text x="8" y="14" class="v">5.79</text><text x="46" y="14" class="u">МПа</text>
+            <text x="8" y="26" class="tag">P_вых ГПА-3</text>
+          </g>
+
+          <path class="pipe" d="M960,452 L960,486"/>
+          <rect class="equip-outline" x="890" y="486" width="140" height="60" rx="8"/>
+          <text x="960" y="506" class="equip-label" text-anchor="middle" style="font-size:11px">АВО газа №3</text>
+          <line class="aco-fin" x1="902" y1="518" x2="1018" y2="518"/>
+          <line class="aco-fin" x1="902" y1="526" x2="1018" y2="526"/>
+          <line class="aco-fin" x1="902" y1="534" x2="1018" y2="534"/>
+          <path d="M916,486 v60 M936,486 v60 M960,486 v60 M984,486 v60 M1004,486 v60" stroke="var(--line)" stroke-width="1"/>
+
+          <g class="mtag info" transform="translate(1038,500)">
+            <rect width="78" height="30"/>
+            <text x="8" y="13" class="v">40.5</text><text x="42" y="13" class="u">°C</text>
+            <text x="8" y="24" class="tag">Перепад АВО</text>
+          </g>
+
+          <path class="pipe" d="M960,546 L960,600" marker-end="url(#arrow)"/>
+          <path class="pipe" d="M960,600 L960,690" marker-end="url(#arrow)"/>
+        </g>
+
+        <!-- ══ Cross-unit header ties ══ -->
+        <path class="pipe" d="M180,90 v0" />
+        <path d="M180,600 L540,600" class="pipe" stroke-dasharray="4 3" opacity=".55"/>
+        <path d="M540,600 L960,600" class="pipe" stroke-dasharray="4 3" opacity=".55"/>
+        <text x="360" y="614" class="node-title" opacity=".8">байпас-перемычка (закрыта)</text>
+
+      </svg>
+    </section>
+
+    <!-- ── LEGEND SIDEBAR ── -->
+    <aside class="legend-side">
+      <div class="ls-head">Легенда · Схема КС</div>
+
+      <div class="ls-sec">
+        <div class="sec-t">Критичность точек</div>
+        <div class="sev-row"><span class="sq crit"></span>Суперважно (CRIT)<span class="cnt">1</span></div>
+        <div class="sev-row"><span class="sq warn"></span>Внимание (WARN)<span class="cnt">3</span></div>
+        <div class="sev-row"><span class="sq info"></span>Наблюдение (INFO)<span class="cnt">1</span></div>
+        <div class="sev-row"><span class="sq ok"></span>Норма (OK)<span class="cnt">9</span></div>
+      </div>
+
+      <div class="ls-sec">
+        <div class="sec-t">Активные аларм-точки</div>
+
+        <div class="alarm-item crit">
+          <div class="row1">
+            <span class="badge-sev crit">Крит</span>
+            <span class="gpa mono">ГПА-1</span>
+            <span class="time">14:05</span>
+          </div>
+          <div class="desc">Tподш. ГПА-1 — отклонение факта от прогноза модели</div>
+          <div class="val">98.4 °C (Δ +12.1)</div>
+        </div>
+
+        <div class="alarm-item">
+          <div class="row1">
+            <span class="badge-sev crit">Крит</span>
+            <span class="gpa mono">ГПА-1</span>
+            <span class="time">14:05</span>
+          </div>
+          <div class="desc">P_вых ГПА-1 — стат. выброс</div>
+          <div class="val">5.81 МПа (Δ0.34)</div>
+        </div>
+
+        <div class="alarm-item">
+          <div class="row1">
+            <span class="badge-sev warn" style="background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)">Предупрежд.</span>
+            <span class="gpa mono">ГПА-1</span>
+            <span class="time">13:52</span>
+          </div>
+          <div class="desc">Вибрация ОС — скачок ΔV</div>
+          <div class="val" style="color:var(--warn-ink)">7.1 мм/с (Δ0.9)</div>
+        </div>
+
+        <div class="alarm-item">
+          <div class="row1">
+            <span class="badge-sev warn" style="background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)">Предупрежд.</span>
+            <span class="gpa mono">ГПА-2</span>
+            <span class="time">13:40</span>
+          </div>
+          <div class="desc">Tподш. ГПА-2 — приближение к порогу</div>
+          <div class="val" style="color:var(--warn-ink)">86.0 °C (Δ4.2)</div>
+        </div>
+      </div>
+
+      <div class="ls-sec">
+        <div class="sec-t">Управление</div>
+        <div class="legend-note">
+          Колесо мыши — масштаб, зажать и тянуть — панорама.<br>
+          Клик по тегу — открыть график датчика в «Мониторинге».<br>
+          <span class="kbd">Схема КС</span> переключается из верхней панели.
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+2026-06-12 10:15:23,240 ERROR live_predict ensure_anomalies_table при старте не выполнен — продолжаем
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 64, in _init_station
+    _loader.ensure_anomalies_table()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 164, in ensure_anomalies_table
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 134, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 118, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: timeout expired
+
+2026-06-12 13:52:03,854 ERROR live_predict MemoryError в цикле #33 — сбрасываю накопленные данные
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 2671, in run_continuous
+    updated_df = run_once(existing_df=current_raw_df)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 2433, in run_once
+    build_dashboard(results, metadata, OUTPUT_HTML, df_wide=df_wide)
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 735, in build_dashboard
+    _all_incidents.append({'s': s, **inc, 'pretty': _sensor_meta.get(s, {}).get('pretty', s)})
+MemoryError
+2026-06-12 13:52:04,062 WARNING live_predict Backoff 60 сек после 1 ошибок подряд
+2026-06-12 14:44:25,447 ERROR live_predict Ошибка цикла #40 (подряд: 1)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 2671, in run_continuous
+    updated_df = run_once(existing_df=current_raw_df)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 2434, in run_once
+    _write_live_state(results, metadata)
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 2631, in _write_live_state
+    os.replace(tmp, out)
+PermissionError: [WinError 5] Отказано в доступе: 'C:\\Users\\Timur\\Desktop\\UTG\\КС\\cs_4\\backend\\state\\ohangaron_live_state.json.tmp' -> 'C:\\Users\\Timur\\Desktop\\UTG\\КС\\cs_4\\backend\\state\\ohangaron_live_state.json'
+2026-06-12 14:44:25,821 WARNING live_predict Backoff 60 сек после 1 ошибок подряд
+2026-06-15 14:54:05,332 INFO live_predict detect-diag: датчиков=70 покрытие(медиана)=0.999 алармы(медиана)=0.0000 горячих(>5%)=15 states_gpa.7:1.00, states_gtd.0:1.00, states_gtd.5:1.00, te223.pv:1.00, te224.pv:1.00
+2026-06-15 14:59:11,147 WARNING data_loader write-batch: чанк 0 упал (ОШИБКА:  выполнение оператора отменено из-за тайм-аута
+CONTEXT:  при изменении кортежа (46987,98) в отношении "raw_data"
+) — повтор 1/3
+2026-06-15 15:04:17,137 WARNING data_loader write-batch: чанк 0 упал (ОШИБКА:  выполнение оператора отменено из-за тайм-аута
+CONTEXT:  при изменении кортежа (46987,98) в отношении "raw_data"
+) — повтор 2/3
+2026-06-15 15:09:27,661 ERROR data_loader write-batch: чанк 0 не записан после 3 попыток (ОШИБКА:  выполнение оператора отменено из-за тайм-аута
+CONTEXT:  при изменении кортежа (46987,98) в отношении "raw_data"
+)
+2026-06-18 17:21:23,806 INFO live_predict detect-diag: датчиков=98 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=4.00 горячих(>5%)=22 gc_uptg.pv:1.00, states_gpa.7:1.00, states_gtd.0:1.00, states_gtd.5:1.00, te223.pv:1.00
+2026-06-19 15:56:16,066 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0005 n_sigma_cal(медиана)=3.34 горячих(>5%)=15 temp_front_bearing_pads:1.00, vibro_st_support:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00
+2026-06-19 16:15:19,176 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0005 n_sigma_cal(медиана)=3.00 горячих(>5%)=14 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-19 17:11:46,745 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0005 n_sigma_cal(медиана)=3.00 горячих(>5%)=14 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-19 17:29:18,309 ERROR live_predict ensure_anomalies_table при старте не выполнен — продолжаем
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 69, in _init_station
+    _loader.ensure_anomalies_table()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 297, in ensure_anomalies_table
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-06-19 17:35:02,136 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0004 n_sigma_cal(медиана)=3.00 горячих(>5%)=14 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 11:37:52,625 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:15:53,744 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:17:19,666 WARNING data_loader write-batch: чанк 0 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-06-22 14:23:04,262 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:29:33,724 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:35:58,628 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:42:23,095 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:48:49,165 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 14:55:33,544 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 15:02:16,367 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=1.000 алармы(медиана)=0.0003 n_sigma_cal(медиана)=3.00 горячих(>5%)=13 temp_front_bearing_pads:1.00, vibro_rotor_front_vert:1.00, vibro_disp_rotor_rear_vert:1.00, compressor_rotor_axial_shift_t1:1.00, compressor_rotor_axial_shift_t2:1.00
+2026-06-22 15:22:13,528 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 15:24:49,742 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 15:30:48,656 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 15:36:59,593 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 15:39:26,580 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 15:45:28,891 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 16:34:36,305 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 16:40:50,875 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 16:46:54,744 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 16:52:47,016 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 16:57:09,363 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 17:03:11,356 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 17:09:54,290 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 17:16:28,430 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 17:22:27,153 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 17:28:27,369 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-22 17:34:23,221 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:19:20,612 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:25:16,530 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:31:03,406 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:36:52,253 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:43:05,693 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:49:00,145 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 10:55:05,451 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:00:56,154 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:06:52,507 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:12:41,409 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:18:28,994 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:24:19,919 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:30:02,993 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:35:59,789 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:41:55,836 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 11:47:58,524 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:07:44,689 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:13:46,632 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:19:38,654 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:25:39,728 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:31:41,846 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:37:58,344 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:44:01,429 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:49:47,819 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 14:55:37,509 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:01:32,338 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:07:21,838 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:13:13,981 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:19:14,193 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:25:08,439 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:31:03,156 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:38:05,682 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:43:59,612 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:49:51,694 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 15:55:47,248 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:19:10,496 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:25:14,044 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:31:08,983 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:37:08,969 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:43:05,615 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:49:08,675 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 16:55:07,623 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:01:01,216 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:06:59,565 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:12:55,603 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:18:53,416 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:25:06,435 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:31:24,175 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:37:17,117 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:43:14,041 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:49:08,866 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-23 17:54:54,691 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.11
+2026-06-25 14:53:43,996 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 14:59:35,309 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:05:24,635 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:11:13,147 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:17:06,289 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:23:09,770 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:29:11,961 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:35:07,465 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:41:06,828 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:46:56,029 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:52:42,328 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 15:58:29,070 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 16:04:20,396 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-25 16:10:20,605 INFO live_predict detect-diag: датчиков=47 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.10
+2026-06-26 14:53:59,430 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.988 алармы(медиана)=0.0189 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 gas_temp_out_gpa:0.14, compressor_rotor_axial_shift_t2:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 15:44:40,743 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 15:54:16,737 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 15:58:00,833 INFO logging_config Получен сигнал 2 — graceful shutdown
+2026-06-26 15:58:05,683 INFO live_predict Остановлен корректно (iteration=2)
+2026-06-29 14:43:01,112 INFO weather ambient кэш обновлён: 4320 часов до 2026-06-29 23:00:00
+2026-06-29 14:43:47,541 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.988 алармы(медиана)=0.0123 n_sigma_cal(медиана)=3.00 горячих(>5%)=8 gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.10, vibro_rotor_front_horiz:0.09, compressor_rotor_axial_shift_t2:0.08
+2026-06-29 17:03:39,941 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0008 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.07, compressor_rotor_axial_shift_t1:0.06, compressor_rotor_axial_shift_t2:0.06
+2026-06-29 17:24:29,952 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0012 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.07, compressor_rotor_axial_shift_t1:0.06, compressor_rotor_axial_shift_t2:0.06
+2026-06-29 17:29:43,501 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0012 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.07, compressor_rotor_axial_shift_t1:0.06, compressor_rotor_axial_shift_t2:0.06
+2026-06-29 17:35:32,455 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0012 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.07, compressor_rotor_axial_shift_t1:0.06, compressor_rotor_axial_shift_t2:0.06
+2026-07-01 09:31:38,413 INFO weather ambient кэш обновлён: 4368 часов до 2026-07-01 23:00:00
+2026-07-01 09:32:35,810 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 09:39:50,848 WARNING data_loader write-batch: чанк 11 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 09:40:09,100 WARNING data_loader write-batch: чанк 11 пропущен (timeout/lock)
+2026-07-01 09:40:38,069 WARNING data_loader write-batch: чанк 14 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 09:41:20,658 WARNING data_loader write-batch: пропущено 2000 строк из-за блокировок/таймаутов (повтор на след. цикле)
+2026-07-01 09:43:12,022 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 09:47:08,882 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 09:59:12,511 WARNING live_predict domain-запись в БД не выполнена: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-01 10:04:14,682 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 10:08:58,052 WARNING data_loader write-batch: чанк 0 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 10:10:56,372 WARNING data_loader write-batch: чанк 7 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 10:18:32,554 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 10:29:14,121 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 10:40:09,812 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 10:51:14,517 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-07-01 11:02:57,469 WARNING data_loader write-batch: чанк 10 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 11:05:33,785 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 oil_temp_in_pod:0.08
+2026-07-01 11:06:10,897 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.06, compressor_rotor_axial_shift_t1:0.06, oil_temp_in_pod:0.06
+2026-07-01 11:07:18,870 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.998 алармы(медиана)=0.0007 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.70, compressor_rotor_axial_shift_t1:0.25, vibro_disp_rotor_rear_horiz:0.19, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15
+2026-07-01 11:08:04,566 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0029 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.21, compressor_rotor_axial_shift_t1:0.18, compressor_rotor_axial_shift_t2:0.17, compressor_rotor_axial_shift_t1:0.13
+2026-07-01 11:08:59,187 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.997 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t1:0.13
+2026-07-01 11:09:57,278 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.14, compressor_rotor_axial_shift_t1:0.13
+2026-07-01 11:10:42,028 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.15
+2026-07-01 11:11:23,119 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t1:0.14, compressor_rotor_axial_shift_t2:0.13
+2026-07-01 11:12:01,799 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.985 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t1:0.09, compressor_rotor_axial_shift_t2:0.09, vibro_front_support:0.05
+2026-07-01 11:12:44,975 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.950 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.01 горячих(>5%)=1 temp_front_bearing_pads:0.08
+2026-07-01 11:13:25,235 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_rear_support:0.06
+2026-07-01 11:19:29,693 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 11:23:31,870 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 11:30:18,383 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:00:44,704 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+2026-07-01 14:01:31,160 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+2026-07-01 14:02:21,270 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+2026-07-01 14:03:36,896 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.09, compressor_rotor_axial_shift_t1:0.08
+2026-07-01 14:04:21,514 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:05:11,368 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12
+2026-07-01 14:05:53,777 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.16, compressor_rotor_axial_shift_t1:0.16
+2026-07-01 14:06:40,291 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t1:0.17, compressor_rotor_axial_shift_t2:0.17
+2026-07-01 14:07:45,027 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.947 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.09, compressor_rotor_axial_shift_t2:0.09, temp_front_bearing_pads:0.08, vibro_front_support:0.05
+2026-07-01 14:08:47,127 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.956 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 temp_front_bearing_pads:0.06
+2026-07-01 14:09:35,196 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.997 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.11, compressor_rotor_axial_shift_t1:0.10, vibro_rear_support:0.08
+2026-07-01 15:05:28,054 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+2026-07-01 15:06:29,600 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+2026-07-01 15:07:20,371 WARNING live_predict domain-запись в БД не выполнена: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-01 15:07:46,183 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+2026-07-01 15:08:47,539 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.09, compressor_rotor_axial_shift_t1:0.08
+2026-07-01 15:09:42,617 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:14:46,022 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+2026-07-01 15:15:32,774 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+2026-07-01 15:16:21,429 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+2026-07-01 15:18:31,249 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+2026-07-01 15:19:08,342 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+2026-07-01 15:20:36,718 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+2026-07-01 15:21:51,818 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.09, compressor_rotor_axial_shift_t1:0.08
+2026-07-01 15:22:40,582 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:23:28,816 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12
+2026-07-01 15:24:37,307 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.16, compressor_rotor_axial_shift_t1:0.16
+2026-07-01 15:25:26,320 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t1:0.17, compressor_rotor_axial_shift_t2:0.17
+2026-07-01 15:26:17,814 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.947 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.09, compressor_rotor_axial_shift_t2:0.09, temp_front_bearing_pads:0.08, vibro_front_support:0.05
+2026-07-01 15:27:09,435 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.956 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 temp_front_bearing_pads:0.06
+2026-07-01 15:27:45,460 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.997 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, vibro_rear_support:0.08
+2026-07-01 15:31:29,792 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+2026-07-01 15:32:28,758 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+2026-07-01 15:33:39,943 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+2026-07-01 15:34:51,438 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.09, compressor_rotor_axial_shift_t1:0.08
+2026-07-01 15:35:49,645 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:36:43,597 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12
+2026-07-01 15:37:51,994 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.16, compressor_rotor_axial_shift_t1:0.16
+2026-07-01 15:39:40,102 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t1:0.17, compressor_rotor_axial_shift_t2:0.17
+2026-07-01 15:40:06,396 WARNING data_loader write-batch: чанк 0 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 15:41:30,881 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.947 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.09, compressor_rotor_axial_shift_t2:0.09, temp_front_bearing_pads:0.08, vibro_front_support:0.05
+2026-07-01 15:42:46,195 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.956 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 temp_front_bearing_pads:0.06
+2026-07-01 15:44:10,597 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.997 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, vibro_rear_support:0.08
+2026-07-01 16:35:07,086 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=0 
+2026-07-01 16:36:12,122 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.10
+2026-07-01 16:37:28,240 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.996 алармы(медиана)=0.0022 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.07, vibro_disp_rotor_rear_horiz:0.07
+2026-07-01 16:38:49,285 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.09, compressor_rotor_axial_shift_t1:0.08
+2026-07-01 16:39:56,799 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:41:05,505 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12
+2026-07-01 16:42:35,698 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.16, compressor_rotor_axial_shift_t1:0.16
+2026-07-01 16:44:05,231 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t1:0.17, compressor_rotor_axial_shift_t2:0.17
+2026-07-01 16:45:18,867 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.947 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t1:0.09, compressor_rotor_axial_shift_t2:0.09, temp_front_bearing_pads:0.08, vibro_front_support:0.05
+2026-07-01 16:46:54,435 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.956 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 temp_front_bearing_pads:0.06
+2026-07-01 16:48:04,803 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, vibro_rear_support:0.08
+2026-07-02 15:34:11,348 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_in_pod:0.06
+2026-07-02 15:36:29,112 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.980 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.15, vibro_disp_rotor_rear_vert:0.13, vibro_disp_rotor_rear_vert:0.08, vibro_rotor_front_vert:0.05
+2026-07-02 15:38:57,769 WARNING data_loader write-batch: чанк 17 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-02 15:40:39,530 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_disp_rotor_rear_vert:0.13
+2026-07-02 15:41:55,554 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.970 алармы(медиана)=0.0035 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.17, oil_temp_in_pod:0.07, oil_temp_out_st:0.06
+2026-07-02 15:43:34,827 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.970 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=6 compressor_rotor_axial_shift_t2:0.19, compressor_rotor_axial_shift_t1:0.16, oil_temp_out_st:0.07, vibro_st_support:0.06, oil_temp_in_pod:0.06
+2026-07-02 15:45:05,126 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.11, compressor_rotor_axial_shift_t1:0.09, vibro_front_support:0.06
+2026-07-02 15:46:40,113 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_front_support:0.05
+2026-07-02 15:48:19,638 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.996 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.09, vibro_disp_rotor_rear_horiz:0.08, compressor_rotor_axial_shift_t1:0.07
+2026-07-02 15:49:50,331 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 compressor_rotor_axial_shift_t2:0.05
+2026-07-02 15:51:14,623 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_disp_rotor_rear_horiz:0.06
+2026-07-02 15:53:10,620 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.997 алармы(медиана)=0.0037 n_sigma_cal(медиана)=3.00 горячих(>5%)=8 compressor_rotor_axial_shift_t2:0.70, vibro_disp_rotor_rear_horiz:0.25, compressor_rotor_axial_shift_t1:0.24, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15
+2026-07-02 15:54:59,913 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0037 n_sigma_cal(медиана)=3.00 горячих(>5%)=6 compressor_rotor_axial_shift_t2:0.21, compressor_rotor_axial_shift_t1:0.18, compressor_rotor_axial_shift_t2:0.17, compressor_rotor_axial_shift_t1:0.13, vibro_disp_rotor_rear_horiz:0.06
+2026-07-02 15:56:07,433 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t1:0.13
+2026-07-02 15:57:03,633 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.14, compressor_rotor_axial_shift_t1:0.13
+2026-07-02 15:57:55,854 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.997 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.16, compressor_rotor_axial_shift_t1:0.15
+2026-07-02 15:58:47,103 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 oil_temp_out_st:0.14, compressor_rotor_axial_shift_t2:0.14, compressor_rotor_axial_shift_t1:0.13
+2026-07-02 16:00:20,610 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.979 алармы(медиана)=0.0023 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 oil_temp_out_st:0.24, oil_temp_in_pod:0.15, temp_front_bearing_pads:0.10, compressor_rotor_axial_shift_t1:0.08, compressor_rotor_axial_shift_t2:0.08
+2026-07-02 16:01:34,515 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.942 алармы(медиана)=0.0041 n_sigma_cal(медиана)=3.34 горячих(>5%)=6 oil_temp_out_st:0.21, oil_temp_in_pod:0.16, temp_front_bearing_pads:0.10, temp_rear_bearing_pads:0.10, oil_temp_out_zod:0.07
+2026-07-02 16:03:54,437 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.993 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 vibro_front_support:0.21, oil_temp_out_st:0.09, compressor_rotor_axial_shift_t2:0.07, compressor_rotor_axial_shift_t1:0.07
+2026-07-02 16:04:40,411 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.997 алармы(медиана)=0.0029 n_sigma_cal(медиана)=3.00 горячих(>5%)=6 compressor_rotor_axial_shift_t1:0.94, compressor_rotor_axial_shift_t2:0.94, oil_temp_out_st:0.33, vibro_front_support:0.17, vibro_front_support:0.12

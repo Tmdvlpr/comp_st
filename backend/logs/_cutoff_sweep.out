@@ -1,0 +1,23 @@
+CV-перебор: 2×7 = 14 конфигов
+
+[resume] from=ALL cut=2026-05-25: metadata уже есть → пропуск обучения
+  → {"ml_corridor": 41, "per_gpa": {"1": 13, "2": 14, "3": 14}, "median_r2": 0.132, "good_r2ge_0.3": 19}
+     cutoff=2026-05-25 → покрытие меряется на index>cutoff (train-период только как контекст фич)
+     ИТОГ conformal: покрытие=0.9444  FP=0.0556  (на 114795 held-out точках, 41 режимов)
+     ИТОГ hybrid   : покрытие=0.9415  FP=0.0585  (на 114795 held-out точках, 41 режимов)
+     Выбор corridor_mode: ближе к цели по покрытию И меньший FP на healthy.
+
+=== TRAIN from=ALL cutoff=2026-06-01 → models/_sweep\cfg_all_2026-06-01 ===
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+  → {"ml_corridor": null, "per_gpa": null, "median_r2": null, "good_r2ge_0.3": null}
+     (нет строк покрытия — см. лог)
+
+=== TRAIN from=ALL cutoff=2026-06-05 → models/_sweep\cfg_all_2026-06-05 ===
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+  → {"ml_corridor": null, "per_gpa": null, "median_r2": null, "good_r2ge_0.3": null}
+     (нет строк покрытия — см. лог)
+
+=== TRAIN from=ALL cutoff=2026-06-08 → models/_sweep\cfg_all_2026-06-08 ===
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+  wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+  temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor

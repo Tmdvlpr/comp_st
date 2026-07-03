@@ -1,0 +1,21 @@
+Всего SENS записей: 56
+
+По листам:
+  gpa         : 35 -- ['PS', 'TS', 'PD', 'TD', 'PG_AIRC', 'T_AIRC', 'ASV_IN', 'PE101', 'FLOW', 'VT101', 'VT102', 'VT103', 'nТВД', 'nТНД', 'TE51', 'TE52', 'TE54', 'nСТ', 'AX201', 'AX202', 'VT201', 'VT202', 'VT203', 'VT204', 'TE221', 'TE222', 'TE223', 'TE224', 'GC_BFS', 'GC_COM1', 'GC_COM2', 'GC_Cover', 'GC_FCV', 'STATES_GPA', 'STATES_GTD']
+  dvig        :  9 -- ['nТВД', 'nТНД', 'nСТ', 'TE54', 'TE51', 'TE52', 'VT101', 'VT102', 'VT103']
+  prf         :  9 -- ['nТВД', 'nТНД', 'nСТ', 'VT101', 'VT102', 'VT103', 'TE54', 'TE51', 'TE52']
+  tg          :  3 -- ['GC_BFTG', 'GC_FG7001', 'GC_UPTG']
+
+По типу:
+  T: 16
+  V: 15
+  R: 9
+  G: 8
+  P: 4
+  S: 2
+  A: 1
+  F: 1
+
+API тегов: 95
+SENS совпало с API (GPA-1): 50 из 56
+Без данных API: ['TE223', 'TE224', 'GC_BFS', 'GC_FCV', 'STATES_GPA', 'STATES_GTD']

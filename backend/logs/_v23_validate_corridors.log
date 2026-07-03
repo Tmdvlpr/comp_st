@@ -1,0 +1,57 @@
+📡 Загрузка истории (оконно) для валидации, cutoff=2026-06-12...
+    окно 1: 2026-03-01..2026-03-21 → 790440 строк
+    окно 2: 2026-03-21..2026-04-10 → 768320 строк
+    окно 3: 2026-04-10..2026-04-30 → 790020 строк
+    окно 4: 2026-04-30..2026-05-20 → 779380 строк
+    окно 5: 2026-05-20..2026-06-09 → 797020 строк
+streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+    окно 6: 2026-06-09..2026-06-29 → 794220 строк
+    окно 7: 2026-06-29..2026-06-30 → 63280 строк
+========================================================================================
+ВАЛИДАЦИЯ КОРИДОРОВ (held-out 60/40 на ТОЛЬКО post-cutoff точках, цель 98%) — models/ohangaron_v23_staging
+cutoff=2026-06-12 → покрытие меряется на index>cutoff (train-период только как контекст фич)
+========================================================================================
+датчик · ГПА | бин                                         n_test  conform   hybrid
+compressor_rotor_axial_shift_t1·ГПА1|all                     1669    0.990    0.995
+compressor_rotor_axial_shift_t2·ГПА1|all                     1669    0.989    0.987
+gas_temp_out_gpa·ГПА1|all                                    1669    0.986    0.959
+oil_temp_in_pod·ГПА1|all                                     1669    0.832    0.861
+oil_temp_out_zod·ГПА1|all                                    1669    0.837    1.000
+polytropic_head·ГПА1|all                                     1669    0.965    0.981
+temp_front_bearing_pads·ГПА1|all                             1669    0.981    0.982
+temp_rear_bearing_pads·ГПА1|all                              1669    0.858    0.860
+vibro_disp_rotor_rear_horiz·ГПА1|all                         1669    1.000    1.000
+vibro_disp_rotor_rear_vert·ГПА1|all                          1669    0.834    0.851
+vibro_front_support·ГПА1|all                                 1669    0.981    0.995
+vibro_rear_support·ГПА1|all                                  1669    0.878    0.906
+vibro_st_support·ГПА1|all                                    1669    0.699    0.791
+compressor_rotor_axial_shift_t1·ГПА2|all                     2110    0.876    0.890
+compressor_rotor_axial_shift_t2·ГПА2|all                     2110    0.918    0.924
+gas_temp_out_gpa·ГПА2|all                                    2110    0.971    0.978
+oil_temp_in_pod·ГПА2|all                                     2110    0.902    0.896
+oil_temp_out_st·ГПА2|all                                     2110    0.899    0.919
+oil_temp_out_zod·ГПА2|all                                    2110    0.898    0.884
+polytropic_head·ГПА2|all                                     2110    0.978    0.960
+temp_front_bearing_pads·ГПА2|all                             2110    0.938    0.940
+temp_rear_bearing_pads·ГПА2|all                              2110    0.897    0.880
+vibro_disp_rotor_rear_horiz·ГПА2|all                         2110    0.985    0.986
+vibro_disp_rotor_rear_vert·ГПА2|all                          2110    0.963    0.962
+vibro_front_support·ГПА2|all                                 2110    0.943    0.905
+vibro_rear_support·ГПА2|all                                  2110    0.970    0.973
+vibro_rotor_front_horiz·ГПА2|all                             2110    0.990    0.991
+vibro_rotor_front_vert·ГПА2|all                              2110    1.000    1.000
+oil_temp_in_pod·ГПА3|all                                      436    0.929    0.915
+polytropic_head·ГПА3|all                                      436    1.000    1.000
+vibro_rear_support·ГПА3|all                                   436    0.998    1.000
+----------------------------------------------------------------------------------------
+  ГПА-1: ml_corridor=13, оценено датчиков=13  | conformal=0.910  hybrid=0.936  (n_test=21697)
+  ГПА-2: ml_corridor=15, оценено датчиков=15  | conformal=0.942  hybrid=0.939  (n_test=31650)
+  ГПА-3: ml_corridor=3, оценено датчиков=3  | conformal=0.976  hybrid=0.972  (n_test=1308)
+----------------------------------------------------------------------------------------
+  ИТОГ conformal: покрытие=0.9301  FP=0.0699  (на 54655 held-out точках, 31 режимов)
+  ИТОГ hybrid   : покрытие=0.9388  FP=0.0612  (на 54655 held-out точках, 31 режимов)
+========================================================================================
+Выбор corridor_mode: ближе к цели по покрытию И меньший FP на healthy.

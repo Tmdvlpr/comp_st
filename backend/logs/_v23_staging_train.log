@@ -1,0 +1,57 @@
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+    окно 1: 2026-02-02..2026-02-22 → 740711 строк
+    окно 2: 2026-02-22..2026-03-14 → 789040 строк
+    окно 3: 2026-03-14..2026-04-03 → 766220 строк
+    окно 4: 2026-04-03..2026-04-23 → 791420 строк
+    окно 5: 2026-04-23..2026-05-13 → 782040 строк
+    окно 6: 2026-05-13..2026-06-02 → 792120 строк
+    окно 7: 2026-06-02..2026-06-22 → 797580 строк
+    окно 8: 2026-06-22..2026-06-30 → 313740 строк
+  temp_front_bearing_pads__GPA1: ml_corridor n_trees=55 R²_eval=-14.0953
+  temp_rear_bearing_pads__GPA1: ml_corridor n_trees=73 R²_eval=-0.6806
+  vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3393
+  vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0849
+  vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.132
+  vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.3697
+  vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.402
+  vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.066
+  vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3893
+  polytropic_head__GPA1: ml_corridor n_trees=72 R²_eval=-2.1101
+  compressor_rotor_axial_shift_t1__GPA1: ml_corridor n_trees=88 R²_eval=-0.5431
+  compressor_rotor_axial_shift_t2__GPA1: ml_corridor n_trees=77 R²_eval=-0.6547
+  gas_temp_out_gpa__GPA1: ml_corridor n_trees=44 R²_eval=0.0732
+  oil_temp_out_zod__GPA1: ml_corridor n_trees=67 R²_eval=-4.0627
+  oil_temp_out_st__GPA1: univariate_only n_trees=22 R²_eval=-4.1614
+  oil_temp_in_pod__GPA1: ml_corridor n_trees=59 R²_eval=-1.3982
+  temp_front_bearing_pads__GPA2: ml_corridor n_trees=109 R²_eval=0.2367
+  temp_rear_bearing_pads__GPA2: ml_corridor n_trees=121 R²_eval=0.466
+  vibro_front_support__GPA2: ml_corridor n_trees=68 R²_eval=0.324
+  vibro_rear_support__GPA2: ml_corridor n_trees=40 R²_eval=-0.2951
+  vibro_st_support__GPA2: univariate_only n_trees=4 R²_eval=-0.789
+  vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=36 R²_eval=0.0144
+  vibro_rotor_front_vert__GPA2: ml_corridor n_trees=67 R²_eval=-0.3826
+  vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=43 R²_eval=0.6426
+  vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=46 R²_eval=-0.2285
+  polytropic_head__GPA2: ml_corridor n_trees=137 R²_eval=0.6018
+  compressor_rotor_axial_shift_t1__GPA2: ml_corridor n_trees=86 R²_eval=-0.0914
+  compressor_rotor_axial_shift_t2__GPA2: ml_corridor n_trees=104 R²_eval=-0.2238
+  gas_temp_out_gpa__GPA2: ml_corridor n_trees=320 R²_eval=0.9114
+  oil_temp_out_zod__GPA2: ml_corridor n_trees=103 R²_eval=-0.2019
+  oil_temp_out_st__GPA2: ml_corridor n_trees=64 R²_eval=-1.1508
+  oil_temp_in_pod__GPA2: ml_corridor n_trees=79 R²_eval=0.2173
+  temp_front_bearing_pads__GPA3: univariate_only n_trees=42 R²_eval=0.5716
+  temp_rear_bearing_pads__GPA3: univariate_only n_trees=61 R²_eval=0.5329
+  vibro_front_support__GPA3: univariate_only n_trees=13 R²_eval=-1.5216
+  vibro_rear_support__GPA3: ml_corridor n_trees=71 R²_eval=-0.0666
+  vibro_st_support__GPA3: univariate_only n_trees=60 R²_eval=0.0508
+  vibro_rotor_front_horiz__GPA3: univariate_only n_trees=105 R²_eval=-0.0449
+  vibro_rotor_front_vert__GPA3: univariate_only n_trees=52 R²_eval=0.2607
+  vibro_disp_rotor_rear_horiz__GPA3: univariate_only n_trees=51 R²_eval=0.2017
+  vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=23 R²_eval=-0.3411
+  polytropic_head__GPA3: ml_corridor n_trees=108 R²_eval=0.31
+  compressor_rotor_axial_shift_t1__GPA3: univariate_only n_trees=150 R²_eval=0.5951
+  compressor_rotor_axial_shift_t2__GPA3: univariate_only n_trees=120 R²_eval=0.5904
+  gas_temp_out_gpa__GPA3: univariate_only n_trees=88 R²_eval=-2.6986
+  oil_temp_out_zod__GPA3: univariate_only n_trees=116 R²_eval=0.6668
+  oil_temp_out_st__GPA3: univariate_only n_trees=105 R²_eval=0.6302
+  oil_temp_in_pod__GPA3: ml_corridor n_trees=102 R²_eval=0.6194

@@ -1,0 +1,9 @@
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+  wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+  vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3303
+  vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0836
+  vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1319
+  vibro_rotor_front_horiz__GPA1: ml_corridor n_trees=27 R²_eval=-10.4514
+  vibro_rotor_front_vert__GPA1: ml_corridor n_trees=67 R²_eval=-12.4572
+  vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0783
+  vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874

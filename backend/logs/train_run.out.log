@@ -1,0 +1,158 @@
+🏭 Станция: Охангаронская КС (ohangaron)
+📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+🔑 Строим маппинг тегов из БД...
+   Найдено 138 тегов
+📡 Загрузка данных из БД (from=нет, cutoff=2026-06-12)...
+📅 Последняя метка: 2026-06-11 23:55:00+05:00
+🖥️  Параллелизм: 6 задач × 2 потоков/модель (всего 12 ядер)
+
+⚙️  ГПА-1: 46 моделей параллельно...
+  ✗ asv_in.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+  ✗ ax201.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+  ✓ ax202.pv                                      R²(val)=-0.487  MAE=0.3124  nMAE=0.290  trim=2433  iter=13
+  ✗ gc_bfs.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+  ✗ gc_bftg.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+  ✗ gc_com1.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+  ✓ gc_com2.pv                                    R²(val)=0.338  MAE=0.007797  nMAE=0.132  trim=1  iter=151
+  ✓ gc_cover.pv                                   R²(val)=0.833  MAE=0.0006714  nMAE=0.061  trim=7  iter=174
+  ✗ gc_fcv.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ gc_fg7001.pv                                  R²(val)=-1.242  MAE=0.9342  nMAE=0.445  trim=4381  iter=10
+  ✓ gc_uptg.pv                                    R²(val)=0.008  MAE=0.005513  nMAE=0.165  trim=16  iter=82
+  ✓ pd.pv                                         R²(val)=-0.781  MAE=0.83  nMAE=0.235  trim=0  iter=15
+  ✓ pe101.pv                                      R²(val)=-331660.746  MAE=0.2036  nMAE=0.084  trim=14117  iter=56
+  ✓ pg_airc.pv                                    R²(val)=-0.635  MAE=0.7785  nMAE=0.223  trim=0  iter=18
+  ✓ program:flowcalc.tot_unit.in                  R²(val)=0.000  MAE=0.05963  nMAE=0.042  trim=14856  iter=57
+  ✓ ps.pv                                         R²(val)=-0.104  MAE=0.5724  nMAE=0.252  trim=0  iter=9
+  ✗ states_gpa.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.1: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.2: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.3: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.4: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.6: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.7: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gtd.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gtd.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ td.pv                                         R²(val)=0.155  MAE=2.956  nMAE=0.039  trim=2  iter=51
+  ✓ te221.pv                                      R²(val)=-1.613  MAE=12.71  nMAE=0.201  trim=0  iter=24
+  ✓ te222.pv                                      R²(val)=0.068  MAE=22.97  nMAE=0.333  trim=248  iter=800
+  ✗ te223.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ te224.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ te51.pv                                       R²(val)=-4.773  MAE=4.996  nMAE=0.061  trim=27  iter=52
+  ✓ te52.pv                                       R²(val)=-1.505  MAE=3.625  nMAE=0.052  trim=30  iter=54
+  ✓ te54.pv                                       R²(val)=0.889  MAE=0.8101  nMAE=0.019  trim=106  iter=66
+  ✓ ts.pv                                         R²(val)=0.959  MAE=0.4558  nMAE=0.017  trim=490  iter=111
+  ✓ t_airc_out.pv                                 R²(val)=0.949  MAE=1.01  nMAE=0.021  trim=153  iter=82
+  ✓ vt101.pv                                      R²(val)=-61.381  MAE=0.2245  nMAE=0.026  trim=3308  iter=69
+  ✓ vt102.pv                                      R²(val)=-368.135  MAE=0.4959  nMAE=0.039  trim=5813  iter=60
+  ✓ vt103.pv                                      R²(val)=-6628.615  MAE=0.9185  nMAE=0.067  trim=13092  iter=43
+  ✓ vt201.pv                                      R²(val)=0.137  MAE=8.346  nMAE=0.091  trim=17425  iter=27
+  ✓ vt202.pv                                      R²(val)=0.179  MAE=6.544  nMAE=0.256  trim=17137  iter=22
+  ✓ vt203.pv                                      R²(val)=0.273  MAE=7.922  nMAE=0.142  trim=3705  iter=36
+  ✓ vt204.pv                                      R²(val)=0.315  MAE=5.294  nMAE=0.126  trim=6204  iter=49
+  ✓ gt01.ctrl.in[1].value                         R²(val)=-10393.978  MAE=740.7  nMAE=0.111  trim=15404  iter=52
+  ✓ gt01.ctrl.in[2].value                         R²(val)=0.000  MAE=343.9  nMAE=0.069  trim=15392  iter=56
+  ✓ gt01.ctrl.in[5].value                         R²(val)=-33352.578  MAE=577.7  nMAE=0.110  trim=15435  iter=51
+  ✅ ГПА-1: 28 моделей (1090s)
+
+⚙️  ГПА-2: 46 моделей параллельно...
+  ✓ asv_in.pv                                     R²(val)=0.977  MAE=0.5088  nMAE=0.007  trim=1490  iter=105
+  ✓ ax201.pv                                      R²(val)=0.913  MAE=0.006302  nMAE=0.006  trim=494  iter=103
+  ✓ ax202.pv                                      R²(val)=0.964  MAE=0.004036  nMAE=0.004  trim=312  iter=123
+  ✗ gc_bfs.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ gc_bftg.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ gc_com1.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ gc_com2.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ gc_cover.pv                                   R²(val)=0.729  MAE=0.0008668  nMAE=0.079  trim=2  iter=236
+  ✗ gc_fcv.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ gc_fg7001.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ gc_uptg.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ pd.pv                                         R²(val)=0.956  MAE=0.02691  nMAE=0.008  trim=221  iter=143
+  ✓ pe101.pv                                      R²(val)=0.130  MAE=0.006304  nMAE=0.003  trim=798  iter=251
+  ✓ pg_airc.pv                                    R²(val)=0.984  MAE=0.01548  nMAE=0.004  trim=142  iter=163
+  ✓ program:flowcalc.tot_unit.in                  R²(val)=0.940  MAE=0.01748  nMAE=0.013  trim=328  iter=136
+  ✓ ps.pv                                         R²(val)=0.993  MAE=0.01109  nMAE=0.005  trim=166  iter=163
+  ✗ states_gpa.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.1: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.2: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.3: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.4: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.6: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ states_gpa.7                                  R²(val)=0.000  MAE=0.003239  nMAE=0.003  trim=992  iter=93
+  ✓ states_gtd.0                                  R²(val)=0.000  MAE=0.001366  nMAE=0.001  trim=1602  iter=108
+  ✓ states_gtd.5                                  R²(val)=0.000  MAE=0.001135  nMAE=0.001  trim=1082  iter=129
+  ✓ td.pv                                         R²(val)=0.809  MAE=2.382  nMAE=0.035  trim=161  iter=72
+  ✓ te221.pv                                      R²(val)=0.851  MAE=0.721  nMAE=0.012  trim=270  iter=126
+  ✓ te222.pv                                      R²(val)=0.872  MAE=0.7599  nMAE=0.013  trim=250  iter=147
+  ✓ te223.pv                                      R²(val)=0.000  MAE=0.08664  nMAE=0.008  trim=1686  iter=101
+  ✓ te224.pv                                      R²(val)=0.000  MAE=0.1324  nMAE=0.040  trim=803  iter=178
+  ✓ te51.pv                                       R²(val)=0.929  MAE=0.9941  nMAE=0.012  trim=179  iter=173
+  ✓ te52.pv                                       R²(val)=0.962  MAE=0.6537  nMAE=0.010  trim=157  iter=189
+  ✓ te54.pv                                       R²(val)=0.954  MAE=0.6061  nMAE=0.014  trim=67  iter=185
+  ✓ ts.pv                                         R²(val)=0.990  MAE=0.1546  nMAE=0.007  trim=903  iter=291
+  ✓ t_airc_out.pv                                 R²(val)=0.222  MAE=1.462  nMAE=0.034  trim=135  iter=52
+  ✓ vt101.pv                                      R²(val)=0.811  MAE=0.1566  nMAE=0.025  trim=749  iter=325
+  ✓ vt102.pv                                      R²(val)=0.616  MAE=0.9902  nMAE=0.057  trim=1992  iter=67
+  ✓ vt103.pv                                      R²(val)=0.944  MAE=0.4309  nMAE=0.025  trim=635  iter=338
+  ✓ vt201.pv                                      R²(val)=0.837  MAE=0.7867  nMAE=0.010  trim=1610  iter=49
+  ✓ vt202.pv                                      R²(val)=0.746  MAE=1.013  nMAE=0.017  trim=182  iter=74
+  ✓ vt203.pv                                      R²(val)=0.682  MAE=0.5418  nMAE=0.009  trim=1237  iter=35
+  ✓ vt204.pv                                      R²(val)=0.866  MAE=0.4156  nMAE=0.006  trim=1045  iter=40
+  ✓ gt01.ctrl.in[1].value                         R²(val)=0.885  MAE=18.86  nMAE=0.003  trim=222  iter=473
+  ✓ gt01.ctrl.in[2].value                         R²(val)=0.975  MAE=33.2  nMAE=0.007  trim=569  iter=135
+  ✓ gt01.ctrl.in[5].value                         R²(val)=0.866  MAE=27.88  nMAE=0.005  trim=231  iter=183
+  ✅ ГПА-2: 32 моделей (1328s)
+
+⚙️  ГПА-3: 46 моделей параллельно...
+  ✓ asv_in.pv                                     R²(val)=-4.192  MAE=0.5267  nMAE=0.005  trim=192  iter=99
+  ✓ ax201.pv                                      R²(val)=0.946  MAE=0.004107  nMAE=0.013  trim=69  iter=92
+  ✓ ax202.pv                                      R²(val)=0.876  MAE=0.007158  nMAE=0.022  trim=131  iter=70
+  ✓ gc_bfs.pv                                     R²(val)=0.000  MAE=0.001511  nMAE=0.001  trim=736  iter=149
+  ✓ gc_bftg.pv                                    R²(val)=0.000  MAE=0.0003683  nMAE=0.007  trim=3672  iter=231
+  ✓ gc_com1.pv                                    R²(val)=0.000  MAE=0.0004617  nMAE=0.001  trim=7556  iter=201
+  ✓ gc_com2.pv                                    R²(val)=0.000  MAE=0.001537  nMAE=0.001  trim=535  iter=187
+  ✓ gc_cover.pv                                   R²(val)=0.502  MAE=0.001054  nMAE=0.061  trim=1  iter=644
+  ✓ gc_fcv.pv                                     R²(val)=0.000  MAE=0.001563  nMAE=0.002  trim=1365  iter=136
+  ✗ gc_fg7001.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ gc_uptg.pv                                    R²(val)=0.000  MAE=0.000157  nMAE=0.004  trim=7020  iter=207
+  ✓ pd.pv                                         R²(val)=0.915  MAE=0.04019  nMAE=0.016  trim=52  iter=97
+  ✓ pe101.pv                                      R²(val)=-2.279  MAE=0.011  nMAE=0.004  trim=1143  iter=187
+  ✓ pg_airc.pv                                    R²(val)=0.888  MAE=0.04536  nMAE=0.018  trim=48  iter=88
+  ✓ program:flowcalc.tot_unit.in                  R²(val)=0.988  MAE=0.007615  nMAE=0.006  trim=351  iter=243
+  ✓ ps.pv                                         R²(val)=0.996  MAE=0.009003  nMAE=0.007  trim=144  iter=363
+  ✗ states_gpa.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.1: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.2: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.3: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.4: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✗ states_gpa.6: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+  ✓ states_gpa.7                                  R²(val)=0.000  MAE=0.004621  nMAE=0.005  trim=883  iter=95
+  ✓ states_gtd.0                                  R²(val)=0.000  MAE=0.001638  nMAE=0.002  trim=1460  iter=145
+  ✓ states_gtd.5                                  R²(val)=0.000  MAE=0.002185  nMAE=0.002  trim=996  iter=212
+  ✓ td.pv                                         R²(val)=0.885  MAE=2.205  nMAE=0.029  trim=126  iter=88
+  ✓ te221.pv                                      R²(val)=0.914  MAE=0.7522  nMAE=0.012  trim=109  iter=77
+  ✓ te222.pv                                      R²(val)=0.976  MAE=0.4467  nMAE=0.007  trim=144  iter=299
+  ✓ te223.pv                                      R²(val)=0.000  MAE=6.085  nMAE=0.082  trim=0  iter=34
+  ✓ te224.pv                                      R²(val)=0.961  MAE=0.6424  nMAE=0.013  trim=195  iter=96
+  ✓ te51.pv                                       R²(val)=0.961  MAE=0.591  nMAE=0.007  trim=72  iter=186
+  ✓ te52.pv                                       R²(val)=0.965  MAE=0.6125  nMAE=0.009  trim=95  iter=265
+  ✓ te54.pv                                       R²(val)=0.868  MAE=0.7763  nMAE=0.017  trim=139  iter=233
+  ✓ ts.pv                                         R²(val)=0.933  MAE=0.1435  nMAE=0.005  trim=400  iter=218
+  ✓ t_airc_out.pv                                 R²(val)=0.355  MAE=0.5471  nMAE=0.010  trim=259  iter=104
+  ✓ vt101.pv                                      R²(val)=0.879  MAE=0.06512  nMAE=0.016  trim=1434  iter=587
+  ✓ vt102.pv                                      R²(val)=0.743  MAE=0.158  nMAE=0.028  trim=1075  iter=527
+  ✓ vt103.pv                                      R²(val)=0.133  MAE=0.2777  nMAE=0.086  trim=472  iter=103
+  ✓ vt201.pv                                      R²(val)=0.988  MAE=0.2203  nMAE=0.011  trim=541  iter=384
+  ✓ vt202.pv                                      R²(val)=0.921  MAE=0.2546  nMAE=0.016  trim=126  iter=82
+  ✓ vt203.pv                                      R²(val)=0.782  MAE=0.2443  nMAE=0.012  trim=256  iter=100
+  ✓ vt204.pv                                      R²(val)=0.719  MAE=0.08943  nMAE=0.006  trim=564  iter=145
+  ✓ gt01.ctrl.in[1].value                         R²(val)=0.948  MAE=17.4  nMAE=0.003  trim=274  iter=147
+  ✓ gt01.ctrl.in[2].value                         R²(val)=0.978  MAE=36.54  nMAE=0.007  trim=323  iter=103
+  ✓ gt01.ctrl.in[5].value                         R²(val)=0.963  MAE=15.65  nMAE=0.003  trim=388  iter=125
+  ✅ ГПА-3: 38 моделей (1685s)
+
+🎉 Готово! 98 моделей сохранено, 40 ошибок.
+   Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron\metadata.json
+   Общее время: 1685 сек

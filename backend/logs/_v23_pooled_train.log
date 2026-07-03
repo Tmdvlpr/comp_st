@@ -1,0 +1,32 @@
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+  wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+  temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+  temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+  vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3368
+  vibro_front_support__GPA2: ml_corridor n_trees=68 R²_eval=0.3215
+  vibro_front_support__GPA3: univariate_only n_trees=13 R²_eval=-1.5216
+  vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0762
+  vibro_rear_support__GPA2: ml_corridor n_trees=40 R²_eval=-0.2952
+  vibro_rear_support__GPA3: ml_corridor n_trees=71 R²_eval=-0.0666
+  vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1315
+  vibro_st_support__GPA2: univariate_only n_trees=4 R²_eval=-0.7855
+  vibro_st_support__GPA3: univariate_only n_trees=60 R²_eval=0.0508
+  vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.4408
+  vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=36 R²_eval=0.0099
+  vibro_rotor_front_horiz__GPA3: univariate_only n_trees=105 R²_eval=-0.0449
+  vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.4821
+  vibro_rotor_front_vert__GPA2: ml_corridor n_trees=67 R²_eval=-0.3996
+  vibro_rotor_front_vert__GPA3: univariate_only n_trees=52 R²_eval=0.2607
+  vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0929
+  vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=43 R²_eval=0.6422
+  vibro_disp_rotor_rear_horiz__GPA3: univariate_only n_trees=51 R²_eval=0.2017
+  vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+  vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=46 R²_eval=-0.2293
+  vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=23 R²_eval=-0.3411
+  polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+  compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor

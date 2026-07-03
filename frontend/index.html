@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Monitor AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Только Inter: JetBrains Mono и Barlow Condensed нигде не используются
+         (globals.css задаёт --font-display и --font-mono = Inter). Убраны 7 из 12
+         начертаний → меньше блокирующей загрузки и FOUT-перерисовки на холодном старте. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- importmap для инъекции engine.html (Двигатель): three/animejs с CDN.
+         Должен быть в документе ДО загрузки модулей; динамически вставленный
+         importmap браузер игнорирует, поэтому держим его здесь. App-код использует
+         свои (Vite-bundled) импорты и этой карты не касается. -->
+    <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "animejs": "https://cdn.jsdelivr.net/npm/animejs@4/+esm"
+    } }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

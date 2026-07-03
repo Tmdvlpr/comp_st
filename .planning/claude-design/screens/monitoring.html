@@ -1,0 +1,361 @@
+<!-- @dsCard group="Экраны" name="Мониторинг" -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мониторинг — CS Monitor AI</title>
+<style>
+:root{
+  --bg:#0d1426;
+  --app-grad:radial-gradient(1100px 620px at 12% -12%,rgba(96,66,168,.34),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(40,86,168,.22),transparent 55%),linear-gradient(150deg,#1a1533 0%,#141b30 52%,#0c1222 100%);
+  --surface:rgba(26,31,56,.78);--surface-2:rgba(38,44,74,.82);--surface-3:rgba(52,58,94,.88);
+  --line:rgba(132,140,200,.16);--line-2:rgba(132,140,200,.30);
+  --text:#E6ECF6;--text-1:#fff;--text-2:#B7C0D6;--text-3:#9BA5BC;
+  --accent:#58A6FF;--accent-2:#7CC0FF;--accent-strong:#2563c4;--on-accent:#fff;--accent-glow:rgba(88,166,255,.16);
+  --crit:#FF5C6C;--warn:#F5B14C;--info:#8C93B0;--ok:#3FB950;--teal:#3FB8AF;
+  --crit-ink:#FF8893;--warn-ink:#F7C06B;--ok-ink:#6EE67D;--info-ink:#C5CBDF;--tl-ok:#22351f;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+  --fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:30px;--fs-2xl:56px;
+  --shadow-md:0 8px 30px rgba(0,0,0,.35);
+  --font-display:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',ui-monospace,'Cascadia Code',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--font-display);font-size:var(--fs-sm);color:var(--text);background:var(--app-grad) fixed,var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono)}
+.sev-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sev-dot.crit{background:var(--crit);box-shadow:0 0 4px var(--crit)}
+.sev-dot.warn{background:var(--warn)}.sev-dot.info{background:var(--info)}.sev-dot.ok{background:var(--ok)}
+.badge-sev{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono)}
+.badge-sev.crit{background:color-mix(in srgb,var(--crit) 20%,transparent);color:var(--crit-ink)}
+.badge-sev.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)}
+.badge-sev.info{background:color-mix(in srgb,var(--info) 20%,transparent);color:var(--info-ink)}
+
+/* ── App grid ───────────────────────────────── */
+.app{display:grid;grid-template-rows:36px 1fr;height:100vh;min-height:720px}
+.topbar{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:0 12px;height:36px;
+  background:var(--surface);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.content{display:grid;grid-template-columns:272px 1fr 300px;min-height:0}
+
+/* topbar bits */
+.tb-clock{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);color:var(--text-1)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.tb-stat{display:inline-flex;align-items:center;gap:4px;color:var(--text-2);font-family:var(--font-mono);font-size:12px}
+.spacer{flex:1}
+.tb-btn{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);font-size:12px;cursor:pointer}
+.tb-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+.tb-pill{background:var(--crit);color:#fff;border-radius:9px;padding:0 6px;font-size:11px;font-weight:700;font-family:var(--font-mono)}
+.tb-ico{width:26px;height:24px;display:grid;place-items:center;border-radius:6px;border:1px solid transparent;color:var(--text-2);cursor:pointer;font-size:14px}
+.tb-ico:hover{border-color:var(--line-2);color:var(--text)}
+.tb-ico.active{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
+.sep{width:1px;height:18px;background:var(--line)}
+.fresh{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-2)}
+.fresh .chipm{display:inline-flex;align-items:center;gap:4px;padding:1px 6px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);font-size:10px}
+
+/* ── Sidebar ────────────────────────────────── */
+.sidebar{border-right:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);display:flex;flex-direction:column;min-height:0}
+.side-search{padding:10px}
+.side-search input{width:100%;padding:7px 10px 7px 28px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:12px;background-image:radial-gradient(circle at 12px 50%,transparent 5px,transparent 5px)}
+.search-wrap{position:relative}
+.search-wrap svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);opacity:.5}
+.tree{overflow:auto;padding:0 6px 12px;font-size:13px}
+.gpa-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer;color:var(--text-1);font-weight:600}
+.gpa-row:hover{background:var(--surface-2)}
+.gpa-row .cnt{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.chev{width:12px;color:var(--text-3);transition:transform .15s}
+.sub-row{display:flex;align-items:center;gap:8px;padding:5px 8px 5px 26px;color:var(--text-2);cursor:pointer;border-radius:6px}
+.sub-row:hover{background:var(--surface-2)}
+.sub-row .cnt{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.sen-row{display:flex;align-items:center;gap:8px;padding:5px 8px 5px 42px;color:var(--text-2);cursor:grab;border-radius:6px;font-size:12px}
+.sen-row:hover{background:var(--surface-2)}
+.sen-row.sel{background:var(--accent-glow);color:var(--text-1);box-shadow:inset 2px 0 0 var(--accent)}
+.dot-mono{display:inline-block;border-radius:50%;background:var(--text-1);flex-shrink:0}
+
+/* ── Center ─────────────────────────────────── */
+.main{overflow:auto;padding:12px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.kpi{position:relative;border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);padding:10px 12px;overflow:hidden}
+.kpi .k-lab{font-size:11px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .k-val{font-family:var(--font-mono);font-weight:700;line-height:1;margin-top:8px}
+.kpi.alarm .k-val{font-size:30px;color:var(--text-1)}
+.kpi.quiet .k-val{font-size:22px;color:var(--text-3)}
+.kpi.sev-crit{box-shadow:inset 3px 0 0 var(--crit)}
+.kpi.sev-warn{box-shadow:inset 3px 0 0 var(--warn)}
+.kpi.sev-info{box-shadow:inset 3px 0 0 var(--info)}
+.kpi.active{border-color:var(--accent);background:var(--accent-glow)}
+.kpi .crit-badge{position:absolute;top:8px;right:8px}
+
+.pbanner{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-md);
+  border:1px solid var(--crit);background:color-mix(in srgb,var(--crit) 12%,var(--surface));cursor:pointer;font-size:13px}
+.pbanner .desc{color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbanner .time{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3);white-space:nowrap}
+
+.bottom{display:grid;grid-template-columns:clamp(280px,28vw,340px) 1fr;gap:12px;min-height:0}
+
+/* heatmap */
+.hm{padding:12px}
+.hm-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.hm-head .badge{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-3);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.hm-legend{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.hm-legend span{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2)}
+.swatch{width:11px;height:11px;border-radius:3px}
+.hm-grid{display:grid;grid-template-columns:auto repeat(3,1fr);gap:3px;font-size:11px}
+.hm-grid .col-h{text-align:center;color:var(--text-3);font-family:var(--font-mono);padding-bottom:2px}
+.hm-grid .row-h{color:var(--text-2);padding-right:6px;white-space:nowrap;display:flex;align-items:center;font-size:11px}
+.cell{height:24px;border-radius:4px;border:1px solid var(--line)}
+.cell.crit{background:color-mix(in srgb,var(--crit) 62%,transparent)}
+.cell.warn{background:color-mix(in srgb,var(--warn) 55%,transparent)}
+.cell.info{background:color-mix(in srgb,var(--info) 45%,transparent)}
+.cell.ok{background:color-mix(in srgb,var(--ok) 40%,transparent)}
+.cell.none{background:transparent;border:1px dashed var(--line-2);opacity:.5}
+
+/* chart card */
+.chart{display:flex;flex-direction:column;min-width:0;padding:12px}
+.ch-head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.ch-id .nm{font-size:var(--fs-md);font-weight:600;color:var(--text-1)}
+.ch-id .tg{font-family:var(--font-mono);font-size:11px;color:var(--text-2)}
+.ch-id .sub{font-family:var(--font-mono);font-size:11px;color:var(--text-3)}
+.ch-tools{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.mini{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);font-size:11px;cursor:pointer}
+.mini.on{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+.presets{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.presets b{padding:3px 8px;font-family:var(--font-mono);font-size:11px;color:var(--text-2);cursor:pointer;font-weight:400}
+.presets b.on{background:var(--accent-strong);color:#fff;font-weight:700}
+.legend{display:flex;gap:14px;margin:2px 0 6px;font-size:11px;color:var(--text-2);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg-line{width:16px;height:0;border-top:2px solid #CDD9E5}
+.lg-dash{width:16px;height:0;border-top:2px dashed var(--accent)}
+.lg-band{width:14px;height:10px;background:color-mix(in srgb,var(--accent) 22%,transparent);border:1px solid var(--accent)}
+.plot-wrap{position:relative;flex:1;min-height:230px}
+.ch-toolbar{position:absolute;top:6px;right:6px;display:flex;flex-direction:column;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:3px}
+.ch-toolbar button{width:22px;height:22px;border:none;background:transparent;color:var(--text-2);cursor:pointer;border-radius:4px;font-size:12px}
+.ch-toolbar button:hover{background:var(--surface-3);color:var(--text)}
+.brush{height:44px;margin-top:6px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);position:relative;overflow:hidden}
+.brush .win{position:absolute;top:0;bottom:0;left:52%;width:26%;background:color-mix(in srgb,var(--accent) 14%,transparent);border-left:2px solid var(--accent);border-right:2px solid var(--accent)}
+
+/* ── Detail ─────────────────────────────────── */
+.detail{border-left:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);display:flex;flex-direction:column;min-height:0}
+.dt-head{padding:12px;border-bottom:1px solid var(--line);font-weight:600;color:var(--text-1)}
+.tabs{display:flex;gap:2px;padding:8px 8px 0;overflow:auto}
+.tab{padding:6px 9px;font-size:11px;color:var(--text-3);border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer}
+.tab.on{color:var(--text-1);border-bottom-color:var(--accent)}
+.dt-body{padding:12px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.gauge{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0}
+.gauge .arc{width:150px;height:78px;position:relative}
+.gauge .lab{font-family:var(--font-mono);font-weight:700;letter-spacing:.06em;color:var(--crit-ink)}
+.gauge .sub{font-size:11px;color:var(--text-3)}
+.metric{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--line)}
+.metric .v{font-family:var(--font-mono);color:var(--text-1)}
+.sec-t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:2px 0 6px}
+.hist{display:grid;grid-template-columns:repeat(15,1fr);gap:3px}
+.hist i{height:14px;border-radius:2px;background:var(--tl-ok)}
+.hist i.warn{background:var(--warn)}.hist i.crit{background:var(--crit)}.hist i.info{background:var(--info)}
+.hist-ax{display:flex;justify-content:space-between;font-size:10px;color:var(--text-3);margin-top:4px}
+.ev{display:flex;gap:8px;font-size:11px;padding:5px 0;border-bottom:1px solid var(--line)}
+.ev .t{font-family:var(--font-mono);color:var(--text-3)}
+.ev .n{color:var(--text-2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev .val{font-family:var(--font-mono);color:var(--text-1)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── TOP BAR ── -->
+  <div class="topbar">
+    <div class="tb-clock"><span class="pulse"></span><span>14:32</span></div>
+    <span class="sep"></span>
+    <span class="tb-stat" title="Датчиков на станции">⚟ 128</span>
+    <span class="tb-stat" title="Аномалий за период">△ 34</span>
+    <span class="spacer"></span>
+    <button class="tb-btn"><span class="tb-pill">7</span> Журнал (J) ↗</button>
+    <span class="sep"></span>
+    <span class="fresh">🕒 14:30
+      <span class="chipm"><span class="sev-dot ok"></span>ML</span>
+      <span class="chipm"><span class="sev-dot ok"></span>БД</span>
+    </span>
+    <span class="sep"></span>
+    <span class="tb-ico active" title="Мониторинг">▦</span>
+    <span class="tb-ico" title="Схема КС">⌗</span>
+    <span class="tb-ico" title="Двигатель · 3D-режим">⚙</span>
+    <span class="tb-ico" title="Отчёт смены">🗎</span>
+    <span class="tb-ico" title="Дежурный режим (K)">◱</span>
+    <span class="tb-ico" title="Тема: dark (T)">☾</span>
+  </div>
+
+  <div class="content">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="side-search"><div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="Поиск датчика...">
+      </div></div>
+      <div class="tree">
+        <div class="gpa-row"><span class="chev">▾</span><span class="sev-dot crit"></span>ГПА-1<span class="cnt">6/42</span></div>
+          <div class="sub-row">Компрессор БЦ<span class="cnt">14</span></div>
+            <div class="sen-row sel"><span class="dot-mono" style="width:8px;height:8px;box-shadow:0 0 0 2px var(--crit)"></span>Давление на выходе</div>
+            <div class="sen-row"><span class="dot-mono" style="width:6px;height:6px;opacity:.7"></span>Темп. подшипника</div>
+            <div class="sen-row"><span class="dot-mono" style="width:5px;height:5px;opacity:.5"></span>Вибрация ОС</div>
+          <div class="sub-row">Турбина СТ<span class="cnt">11</span></div>
+            <div class="sen-row"><span class="dot-mono" style="width:6px;height:6px;opacity:.7"></span>Обороты ТНД</div>
+            <div class="sen-row"><span class="dot-mono" style="width:4px;height:4px;opacity:.4"></span>Темп. газа за ТВД</div>
+          <div class="sub-row">АВО газа<span class="cnt">8</span></div>
+            <div class="sen-row"><span class="dot-mono" style="width:5px;height:5px;opacity:.5"></span>Перепад на АВО</div>
+        <div class="gpa-row"><span class="chev">▸</span><span class="sev-dot warn"></span>ГПА-2<span class="cnt">2/40</span></div>
+        <div class="gpa-row"><span class="chev">▸</span><span class="sev-dot ok"></span>ГПА-3<span class="cnt">0/46</span></div>
+      </div>
+    </aside>
+
+    <!-- ── CENTER ── -->
+    <main class="main">
+      <!-- KPI: 7 detector types -->
+      <div class="kpis">
+        <div class="kpi alarm sev-crit active"><div class="k-lab">Стат. выброс</div><div class="k-val">14</div><span class="badge-sev crit crit-badge">Крит</span></div>
+        <div class="kpi alarm sev-crit"><div class="k-lab">Физичность</div><div class="k-val">2</div></div>
+        <div class="kpi quiet"><div class="k-lab">Датчик завис</div><div class="k-val">0</div></div>
+        <div class="kpi alarm sev-warn"><div class="k-lab">Скачок ΔV</div><div class="k-val">5</div></div>
+        <div class="kpi quiet"><div class="k-lab">Сезонная</div><div class="k-val">0</div></div>
+        <div class="kpi alarm sev-info"><div class="k-lab">Смена режима</div><div class="k-val">2</div></div>
+        <div class="kpi alarm sev-info"><div class="k-lab">Кросс-ГПА</div><div class="k-val">11</div><span class="badge-sev crit crit-badge">Крит</span></div>
+      </div>
+
+      <!-- Priority banner -->
+      <div class="pbanner">
+        <span class="sev-dot crit"></span>
+        <span class="badge-sev crit">Критично</span>
+        <b class="mono" style="font-size:12px">ГПА-1</b>
+        <span>Давление на выходе</span><span class="dim">—</span>
+        <span class="muted">Стат. выброс</span>
+        <span class="desc">отклонение факта от прогноза модели превысило коридор</span>
+        <span class="time">12.06 14:05</span>
+      </div>
+
+      <!-- Bottom: heatmap + chart -->
+      <div class="bottom">
+        <!-- HEATMAP -->
+        <section class="card hm">
+          <div class="hm-head"><b>Тепловая карта</b><span class="badge">126 ячеек</span></div>
+          <div class="hm-legend">
+            <span><i class="swatch" style="background:var(--crit)"></i>Суперважно</span>
+            <span><i class="swatch" style="background:var(--warn)"></i>Внимание</span>
+            <span><i class="swatch" style="background:var(--info)"></i>Наблюдение</span>
+            <span><i class="swatch" style="background:var(--ok)"></i>Норма</span>
+          </div>
+          <div class="hm-grid">
+            <div></div><div class="col-h">ГПА-1</div><div class="col-h">ГПА-2</div><div class="col-h">ГПА-3</div>
+            <div class="row-h">Давл. выход</div><div class="cell crit"></div><div class="cell ok"></div><div class="cell ok"></div>
+            <div class="row-h">Темп. подш.</div><div class="cell warn"></div><div class="cell warn"></div><div class="cell ok"></div>
+            <div class="row-h">Вибрация ОС</div><div class="cell info"></div><div class="cell ok"></div><div class="cell ok"></div>
+            <div class="row-h">Обороты ТНД</div><div class="cell ok"></div><div class="cell ok"></div><div class="cell none"></div>
+            <div class="row-h">Темп. за ТВД</div><div class="cell crit"></div><div class="cell ok"></div><div class="cell ok"></div>
+            <div class="row-h">Перепад АВО</div><div class="cell ok"></div><div class="cell info"></div><div class="cell ok"></div>
+            <div class="row-h">Расход топл.</div><div class="cell ok"></div><div class="cell ok"></div><div class="cell ok"></div>
+            <div class="row-h">Кросс-ГПА z</div><div class="cell warn"></div><div class="cell ok"></div><div class="cell crit"></div>
+          </div>
+        </section>
+
+        <!-- CHART -->
+        <section class="card chart">
+          <div class="ch-head">
+            <div class="ch-id">
+              <div class="nm">Давление газа на выходе</div>
+              <span class="tg">GPA-1.GPA-1.PD.PV</span> <span class="sub">· ГПА-1 · Компрессор БЦ</span>
+            </div>
+            <div class="ch-tools">
+              <span class="mini">от <b class="mono">05.06</b></span><span class="mini">до <b class="mono">12.06</b></span>
+              <span class="presets"><b>1д</b><b>3д</b><b class="on">7д</b><b>14д</b><b>30д</b></span>
+              <span class="mini">★ Важные признаки</span>
+              <span class="mini">⊕ Сравн. ГПА</span>
+              <span class="mini">⇄ Сравнить</span>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i class="lg-line"></i>Значение</span>
+            <span><i class="lg-dash"></i>Модель (MAE: 0.042)</span>
+            <span><i class="lg-band"></i>Дов. интервал</span>
+            <span><span class="sev-dot crit"></span>Аномалия</span>
+          </div>
+          <div class="plot-wrap">
+            <svg viewBox="0 0 820 250" preserveAspectRatio="none" width="100%" height="100%">
+              <!-- grid -->
+              <g stroke="var(--line)" stroke-width="1">
+                <line x1="0" y1="50" x2="820" y2="50"/><line x1="0" y1="110" x2="820" y2="110"/>
+                <line x1="0" y1="170" x2="820" y2="170"/><line x1="0" y1="230" x2="820" y2="230"/>
+              </g>
+              <!-- confidence band -->
+              <path d="M0,150 L110,140 L220,135 L330,120 L440,132 L520,110 L600,150 L700,140 L820,150
+                       L820,190 L700,182 L600,196 L520,158 L440,178 L330,168 L220,182 L110,188 L0,196 Z"
+                    fill="color-mix(in srgb,var(--accent) 16%,transparent)" stroke="none"/>
+              <!-- model (dashed) -->
+              <polyline fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="5 4"
+                points="0,173 110,164 220,158 330,144 440,155 520,134 600,173 700,161 820,173"/>
+              <!-- actual (solid) -->
+              <polyline fill="none" stroke="#CDD9E5" stroke-width="2"
+                points="0,176 60,168 120,182 180,158 240,150 300,160 360,120 420,150 470,66 500,150 560,168 620,150 680,176 740,150 820,158"/>
+              <!-- monitoring start vline -->
+              <line x1="300" y1="8" x2="300" y2="238" stroke="rgba(132,204,22,.7)" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <text x="306" y="20" fill="rgba(132,204,22,.9)" font-size="11" font-family="var(--font-mono)">Начало мониторинга</text>
+              <!-- anomaly marker -->
+              <path d="M470,58 l7,8 l-7,8 l-7,-8 Z" fill="var(--crit)" stroke="#fff" stroke-width="1"/>
+            </svg>
+            <div class="ch-toolbar">
+              <button title="Указатель">↖</button><button title="Панорама">✋</button><button title="Рисование">✎</button>
+              <button title="Увеличить">+</button><button title="Уменьшить">−</button><button title="Сброс">⤢</button>
+              <button title="Range slider">▭</button><button title="Очистить">⌫</button>
+            </div>
+          </div>
+          <div class="brush"><div class="win"></div></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ── DETAIL ── -->
+    <aside class="detail">
+      <div class="dt-head">Аналитика · Давление на выходе</div>
+      <div class="tabs">
+        <div class="tab on">Здоровье</div><div class="tab">Качество модели</div>
+        <div class="tab">Дрейф</div><div class="tab">Калибровка</div><div class="tab">Доменные индексы</div>
+      </div>
+      <div class="dt-body">
+        <div class="gauge">
+          <div class="arc">
+            <svg viewBox="0 0 150 82" width="150" height="82">
+              <path d="M12,78 A63,63 0 0 1 138,78" fill="none" stroke="var(--surface-3)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M12,78 A63,63 0 0 1 120,30" fill="none" stroke="var(--crit)" stroke-width="10" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="lab">КРИТИЧНО</div>
+          <div class="sub">7 аномалий за 24ч · 23 за 30д</div>
+        </div>
+        <div class="metric"><span>Текущее значение</span><span class="v">5.812 МПа</span></div>
+        <div>
+          <div class="sec-t">Коды здоровья (по событиям)</div>
+          <div class="metric"><span>ml (выброс)</span><span class="v">14</span></div>
+          <div class="metric"><span>roc (скачок)</span><span class="v">5</span></div>
+          <div class="metric"><span>drift (дрейф)</span><span class="v">0</span></div>
+        </div>
+        <div>
+          <div class="sec-t">История severity · 30 дней</div>
+          <div class="hist">
+            <i></i><i></i><i class="info"></i><i></i><i class="warn"></i><i></i><i></i><i class="warn"></i><i class="crit"></i><i></i>
+            <i></i><i class="info"></i><i></i><i></i><i class="warn"></i><i class="crit"></i><i></i><i></i><i></i><i class="warn"></i>
+            <i></i><i></i><i class="info"></i><i class="crit"></i><i></i><i></i><i class="warn"></i><i class="crit"></i><i class="crit"></i><i class="warn"></i>
+          </div>
+          <div class="hist-ax"><span>−30д</span><span>сегодня</span></div>
+        </div>
+        <div>
+          <div class="sec-t">Последние события датчика</div>
+          <div class="ev"><span class="t">14:05</span><span class="n">Стат. выброс</span><span class="val">5.81 (Δ0.34)</span></div>
+          <div class="ev"><span class="t">11:40</span><span class="n">Скачок ΔV</span><span class="val">5.62 (Δ0.21)</span></div>
+          <div class="ev"><span class="t">09:12</span><span class="n">Стат. выброс</span><span class="val">5.77 (Δ0.29)</span></div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+</body>
+</html>

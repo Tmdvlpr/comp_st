@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CS Monitor AI - Мониторинг</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "severity-info": "#8C93B0",
+                        "severity-crit-ink": "#FF8893",
+                        "on-secondary": "#003354",
+                        "on-secondary-fixed": "#001d33",
+                        "on-secondary-container": "#bcdcff",
+                        "surface-bright": "#36393f",
+                        "severity-warn": "#F5B14C",
+                        "surface-glass": "rgba(26, 31, 56, 0.78)",
+                        "background": "#101419",
+                        "on-primary-fixed-variant": "#004882",
+                        "tertiary-container": "#da9600",
+                        "surface": "#101419",
+                        "text-key": "#FFFFFF",
+                        "severity-ok": "#3FB950",
+                        "tertiary-fixed-dim": "#ffba42",
+                        "secondary": "#97cbff",
+                        "app-bg-deep": "#0d1426",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "line-strong": "rgba(132, 140, 200, 0.30)",
+                        "surface-tint": "#a2c9ff",
+                        "surface-glass-high": "rgba(52, 58, 94, 0.88)",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#00639c",
+                        "surface-container-highest": "#32353b",
+                        "on-secondary-fixed-variant": "#004a77",
+                        "error-container": "#93000a",
+                        "severity-ok-ink": "#6EE67D",
+                        "on-error": "#690005",
+                        "on-primary-container": "#003a6b",
+                        "outline": "#8b919d",
+                        "on-background": "#e0e2ea",
+                        "severity-info-ink": "#C5CBDF",
+                        "text-tertiary": "#9BA5BC",
+                        "surface-container-lowest": "#0b0e14",
+                        "text-secondary": "#B7C0D6",
+                        "text-primary": "#E6ECF6",
+                        "on-surface-variant": "#c0c7d4",
+                        "surface-container-low": "#181c21",
+                        "on-tertiary": "#432c00",
+                        "on-primary": "#00315c",
+                        "primary-container": "#58a6ff",
+                        "on-tertiary-container": "#4f3400",
+                        "line-subtle": "rgba(132, 140, 200, 0.16)",
+                        "surface-dim": "#101419",
+                        "inverse-surface": "#e0e2ea",
+                        "severity-warn-ink": "#F7C06B",
+                        "surface-container": "#1c2025",
+                        "on-tertiary-fixed": "#281800",
+                        "on-primary-fixed": "#001c38",
+                        "primary": "#a2c9ff",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#2d3136",
+                        "outline-variant": "#414752",
+                        "surface-glass-deep": "rgba(38, 44, 74, 0.82)",
+                        "surface-variant": "#32353b",
+                        "surface-container-high": "#272a30",
+                        "secondary-fixed-dim": "#97cbff",
+                        "severity-crit": "#FF5C6C",
+                        "on-surface": "#e0e2ea",
+                        "tertiary-fixed": "#ffddaf",
+                        "on-tertiary-fixed-variant": "#614000",
+                        "primary-fixed": "#d3e4ff",
+                        "inverse-primary": "#0060aa",
+                        "secondary-fixed": "#cee5ff",
+                        "tertiary": "#ffba42"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    fontFamily: {
+                        "mono-label": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "section-lg": ["Inter"],
+                        "page-xl": ["Inter"],
+                        "hero-2xl": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "body-base": ["Inter"]
+                    },
+                    fontSize: {
+                        "mono-label": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "section-lg": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "page-xl": ["30px", { lineHeight: "38px", fontWeight: "600" }],
+                        "hero-2xl": ["56px", { lineHeight: "64px", fontWeight: "700" }],
+                        "mono-data": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-base": ["14px", { lineHeight: "20px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { margin: 0; overflow: hidden; background-color: #101419; color: #E6ECF6; }
+        .grid-layout { display: grid; grid-template-rows: 36px 1fr; height: 100vh; width: 100vw; }
+        .content-layout { display: grid; grid-template-columns: 272px 1fr 300px; height: calc(100vh - 36px); gap: 1px; background-color: rgba(132, 140, 200, 0.16); }
+        .glass-panel { background-color: rgba(26, 31, 56, 0.78); backdrop-filter: blur(12px); overflow: hidden; }
+        .scrollable { overflow-y: auto; overflow-x: hidden; }
+        
+        /* Scrollbar styling for industrial feel */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(132, 140, 200, 0.30); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(155, 165, 188, 0.6); }
+
+        .pulse-dot { animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+        @keyframes pulse-ring { 
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(110, 230, 125, 0.7); } 
+            70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(110, 230, 125, 0); } 
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(110, 230, 125, 0); } 
+        }
+        
+        .pulse-crit { animation: pulse-crit-ring 1.5s ease-out infinite; }
+        @keyframes pulse-crit-ring {
+            0% { box-shadow: 0 0 0 0 rgba(255, 92, 108, 0.6); }
+            100% { box-shadow: 0 0 0 6px rgba(255, 92, 108, 0); }
+        }
+
+        .chart-grid { stroke: rgba(132, 140, 200, 0.1); stroke-width: 1; }
+        .chart-line-val { fill: none; stroke: #E6ECF6; stroke-width: 1.5; }
+        .chart-line-model { fill: none; stroke: #a2c9ff; stroke-width: 1.5; stroke-dasharray: 4 2; }
+        .chart-band { fill: rgba(162, 201, 255, 0.1); }
+        .chart-anomaly { fill: none; stroke: #FF5C6C; stroke-width: 2; }
+    </style>
+</head>
+<body class="bg-background text-text-primary font-body-base antialiased">
+<div class="grid-layout">
+<!-- TOP BAR: Glass, 36px -->
+<header class="flex justify-between items-center px-4 w-full h-[36px] bg-surface-glass backdrop-blur-xl border-b border-line-subtle z-50">
+<!-- Left Cluster -->
+<div class="flex items-center gap-4 h-full">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-severity-ok-ink pulse-dot"></div>
+<span class="font-mono-label text-mono-label text-text-secondary">14:32</span>
+</div>
+<div class="h-4 w-px bg-line-strong mx-1"></div>
+<div class="flex items-center gap-1.5 text-text-tertiary" title="Сенсоры онлайн">
+<span class="material-symbols-outlined text-[14px]">settings_input_component</span>
+<span class="font-mono-label text-mono-label">1248/1250</span>
+</div>
+<div class="flex items-center gap-1.5 text-severity-crit-ink" title="Активные аномалии">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span class="font-mono-label text-mono-label">3</span>
+</div>
+<div class="flex items-center gap-1.5 text-severity-warn-ink ml-2" title="Внимание">
+<span class="material-symbols-outlined text-[14px]">notifications</span>
+<span class="font-mono-label text-mono-label">12</span>
+</div>
+</div>
+<!-- Center Brand (Optional / Minimal) -->
+<div class="font-mono-label text-mono-label font-bold tracking-widest text-text-secondary opacity-50 uppercase">
+            CS Monitor AI <span class="mx-1 text-line-strong">|</span> <span class="font-normal">GPA Complex</span>
+</div>
+<!-- Right Cluster -->
+<div class="flex items-center gap-3 h-full">
+<!-- Freshness -->
+<div class="flex items-center gap-2 border border-line-subtle rounded px-2 h-6 bg-surface-variant/30">
+<span class="material-symbols-outlined text-[12px] text-text-tertiary">update</span>
+<span class="font-mono-label text-mono-label text-text-tertiary">14:30</span>
+<div class="flex gap-1 ml-1">
+<span class="px-1 bg-surface-bright rounded text-[9px] font-mono-label text-severity-ok-ink">ML</span>
+<span class="px-1 bg-surface-bright rounded text-[9px] font-mono-label text-severity-ok-ink">БД</span>
+</div>
+</div>
+<!-- Journal Button -->
+<button class="flex items-center gap-2 border border-line-strong hover:bg-surface-bright/50 transition-colors rounded px-2 h-6 relative">
+<span class="font-mono-label text-mono-label text-text-primary">Журнал (J)</span>
+<div class="absolute -top-1 -right-1 bg-severity-crit text-white text-[9px] font-mono-label px-1 rounded-sm leading-tight h-[14px] flex items-center justify-center min-w-[14px]">3</div>
+</button>
+<div class="h-4 w-px bg-line-strong mx-1"></div>
+<!-- View Switcher -->
+<div class="flex items-center gap-1">
+<button class="h-6 px-2 flex items-center gap-1 rounded bg-primary-container/20 border border-primary/30 text-primary" title="Мониторинг">
+<span class="material-symbols-outlined text-[14px]">dashboard</span>
+</button>
+<button class="h-6 px-2 flex items-center gap-1 rounded hover:bg-surface-bright/50 text-text-tertiary transition-colors" title="Схема КС">
+<span class="material-symbols-outlined text-[14px]">account_tree</span>
+</button>
+<button class="h-6 px-2 flex items-center gap-1 rounded hover:bg-surface-bright/50 text-text-tertiary transition-colors" title="Двигатель · 3D-режим">
+<span class="material-symbols-outlined text-[14px]">view_in_ar</span>
+</button>
+<button class="h-6 px-2 flex items-center gap-1 rounded hover:bg-surface-bright/50 text-text-tertiary transition-colors" title="Отчёт смены">
+<span class="material-symbols-outlined text-[14px]">assessment</span>
+</button>
+<button class="h-6 px-2 flex items-center gap-1 rounded hover:bg-surface-bright/50 text-text-tertiary transition-colors" title="Дежурный режим">
+<span class="material-symbols-outlined text-[14px]">bedtime</span>
+</button>
+</div>
+<!-- Theme Toggle -->
+<button class="h-6 w-6 flex items-center justify-center rounded hover:bg-surface-bright/50 text-text-tertiary ml-1" title="Тема: dark (T)">
+<span class="material-symbols-outlined text-[14px]">dark_mode</span>
+</button>
+</div>
+</header>
+<div class="content-layout">
+<!-- LEFT SIDEBAR -->
+<aside class="glass-panel flex flex-col">
+<div class="p-3 border-b border-line-subtle">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-text-tertiary text-[16px]">search</span>
+<input class="w-full h-8 pl-8 pr-2 bg-surface-container-highest border border-line-strong rounded focus:border-primary focus:ring-0 text-text-primary font-body-base text-[13px] placeholder:text-text-tertiary transition-colors" placeholder="Поиск датчика..." type="text"/>
+</div>
+</div>
+<div class="flex-1 scrollable p-2 flex flex-col gap-1">
+<!-- GPA-1 Node -->
+<div class="group">
+<div class="flex items-center gap-2 px-2 py-1.5 hover:bg-surface-variant/30 rounded cursor-pointer text-text-secondary group-hover:text-text-primary">
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">keyboard_arrow_down</span>
+<div class="w-2 h-2 rounded-full bg-severity-crit"></div>
+<span class="font-mono-label text-mono-label flex-1">ГПА-1</span>
+<span class="font-mono-label text-[10px] text-text-tertiary">142/142</span>
+</div>
+<!-- L2 / L3 items -->
+<div class="pl-6 flex flex-col gap-[2px]">
+<div class="flex items-center gap-2 px-2 py-1 hover:bg-surface-variant/30 rounded cursor-pointer text-text-tertiary">
+<span class="material-symbols-outlined text-[14px] opacity-0">keyboard_arrow_right</span>
+<div class="w-1.5 h-1.5 rounded-full bg-text-tertiary"></div>
+<span class="font-mono-label text-[11px] truncate">TI_2104 (Темп. масла)</span>
+</div>
+<div class="flex items-center gap-2 px-2 py-1 hover:bg-surface-variant/30 rounded cursor-pointer text-text-tertiary">
+<span class="material-symbols-outlined text-[14px] opacity-0">keyboard_arrow_right</span>
+<div class="w-1.5 h-1.5 rounded-full bg-text-tertiary"></div>
+<span class="font-mono-label text-[11px] truncate">PI_2101 (Давл. на входе)</span>
+</div>
+<!-- Active Sensor -->
+<div class="flex items-center gap-2 px-2 py-1 bg-primary/10 border border-primary/20 rounded cursor-pointer text-primary shadow-[inset_2px_0_0_0_#a2c9ff]">
+<span class="material-symbols-outlined text-[14px] opacity-0">keyboard_arrow_right</span>
+<div class="w-1.5 h-1.5 rounded-full bg-severity-crit pulse-crit"></div>
+<span class="font-mono-label text-[11px] truncate">VI_2105 (Вибрация ОС)</span>
+</div>
+</div>
+</div>
+<!-- GPA-2 Node -->
+<div class="group mt-1">
+<div class="flex items-center gap-2 px-2 py-1.5 hover:bg-surface-variant/30 rounded cursor-pointer text-text-secondary">
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">keyboard_arrow_right</span>
+<div class="w-2 h-2 rounded-full bg-text-tertiary"></div>
+<span class="font-mono-label text-mono-label flex-1">ГПА-2</span>
+<span class="font-mono-label text-[10px] text-text-tertiary">138/142</span>
+</div>
+</div>
+<!-- GPA-3 Node -->
+<div class="group mt-1">
+<div class="flex items-center gap-2 px-2 py-1.5 hover:bg-surface-variant/30 rounded cursor-pointer text-text-secondary">
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">keyboard_arrow_right</span>
+<div class="w-2 h-2 rounded-full bg-text-tertiary"></div>
+<span class="font-mono-label text-mono-label flex-1">ГПА-3</span>
+<span class="font-mono-label text-[10px] text-text-tertiary">141/142</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- CENTER CONTENT -->
+<main class="glass-panel flex flex-col p-4 gap-3 scrollable">
+<!-- 1. KPI Row -->
+<div class="flex gap-2">
+<!-- Stat Outlier (Crit) -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2 border-l-4 border-l-severity-crit relative">
+<div class="absolute top-1 right-1 bg-severity-crit/20 text-severity-crit-ink font-mono-label text-[9px] px-1 rounded uppercase tracking-wider">КРИТ</div>
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Стат. выброс</span>
+<span class="font-mono-data text-page-xl text-text-primary leading-none mt-auto">14</span>
+</div>
+<!-- Physics -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2">
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Физичность</span>
+<span class="font-mono-data text-page-xl text-text-secondary leading-none mt-auto">2</span>
+</div>
+<!-- Frozen -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2">
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Датчик завис</span>
+<span class="font-mono-data text-page-xl text-text-tertiary opacity-50 leading-none mt-auto">0</span>
+</div>
+<!-- Jump dV -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2">
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Скачок ΔV</span>
+<span class="font-mono-data text-page-xl text-text-secondary leading-none mt-auto">5</span>
+</div>
+<!-- Seasonality -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2">
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Сезонная</span>
+<span class="font-mono-data text-page-xl text-text-tertiary opacity-50 leading-none mt-auto">0</span>
+</div>
+<!-- Regime Shift -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2">
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Смена режима</span>
+<span class="font-mono-data text-page-xl text-text-secondary leading-none mt-auto">1</span>
+</div>
+<!-- Cross-GPA -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col p-2 border-l-4 border-l-severity-crit relative">
+<div class="absolute top-1 right-1 bg-severity-crit/20 text-severity-crit-ink font-mono-label text-[9px] px-1 rounded uppercase tracking-wider">КРИТ</div>
+<span class="font-mono-label text-[10px] text-text-tertiary uppercase mb-1">Кросс-ГПА</span>
+<span class="font-mono-data text-page-xl text-text-primary leading-none mt-auto">11</span>
+</div>
+</div>
+<!-- 2. Priority Banner -->
+<div class="w-full bg-severity-crit/5 border border-severity-crit/40 rounded p-3 flex items-center gap-4 cursor-pointer hover:bg-severity-crit/10 transition-colors">
+<div class="w-3 h-3 rounded-full bg-severity-crit pulse-crit flex-shrink-0"></div>
+<div class="bg-severity-crit/20 text-severity-crit-ink font-mono-label text-[10px] px-1.5 py-0.5 rounded uppercase tracking-widest border border-severity-crit/30 flex-shrink-0">
+                    Критично
+                </div>
+<div class="flex items-baseline gap-2 flex-shrink-0">
+<span class="font-mono-label text-mono-label font-bold text-text-primary">ГПА-1</span>
+<span class="font-mono-data text-text-secondary text-[13px]">VI_2105 (Вибрация ОС)</span>
+</div>
+<span class="text-line-strong">—</span>
+<span class="font-mono-label text-severity-crit-ink text-[12px] whitespace-nowrap flex-shrink-0">Стат. выброс</span>
+<span class="font-body-base text-text-tertiary text-[13px] truncate flex-1">Значение превысило верхнюю доверительную границу модели на 4.2σ в течение 15 минут.</span>
+<span class="font-mono-label text-text-tertiary text-[11px] whitespace-nowrap flex-shrink-0 bg-surface-container px-2 py-1 rounded">12.06 14:05</span>
+<span class="material-symbols-outlined text-text-tertiary text-[16px]">chevron_right</span>
+</div>
+<!-- 3. Bottom Grid: Heatmap + Chart -->
+<div class="flex-1 flex gap-3 min-h-0">
+<!-- Heatmap Panel -->
+<div class="w-[320px] bg-surface-glass border border-line-subtle rounded flex flex-col flex-shrink-0">
+<div class="p-3 border-b border-line-subtle flex justify-between items-center">
+<h3 class="font-section-lg text-[14px] text-text-primary">Тепловая карта</h3>
+<!-- Legend -->
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 bg-severity-crit rounded-sm" title="Критично"></div>
+<div class="w-2.5 h-2.5 bg-severity-warn rounded-sm" title="Внимание"></div>
+<div class="w-2.5 h-2.5 bg-text-tertiary/20 rounded-sm" title="Норма"></div>
+<div class="w-2.5 h-2.5 bg-severity-ok rounded-sm opacity-30" title="Оптимум"></div>
+</div>
+</div>
+<div class="p-2 flex-1 scrollable flex justify-center">
+<!-- Heatmap Grid Simulation (Industrial Data Dense) -->
+<div class="flex flex-col gap-4 w-full">
+<!-- GPA-1 -->
+<div>
+<div class="font-mono-label text-[10px] text-text-tertiary mb-1">ГПА-1</div>
+<div class="grid grid-cols-10 gap-[2px]">
+<!-- Generating cells, some colored -->
+<div class="h-6 bg-text-tertiary/20 hover:border-line-strong border border-transparent"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-severity-warn/80 border border-severity-warn"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-severity-crit border border-severity-crit-ink shadow-[0_0_8px_rgba(255,92,108,0.5)]"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-severity-ok/30"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-severity-crit/80 border border-severity-crit"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+</div>
+</div>
+<!-- GPA-2 -->
+<div>
+<div class="font-mono-label text-[10px] text-text-tertiary mb-1">ГПА-2</div>
+<div class="grid grid-cols-10 gap-[2px]">
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-severity-ok/30"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+<div class="h-6 bg-text-tertiary/20"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chart Panel -->
+<div class="flex-1 bg-surface-glass border border-line-subtle rounded flex flex-col min-w-0">
+<!-- Chart Header -->
+<div class="p-3 border-b border-line-subtle flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-baseline gap-2">
+<h2 class="font-section-lg text-[16px] text-text-primary">VI_2105 (Вибрация ОС)</h2>
+<span class="font-mono-label text-[11px] text-text-tertiary bg-surface-container px-1.5 py-0.5 rounded">ГПА-1 · Подшипники</span>
+</div>
+<!-- Mini Toolbar -->
+<div class="flex items-center gap-1 bg-surface-variant/30 rounded p-0.5 border border-line-subtle">
+<button class="w-6 h-6 flex items-center justify-center text-primary bg-surface-bright rounded"><span class="material-symbols-outlined text-[14px]">north_west</span></button>
+<button class="w-6 h-6 flex items-center justify-center text-text-tertiary hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">pan_tool</span></button>
+<button class="w-6 h-6 flex items-center justify-center text-text-tertiary hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">edit</span></button>
+<div class="w-px h-4 bg-line-strong mx-0.5"></div>
+<button class="w-6 h-6 flex items-center justify-center text-text-tertiary hover:text-text-primary"><span class="material-symbols-outlined text-[14px]">more_vert</span></button>
+</div>
+</div>
+<!-- Chart Controls -->
+<div class="flex items-center justify-between mt-1">
+<div class="flex gap-2 items-center">
+<div class="flex items-center bg-surface-container-highest border border-line-strong rounded px-2 h-7">
+<span class="material-symbols-outlined text-[14px] text-text-tertiary mr-1">calendar_month</span>
+<span class="font-mono-data text-[12px] text-text-secondary">11.06 - 12.06</span>
+</div>
+<div class="flex bg-surface-container-highest border border-line-strong rounded p-0.5">
+<button class="px-2 py-0.5 font-mono-label text-[10px] rounded hover:bg-surface-bright text-text-tertiary">1ч</button>
+<button class="px-2 py-0.5 font-mono-label text-[10px] rounded bg-primary/20 text-primary border border-primary/30">1д</button>
+<button class="px-2 py-0.5 font-mono-label text-[10px] rounded hover:bg-surface-bright text-text-tertiary">7д</button>
+<button class="px-2 py-0.5 font-mono-label text-[10px] rounded hover:bg-surface-bright text-text-tertiary">30д</button>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="h-7 px-3 flex items-center gap-1 rounded border border-line-strong hover:bg-surface-bright/50 text-text-secondary font-mono-label text-[11px] transition-colors">
+<span class="material-symbols-outlined text-[14px]">insights</span>
+                                    Важные признаки
+                                </button>
+<button class="h-7 px-3 flex items-center gap-1 rounded bg-surface-container border border-line-strong hover:bg-surface-bright/50 text-text-secondary font-mono-label text-[11px] transition-colors">
+                                    Сравн. ГПА
+                                </button>
+<button class="h-7 px-3 flex items-center gap-1 rounded bg-primary-container/20 border border-primary/30 text-primary font-mono-label text-[11px] hover:bg-primary-container/30 transition-colors">
+                                    Сравнить
+                                </button>
+</div>
+</div>
+</div>
+<!-- Main Chart Area -->
+<div class="flex-1 p-4 relative overflow-hidden flex flex-col">
+<!-- Legends -->
+<div class="absolute top-2 left-4 flex gap-4 font-mono-label text-[10px]">
+<div class="flex items-center gap-1"><div class="w-3 h-[2px] bg-text-primary"></div> Значение</div>
+<div class="flex items-center gap-1"><div class="w-3 h-[2px] bg-primary border-t border-dashed"></div> Модель</div>
+<div class="flex items-center gap-1"><div class="w-3 h-2 bg-primary/10 border border-primary/20"></div> Довер. инт.</div>
+</div>
+<!-- SVG Chart Canvas (Static reproduction) -->
+<div class="flex-1 w-full h-full mt-4 relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 200">
+<!-- Grid -->
+<line class="chart-grid" x1="0" x2="1000" y1="50" y2="50"></line>
+<line class="chart-grid" x1="0" x2="1000" y1="100" y2="100"></line>
+<line class="chart-grid" x1="0" x2="1000" y1="150" y2="150"></line>
+<line class="chart-grid" x1="250" x2="250" y1="0" y2="200"></line>
+<line class="chart-grid" x1="500" x2="500" y1="0" y2="200"></line>
+<line class="chart-grid" x1="750" x2="750" y1="0" y2="200"></line>
+<!-- Confidence Band -->
+<path class="chart-band" d="M0,130 Q100,120 200,125 T400,110 T600,100 T800,90 T1000,105 L1000,170 Q800,150 600,160 T400,180 T200,175 T0,180 Z"></path>
+<!-- Model Line -->
+<path class="chart-line-model" d="M0,150 Q100,140 200,150 T400,145 T600,130 T800,120 T1000,135"></path>
+<!-- Value Line (spikes into anomaly) -->
+<path class="chart-line-val" d="M0,145 L100,148 L200,135 L300,140 L400,150 L500,120 L600,125 L700,115 L780,40 L800,30 L820,45 L850,110 L900,120 L1000,130"></path>
+<!-- Anomaly Markers (Diamond on spike) -->
+<polygon class="chart-anomaly" fill="rgba(255,92,108,0.2)" points="800,20 810,30 800,40 790,30"></polygon>
+<circle class="chart-anomaly" cx="780" cy="40" fill="rgba(255,92,108,0.2)" r="4"></circle>
+<!-- Vertical Start Line -->
+<line stroke="#F5B14C" stroke-dasharray="2 2" stroke-width="1" x1="150" x2="150" y1="0" y2="200"></line>
+<text class="font-mono-label text-[9px]" fill="#F5B14C" opacity="0.8" x="155" y="15">Начало мониторинга</text>
+</svg>
+</div>
+</div>
+<!-- Range Slider Sparkline -->
+<div class="h-10 border-t border-line-subtle px-4 py-1 flex flex-col justify-center bg-surface-container-lowest">
+<div class="relative w-full h-4 bg-surface-variant/50 rounded overflow-hidden">
+<!-- Sparkline path -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 10">
+<path d="M0,8 L10,7 L20,8 L30,5 L40,6 L50,4 L60,5 L70,2 L80,3 L90,6 L100,7" fill="none" stroke="rgba(132,140,200,0.3)" stroke-width="1"></path>
+</svg>
+<!-- Slider window -->
+<div class="absolute top-0 bottom-0 left-[70%] right-[10%] bg-primary/10 border-x border-primary/50 cursor-ew-resize"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- RIGHT PANEL -->
+<aside class="glass-panel flex flex-col border-l border-line-subtle">
+<!-- Header & Tabs -->
+<div class="p-3 border-b border-line-subtle">
+<h3 class="font-section-lg text-[14px] text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">analytics</span>
+                    Аналитика
+                </h3>
+<div class="font-mono-label text-[11px] text-text-tertiary truncate mt-1">VI_2105 (Вибрация ОС)</div>
+<div class="flex gap-4 mt-3 border-b border-line-strong">
+<button class="font-mono-label text-[11px] text-primary border-b-2 border-primary pb-1">Здоровье</button>
+<button class="font-mono-label text-[11px] text-text-tertiary hover:text-text-primary pb-1 transition-colors">Влияние</button>
+<button class="font-mono-label text-[11px] text-text-tertiary hover:text-text-primary pb-1 transition-colors">Модель</button>
+</div>
+</div>
+<div class="flex-1 scrollable p-4 flex flex-col gap-6">
+<!-- Gauge / Primary Status -->
+<div class="flex flex-col items-center">
+<!-- Semi-circle gauge CSS simulation -->
+<div class="relative w-32 h-16 overflow-hidden mb-2">
+<div class="w-32 h-32 rounded-full border-[8px] border-surface-variant absolute top-0 left-0 border-b-transparent border-r-transparent transform rotate-45"></div>
+<!-- Danger segment -->
+<div class="w-32 h-32 rounded-full border-[8px] border-severity-crit absolute top-0 left-0 border-b-transparent border-l-transparent transform rotate-45 z-10" style="clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%);"></div>
+<!-- Needle -->
+<div class="absolute bottom-0 left-1/2 w-[2px] h-12 bg-text-primary origin-bottom transform rotate-[60deg]"></div>
+<div class="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-text-primary"></div>
+</div>
+<div class="bg-severity-crit/20 text-severity-crit-ink font-mono-label text-[12px] px-2 py-0.5 rounded uppercase tracking-widest border border-severity-crit/30 mb-1">
+                        Критично
+                    </div>
+<div class="font-mono-data text-[12px] text-text-tertiary">7 аномалий за 24ч</div>
+</div>
+<!-- Health Codes -->
+<div>
+<h4 class="font-mono-label text-[10px] text-text-tertiary uppercase tracking-wider mb-2">Коды здоровья</h4>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-[12px] font-mono-data">
+<span class="text-text-secondary">ML Score</span>
+<span class="text-severity-crit-ink">14.2 (Крит)</span>
+</div>
+<div class="w-full bg-surface-variant h-1 rounded overflow-hidden"><div class="bg-severity-crit h-full w-[85%]"></div></div>
+<div class="flex justify-between items-center text-[12px] font-mono-data mt-1">
+<span class="text-text-secondary">RoC (Скорость)</span>
+<span class="text-severity-warn-ink">0.8 (Вним)</span>
+</div>
+<div class="w-full bg-surface-variant h-1 rounded overflow-hidden"><div class="bg-severity-warn h-full w-[60%]"></div></div>
+<div class="flex justify-between items-center text-[12px] font-mono-data mt-1">
+<span class="text-text-secondary">Drift Score</span>
+<span class="text-severity-ok-ink">0.1 (Норм)</span>
+</div>
+<div class="w-full bg-surface-variant h-1 rounded overflow-hidden"><div class="bg-severity-ok h-full w-[15%]"></div></div>
+</div>
+</div>
+<!-- History Severity Grid -->
+<div>
+<h4 class="font-mono-label text-[10px] text-text-tertiary uppercase tracking-wider mb-2">История severity · 30 дней</h4>
+<div class="grid grid-cols-10 gap-1">
+<!-- 30 cells -->
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]" title="День 1"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-text-tertiary/20 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-warn/60 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-text-tertiary/20 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-warn/60 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-crit/80 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-warn/60 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-text-tertiary/20 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-text-tertiary/20 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-warn/60 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-crit rounded-[2px] border border-severity-crit-ink shadow-[0_0_5px_rgba(255,92,108,0.5)]"></div>
+<div class="w-full aspect-square bg-severity-crit rounded-[2px] border border-severity-crit-ink"></div>
+<div class="w-full aspect-square bg-severity-warn/60 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-text-tertiary/20 rounded-[2px]"></div>
+<div class="w-full aspect-square bg-severity-ok/40 rounded-[2px]"></div>
+</div>
+</div>
+<!-- Recent Events -->
+<div>
+<h4 class="font-mono-label text-[10px] text-text-tertiary uppercase tracking-wider mb-2">Последние события</h4>
+<div class="flex flex-col gap-2">
+<div class="flex gap-2 items-start border-b border-line-subtle pb-2">
+<div class="w-1.5 h-1.5 mt-1 rounded-full bg-severity-crit flex-shrink-0 pulse-crit"></div>
+<div class="flex flex-col">
+<span class="font-mono-data text-[11px] text-text-secondary">14:05 <span class="text-severity-crit-ink ml-1">Стат. выброс</span></span>
+<span class="font-body-base text-[11px] text-text-tertiary leading-tight">Превышение границы модели (4.2σ)</span>
+</div>
+</div>
+<div class="flex gap-2 items-start border-b border-line-subtle pb-2">
+<div class="w-1.5 h-1.5 mt-1 rounded-full bg-severity-warn flex-shrink-0"></div>
+<div class="flex flex-col">
+<span class="font-mono-data text-[11px] text-text-secondary">12:30 <span class="text-severity-warn-ink ml-1">Рост ΔV</span></span>
+<span class="font-body-base text-[11px] text-text-tertiary leading-tight">Градиент изменения выше нормы</span>
+</div>
+</div>
+<div class="flex gap-2 items-start border-b border-line-subtle pb-2">
+<div class="w-1.5 h-1.5 mt-1 rounded-full bg-text-tertiary flex-shrink-0"></div>
+<div class="flex flex-col">
+<span class="font-mono-data text-[11px] text-text-secondary">08:00 <span class="text-text-tertiary ml-1">Смена режима</span></span>
+<span class="font-body-base text-[11px] text-text-tertiary leading-tight">Переход в режим 3 (нагрузка)</span>
+</div>
+</div>
+<div class="flex gap-2 items-start border-b border-line-subtle pb-2">
+<div class="w-1.5 h-1.5 mt-1 rounded-full bg-severity-crit flex-shrink-0"></div>
+<div class="flex flex-col">
+<span class="font-mono-data text-[11px] text-text-secondary">Вчера <span class="text-severity-crit-ink ml-1">Кросс-ГПА</span></span>
+<span class="font-body-base text-[11px] text-text-tertiary leading-tight">Корреляция с ГПА-2 нарушена</span>
+</div>
+</div>
+<div class="flex gap-2 items-start">
+<div class="w-1.5 h-1.5 mt-1 rounded-full bg-severity-warn flex-shrink-0"></div>
+<div class="flex flex-col">
+<span class="font-mono-data text-[11px] text-text-secondary">10.06 <span class="text-severity-warn-ink ml-1">Физичность</span></span>
+<span class="font-body-base text-[11px] text-text-tertiary leading-tight">Противоречие термодинамике</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</body></html>

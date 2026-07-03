@@ -1,0 +1,11 @@
+# EDA dependencies (дополнение к backend/requirements.txt)
+jupyter>=1.0
+ipykernel>=6.0
+matplotlib>=3.7
+seaborn>=0.13
+python-dotenv>=1.0
+# уже есть в backend/requirements.txt, но нужны явно:
+pandas>=2.0
+numpy>=1.24
+psycopg2-binary>=2.9
+PyYAML>=6.0

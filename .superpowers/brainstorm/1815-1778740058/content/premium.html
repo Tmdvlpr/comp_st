@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>CS Monitor — Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── TOKENS ── */
+body.dark {
+  --bg:       #0c0c0e;
+  --s1:       #111113;
+  --s2:       #17171a;
+  --s3:       #1e1e22;
+  --border:   rgba(255,255,255,.07);
+  --border2:  rgba(255,255,255,.04);
+  --t1:       #e8e8ea;
+  --t2:       #6b6b6f;
+  --t3:       #3a3a3e;
+  --crit:     #c94f4f;
+  --crit-bg:  rgba(201,79,79,.08);
+  --warn:     #b87333;
+  --warn-bg:  rgba(184,115,51,.08);
+  --info:     #4a7ab5;
+  --info-bg:  rgba(74,122,181,.08);
+  --ok:       #3a7a52;
+  --ok-bg:    rgba(58,122,82,.08);
+}
+body.light {
+  --bg:       #f0f0f2;
+  --s1:       #fafafa;
+  --s2:       #f4f4f6;
+  --s3:       #ececef;
+  --border:   rgba(0,0,0,.08);
+  --border2:  rgba(0,0,0,.04);
+  --t1:       #141416;
+  --t2:       #8a8a8e;
+  --t3:       #c4c4c8;
+  --crit:     #b03a3a;
+  --crit-bg:  rgba(176,58,58,.06);
+  --warn:     #9a6020;
+  --warn-bg:  rgba(154,96,32,.06);
+  --info:     #3a66a0;
+  --info-bg:  rgba(58,102,160,.06);
+  --ok:       #2a6640;
+  --ok-bg:    rgba(42,102,64,.06);
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+  background: var(--bg);
+  color: var(--t1);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.hdr {
+  height: 44px;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.hdr-logo {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--t1);
+}
+.hdr-sep { width: 1px; height: 16px; background: var(--border); }
+.hdr-live {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 500; color: var(--t2);
+  letter-spacing: .02em;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 2px var(--ok-bg);
+}
+.hdr-meta { font-size: 11px; color: var(--t3); letter-spacing: .01em; }
+.hdr-r { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.theme-sw {
+  display: flex; background: var(--s3); border-radius: 4px;
+  padding: 2px; gap: 1px; border: none; cursor: pointer;
+}
+.sw-opt {
+  padding: 3px 9px; border-radius: 3px; font-size: 10px;
+  letter-spacing: .02em; border: none; cursor: pointer;
+  background: transparent; font-family: inherit;
+  color: var(--t3); transition: all .15s;
+}
+.sw-opt.on { background: var(--s1); color: var(--t1); box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.jrn-btn {
+  padding: 5px 12px; border-radius: 4px; border: none;
+  background: var(--s3); color: var(--t2);
+  font-size: 11px; font-weight: 500; cursor: pointer;
+  letter-spacing: .02em; font-family: inherit;
+  display: flex; align-items: center; gap: 6px;
+  transition: background .15s;
+}
+.jrn-btn:hover { background: var(--s2); color: var(--t1); }
+.jrn-count {
+  background: var(--crit); color: #fff;
+  border-radius: 3px; padding: 1px 5px; font-size: 10px; font-weight: 600;
+}
+
+/* ── STATS ROW ── */
+.stats {
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.sc {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 14px; border-radius: 5px;
+  background: var(--s2); border: 1px solid var(--border2);
+  min-width: 72px;
+}
+.sc-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px; font-weight: 500; line-height: 1;
+  letter-spacing: -.02em;
+}
+.sc-lbl {
+  font-size: 10px; font-weight: 500; color: var(--t2);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.sc.gpa  .sc-val { color: var(--ok); }
+.sc.crit .sc-val { color: var(--crit); }
+.sc.warn .sc-val { color: var(--warn); }
+.sc.info .sc-val { color: var(--info); }
+.sc.mute .sc-val { color: var(--t1); opacity: .45; }
+.sc-div { width: 1px; background: var(--border); margin: 0 4px; }
+.kiosk-btn {
+  margin-left: auto; padding: 7px 14px; border-radius: 5px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--t2); font-size: 11px; font-weight: 500;
+  cursor: pointer; letter-spacing: .02em; font-family: inherit;
+  display: flex; align-items: center; gap: 6px;
+  transition: all .15s;
+}
+.kiosk-btn:hover { border-color: var(--ok); color: var(--ok); background: var(--ok-bg); }
+
+/* ── BODY ── */
+.body {
+  flex: 1; display: flex; gap: 1px;
+  background: var(--border); overflow: hidden;
+}
+
+/* sidebar */
+.sb {
+  width: 188px; flex-shrink: 0;
+  background: var(--s1);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.sb-hdr {
+  padding: 12px 16px 8px;
+  font-size: 10px; font-weight: 600; color: var(--t2);
+  letter-spacing: .08em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.sb-scroll { flex: 1; overflow-y: auto; padding: 8px 8px; }
+.sb-scroll::-webkit-scrollbar { width: 3px; }
+.sb-scroll::-webkit-scrollbar-thumb { background: var(--s3); border-radius: 2px; }
+.gpa-hdr {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; padding: 4px 8px 4px;
+  color: var(--t2); margin-top: 4px;
+  display: flex; align-items: center; gap: 6px;
+}
+.gpa-hdr::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.sbtn {
+  width: 100%; display: flex; align-items: center; gap: 7px;
+  padding: 5px 8px; border-radius: 4px; border: none;
+  background: transparent; cursor: pointer;
+  font-size: 11px; font-weight: 400; text-align: left;
+  color: var(--t2); font-family: inherit;
+  margin-bottom: 1px; transition: all .1s;
+}
+.sbtn:hover { background: var(--s3); color: var(--t1); }
+.sbtn.sel  { background: var(--s3); color: var(--t1); }
+.sbtn-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.sbtn-dot.c { background: var(--crit); }
+.sbtn-dot.w { background: var(--warn); }
+.sbtn-dot.n { background: var(--t3); }
+.sbtn-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+.sbtn-tag {
+  font-size: 9px; padding: 1px 5px; border-radius: 2px;
+  font-weight: 500; letter-spacing: .02em; flex-shrink: 0;
+}
+.sbtn-tag.c { background: var(--crit-bg); color: var(--crit); }
+.sbtn-tag.w { background: var(--warn-bg); color: var(--warn); }
+
+/* chart */
+.chart {
+  flex: 1; background: var(--s1);
+  display: flex; flex-direction: column; min-width: 0;
+}
+.chart-hdr {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 12px;
+  flex-shrink: 0;
+}
+.chart-title { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+.chart-sub { font-size: 10px; color: var(--t2); margin-top: 3px; letter-spacing: .01em; font-family: 'JetBrains Mono', monospace; }
+.chart-r { margin-left: auto; display: flex; gap: 4px; }
+.range-btn {
+  padding: 4px 10px; border-radius: 3px; border: 1px solid var(--border);
+  background: transparent; color: var(--t2); font-size: 10px;
+  cursor: pointer; font-family: inherit; font-weight: 500;
+  letter-spacing: .02em; transition: all .1s;
+}
+.range-btn:hover { border-color: var(--info); color: var(--info); }
+.range-btn.on { background: var(--info-bg); border-color: var(--info); color: var(--info); }
+.chart-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.chart-ph {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: var(--t3);
+}
+.chart-ph-svg { opacity: .4; }
+
+/* heatmap col */
+.hm-col {
+  width: 200px; flex-shrink: 0; background: var(--s1);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.hm-col-hdr {
+  padding: 12px 16px 8px;
+  font-size: 10px; font-weight: 600; color: var(--t2);
+  letter-spacing: .08em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.hm-gpas {
+  display: flex; gap: 2px;
+  padding: 6px 16px 4px;
+  font-size: 9px; font-weight: 600; color: var(--t3);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.hm-gpa-lbl { flex: 1; text-align: center; }
+.hm-body { flex: 1; overflow-y: auto; padding: 2px 12px 8px; }
+.hm-body::-webkit-scrollbar { width: 3px; }
+.hm-body::-webkit-scrollbar-thumb { background: var(--s3); border-radius: 2px; }
+.hm-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+.hm-name { font-size: 9.5px; font-family: 'JetBrains Mono', monospace; color: var(--t2); width: 96px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-cells { display: flex; gap: 2px; }
+.hm-cell { width: 26px; height: 18px; border-radius: 2px; cursor: pointer; transition: opacity .1s; }
+.hm-cell:hover { opacity: .7; }
+.hc-c { background: var(--crit); opacity: .85; }
+.hc-w { background: var(--warn); opacity: .7; }
+.hc-o { background: var(--s3); }
+.hc-n { background: var(--border2); }
+
+/* ── JOURNAL ── */
+.jrn {
+  height: 72px; flex-shrink: 0;
+  background: var(--s1); border-top: 1px solid var(--border);
+  display: flex; flex-direction: column;
+}
+.jrn-hdr {
+  padding: 6px 20px 4px;
+  font-size: 10px; font-weight: 600; color: var(--t2);
+  letter-spacing: .08em; text-transform: uppercase;
+  flex-shrink: 0;
+}
+.jrn-items {
+  display: flex; gap: 6px; padding: 0 20px 8px;
+  overflow-x: auto; align-items: center;
+}
+.jrn-items::-webkit-scrollbar { height: 0; }
+.ji {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 10px; border-radius: 4px;
+  border: 1px solid var(--border2);
+  background: var(--s2); flex-shrink: 0; cursor: pointer;
+  transition: border-color .1s;
+}
+.ji:hover { border-color: var(--border); }
+.ji-t { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--t2); }
+.ji-n { font-size: 11px; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
+.ji-k { font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 2px; letter-spacing: .04em; text-transform: uppercase; }
+.ji-k.c { background: var(--crit-bg); color: var(--crit); }
+.ji-k.w { background: var(--warn-bg); color: var(--warn); }
+.ji-k.i { background: var(--info-bg); color: var(--info); }
+.ji-ack {
+  padding: 2px 6px; border-radius: 2px; border: 1px solid var(--border);
+  background: transparent; color: var(--t3); font-size: 9px;
+  cursor: pointer; font-family: inherit; transition: all .1s;
+}
+.ji-ack:hover { border-color: var(--ok); color: var(--ok); }
+
+/* ── KIOSK ── */
+.kiosk {
+  display: none; position: fixed; inset: 0; z-index: 100;
+  flex-direction: column; background: var(--bg);
+}
+.kiosk.on { display: flex; }
+.ki-hdr {
+  height: 52px; background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 24px; gap: 14px;
+  flex-shrink: 0;
+}
+.ki-title { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--t2); }
+.ki-clock { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--t1); }
+.ki-close {
+  margin-left: auto; padding: 6px 14px; border-radius: 4px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--t2); font-size: 11px; cursor: pointer; font-family: inherit;
+  transition: all .15s;
+}
+.ki-close:hover { border-color: var(--t1); color: var(--t1); }
+.ki-body { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); overflow: hidden; }
+.ki-tile { background: var(--s1); display: flex; flex-direction: column; padding: 28px 32px; gap: 6px; }
+.ki-gpa-name { font-size: 11px; font-weight: 600; color: var(--t2); letter-spacing: .08em; text-transform: uppercase; }
+.ki-score { font-family: 'JetBrains Mono', monospace; font-size: 64px; font-weight: 400; line-height: 1; letter-spacing: -.04em; margin: 4px 0; }
+.ki-status { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.ki-nums { display: flex; gap: 24px; margin: 12px 0; padding-top: 12px; border-top: 1px solid var(--border); }
+.ki-num-val { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 400; line-height: 1; }
+.ki-num-lbl { font-size: 10px; font-weight: 500; color: var(--t2); letter-spacing: .04em; text-transform: uppercase; margin-top: 4px; }
+.ki-events { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+.ki-event { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.ki-ev-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ki-ev-name { font-size: 12px; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
+.ki-ev-type { font-size: 10px; color: var(--t2); margin-left: auto; font-weight: 500; }
+</style>
+</head>
+<body class="dark">
+<div style="display:flex;flex-direction:column;height:100vh;overflow:hidden">
+
+<!-- HEADER -->
+<header class="hdr">
+  <span class="hdr-logo">CS MONITOR</span>
+  <div class="hdr-sep"></div>
+  <div class="hdr-live"><div class="live-dot"></div> LIVE</div>
+  <span class="hdr-meta">95 датчиков · ГПА-1 · ГПА-2 · ГПА-3 · обновлено 11:22</span>
+  <div class="hdr-r">
+    <div class="theme-sw">
+      <button class="sw-opt on" id="d" onclick="setTheme('dark')">Тёмная</button>
+      <button class="sw-opt"    id="l" onclick="setTheme('light')">Светлая</button>
+    </div>
+    <button class="jrn-btn"><span class="jrn-count">17</span> Журнал</button>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="sc gpa"><span class="sc-val">90</span><span class="sc-lbl">ГПА-1</span></div>
+  <div class="sc gpa"><span class="sc-val">81</span><span class="sc-lbl">ГПА-2</span></div>
+  <div class="sc gpa"><span class="sc-val">93</span><span class="sc-lbl">ГПА-3</span></div>
+  <div class="sc-div"></div>
+  <div class="sc crit"><span class="sc-val">21</span><span class="sc-lbl">ML</span></div>
+  <div class="sc warn"><span class="sc-val">76</span><span class="sc-lbl">Залипания</span></div>
+  <div class="sc warn"><span class="sc-val">24</span><span class="sc-lbl">Физичность</span></div>
+  <div class="sc warn"><span class="sc-val">76</span><span class="sc-lbl">Техпроцесс</span></div>
+  <div class="sc warn"><span class="sc-val">75</span><span class="sc-lbl">Скор. ΔV</span></div>
+  <div class="sc info"><span class="sc-val">22</span><span class="sc-lbl">Сезонные</span></div>
+  <div class="sc mute"><span class="sc-val">85</span><span class="sc-lbl">Uptime %</span></div>
+  <button class="kiosk-btn" onclick="document.querySelector('.kiosk').classList.add('on')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Экран дежурного
+  </button>
+</div>
+
+<!-- BODY -->
+<div class="body" style="flex:1;display:flex;gap:1px;background:var(--border);overflow:hidden">
+
+  <!-- Sidebar -->
+  <nav class="sb">
+    <div class="sb-hdr">Датчики</div>
+    <div class="sb-scroll">
+      <div class="gpa-hdr">ГПА-1</div>
+      <button class="sbtn sel"><span class="sbtn-dot c"></span><span class="sbtn-name">rpm_tnd</span><span class="sbtn-tag c">ML</span></button>
+      <button class="sbtn"><span class="sbtn-dot w"></span><span class="sbtn-name">gas_pressure_in</span><span class="sbtn-tag w">ΔV</span></button>
+      <button class="sbtn"><span class="sbtn-dot w"></span><span class="sbtn-name">vibro_front</span><span class="sbtn-tag w">Зал</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">oil_temp_in</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">rpm_st</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">fuel_gas_p</span></button>
+
+      <div class="gpa-hdr">ГПА-2</div>
+      <button class="sbtn"><span class="sbtn-dot w"></span><span class="sbtn-name">vibro_rear</span><span class="sbtn-tag w">ΔV</span></button>
+      <button class="sbtn"><span class="sbtn-dot w"></span><span class="sbtn-name">gas_leak_enc</span><span class="sbtn-tag w">Зал</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">rpm_tnd</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">rpm_tvd</span></button>
+
+      <div class="gpa-hdr">ГПА-3</div>
+      <button class="sbtn"><span class="sbtn-dot w"></span><span class="sbtn-name">gas_temp_out</span><span class="sbtn-tag w">Сез</span></button>
+      <button class="sbtn"><span class="sbtn-dot w"></span><span class="sbtn-name">fuel_gas_p</span><span class="sbtn-tag c">ML</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">vibro_front</span></button>
+      <button class="sbtn"><span class="sbtn-dot n"></span><span class="sbtn-name" style="color:var(--t3)">rpm_tvd</span></button>
+    </div>
+  </nav>
+
+  <!-- Chart -->
+  <div class="chart">
+    <div class="chart-hdr">
+      <div>
+        <div class="chart-title">ГПА-1 · RPM TND</div>
+        <div class="chart-sub">rpm_tnd · R² 0.986 · диапазон 0–5 229 · CatBoost</div>
+      </div>
+      <div class="chart-r">
+        <button class="range-btn">1д</button>
+        <button class="range-btn">3д</button>
+        <button class="range-btn">7д</button>
+        <button class="range-btn">30д</button>
+        <button class="range-btn on">Всё</button>
+      </div>
+    </div>
+    <div class="chart-body" style="padding:0;position:relative;overflow:hidden">
+      <svg width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none" style="position:absolute;inset:0">
+        <defs>
+          <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4a7ab5" stop-opacity=".12"/>
+            <stop offset="100%" stop-color="#4a7ab5" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- grid lines -->
+        <line x1="0" y1="60"  x2="800" y2="60"  stroke="var(--border)" stroke-width="1"/>
+        <line x1="0" y1="120" x2="800" y2="120" stroke="var(--border)" stroke-width="1"/>
+        <line x1="0" y1="180" x2="800" y2="180" stroke="var(--border)" stroke-width="1"/>
+        <line x1="0" y1="240" x2="800" y2="240" stroke="var(--border)" stroke-width="1"/>
+        <line x1="133" y1="0" x2="133" y2="300" stroke="var(--border)" stroke-width="1"/>
+        <line x1="266" y1="0" x2="266" y2="300" stroke="var(--border)" stroke-width="1"/>
+        <line x1="400" y1="0" x2="400" y2="300" stroke="var(--border)" stroke-width="1"/>
+        <line x1="533" y1="0" x2="533" y2="300" stroke="var(--border)" stroke-width="1"/>
+        <line x1="666" y1="0" x2="666" y2="300" stroke="var(--border)" stroke-width="1"/>
+        <!-- confidence band -->
+        <path d="M0,200 C40,198 60,80 120,75 C180,70 200,195 260,190 C320,185 340,72 400,68 C460,64 480,182 540,178 C600,174 640,66 700,62 C740,60 770,175 800,172 L800,240 C770,238 740,100 700,105 C640,112 600,220 540,224 C480,228 460,115 400,118 C340,121 320,232 260,236 C200,240 180,122 120,128 C60,134 40,242 0,244 Z" fill="url(#ga)"/>
+        <!-- confidence band border top -->
+        <path d="M0,200 C40,198 60,80 120,75 C180,70 200,195 260,190 C320,185 340,72 400,68 C460,64 480,182 540,178 C600,174 640,66 700,62 C740,60 770,175 800,172" fill="none" stroke="#4a7ab5" stroke-width="1" stroke-dasharray="4,3" opacity=".35"/>
+        <path d="M0,244 C40,242 60,134 120,128 C180,122 200,240 260,236 C320,232 340,121 400,118 C460,115 480,228 540,224 C600,220 640,112 700,105 C740,100 770,238 800,240" fill="none" stroke="#4a7ab5" stroke-width="1" stroke-dasharray="4,3" opacity=".35"/>
+        <!-- model prediction line -->
+        <path d="M0,222 C40,220 60,107 120,101 C180,96 200,218 260,213 C320,208 340,96 400,93 C460,90 480,205 540,201 C600,197 640,89 700,84 C740,81 770,206 800,206" fill="none" stroke="#4a7ab5" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <!-- actual value line -->
+        <path d="M0,218 C30,215 55,95 115,88 C160,84 195,210 255,205 C310,200 345,88 398,85 C452,82 478,198 536,193 C592,188 638,80 696,76 C738,73 768,198 800,200" fill="none" stroke="var(--t1)" stroke-width="2" opacity=".7"/>
+        <!-- anomaly markers -->
+        <circle cx="115" cy="88" r="5" fill="none" stroke="#c94f4f" stroke-width="1.5"/>
+        <circle cx="115" cy="88" r="3" fill="#c94f4f"/>
+        <circle cx="696" cy="76" r="5" fill="none" stroke="#c94f4f" stroke-width="1.5"/>
+        <circle cx="696" cy="76" r="3" fill="#c94f4f"/>
+        <!-- axis labels -->
+        <text x="10" y="258" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">01 май</text>
+        <text x="143" y="258" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">02 май</text>
+        <text x="276" y="258" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">03 май</text>
+        <text x="410" y="258" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">04 май</text>
+        <text x="543" y="258" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">05 май</text>
+        <text x="676" y="258" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">06 май</text>
+        <text x="6" y="65"  font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">5000</text>
+        <text x="6" y="125" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">4000</text>
+        <text x="6" y="185" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">3000</text>
+        <text x="6" y="245" font-size="9" fill="var(--t3)" font-family="JetBrains Mono, monospace">2000</text>
+      </svg>
+      <!-- legend -->
+      <div style="position:absolute;top:12px;right:16px;display:flex;gap:14px;font-size:10px;color:var(--t2);background:var(--s1);padding:5px 10px;border-radius:4px;border:1px solid var(--border)">
+        <span style="display:flex;align-items:center;gap:5px"><svg width="16" height="2"><line x1="0" y1="1" x2="16" y2="1" stroke="var(--t1)" stroke-width="2" opacity=".7"/></svg>Реальность</span>
+        <span style="display:flex;align-items:center;gap:5px"><svg width="16" height="2"><line x1="0" y1="1" x2="16" y2="1" stroke="#4a7ab5" stroke-width="1.5" stroke-dasharray="5,2"/></svg>Модель</span>
+        <span style="display:flex;align-items:center;gap:5px"><svg width="8" height="8"><circle cx="4" cy="4" r="3" fill="#c94f4f"/></svg>Аномалия</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heatmap -->
+  <div class="hm-col">
+    <div class="hm-col-hdr">Тепловая карта</div>
+    <div class="hm-gpas">
+      <span class="hm-gpa-lbl" style="margin-left:96px">1</span>
+      <span class="hm-gpa-lbl">2</span>
+      <span class="hm-gpa-lbl">3</span>
+    </div>
+    <div class="hm-body">
+      <div class="hm-row"><span class="hm-name">rpm_tnd</span><div class="hm-cells"><div class="hm-cell hc-c" title="ГПА-1: ML"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">rpm_tvd</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">rpm_st</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">gas_pressure_in</span><div class="hm-cells"><div class="hm-cell hc-w"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-c"></div></div></div>
+      <div class="hm-row"><span class="hm-name">gas_pressure_out</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">gas_temp_in</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">gas_temp_out</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div></div></div>
+      <div class="hm-row"><span class="hm-name">vibro_front</span><div class="hm-cells"><div class="hm-cell hc-w"></div><div class="hm-cell hc-c"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">vibro_rear</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">vibro_st_support</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">temp_bearing_f</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div></div></div>
+      <div class="hm-row"><span class="hm-name">temp_bearing_r</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">oil_temp_in</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">oil_temp_out</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">fuel_gas_p</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-c"></div></div></div>
+      <div class="hm-row"><span class="hm-name">fuel_gas_flow</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">gas_leak_enc</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div><div class="hm-cell hc-w"></div></div></div>
+      <div class="hm-row"><span class="hm-name">gas_leak_bftg</span><div class="hm-cells"><div class="hm-cell hc-w"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">anti_surge</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div></div></div>
+      <div class="hm-row"><span class="hm-name">axial_shift_t1</span><div class="hm-cells"><div class="hm-cell hc-o"></div><div class="hm-cell hc-o"></div><div class="hm-cell hc-w"></div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- JOURNAL -->
+<div class="jrn">
+  <div class="jrn-hdr">Журнал событий</div>
+  <div class="jrn-items">
+    <div class="ji"><span class="ji-t">11:22</span><span class="ji-n">rpm_tnd · ГПА-1</span><span class="ji-k c">ML</span><button class="ji-ack">✓</button></div>
+    <div class="ji"><span class="ji-t">11:20</span><span class="ji-n">vibro_front · ГПА-2</span><span class="ji-k w">Залипание</span><button class="ji-ack">✓</button></div>
+    <div class="ji"><span class="ji-t">11:15</span><span class="ji-n">gas_pressure · ГПА-1</span><span class="ji-k w">Скор. ΔV</span><button class="ji-ack">✓</button></div>
+    <div class="ji"><span class="ji-t">11:10</span><span class="ji-n">gas_temp_out · ГПА-3</span><span class="ji-k i">Сезонная</span><button class="ji-ack">✓</button></div>
+    <div class="ji"><span class="ji-t">11:05</span><span class="ji-n">fuel_gas_p · ГПА-3</span><span class="ji-k c">ML</span><button class="ji-ack">✓</button></div>
+    <div class="ji"><span class="ji-t">10:58</span><span class="ji-n">oil_temp_in · ГПА-2</span><span class="ji-k w">Физичность</span><button class="ji-ack">✓</button></div>
+    <div class="ji"><span class="ji-t">10:51</span><span class="ji-n">axial_shift · ГПА-3</span><span class="ji-k w">Скор. ΔV</span><button class="ji-ack">✓</button></div>
+  </div>
+</div>
+
+<!-- KIOSK -->
+<div class="kiosk">
+  <div class="ki-hdr">
+    <span class="ki-title">Экран дежурного</span>
+    <span class="ki-clock" id="kclk">14.05.2026 · 11:22:07</span>
+    <button class="ki-close" onclick="document.querySelector('.kiosk').classList.remove('on')">Закрыть — Esc</button>
+  </div>
+  <div class="ki-body">
+    <div class="ki-tile">
+      <div class="ki-gpa-name">ГПА-1</div>
+      <div class="ki-score" style="color:var(--ok)">90</div>
+      <div class="ki-status" style="color:var(--ok)">Норма</div>
+      <div class="ki-nums">
+        <div><div class="ki-num-val" style="color:var(--crit)">1</div><div class="ki-num-lbl">Тревога</div></div>
+        <div><div class="ki-num-val" style="color:var(--warn)">3</div><div class="ki-num-lbl">Внимание</div></div>
+        <div><div class="ki-num-val" style="color:var(--t2)">29</div><div class="ki-num-lbl">Датчиков</div></div>
+      </div>
+      <div class="ki-events">
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--crit)"></div><span class="ki-ev-name">rpm_tnd</span><span class="ki-ev-type">ML-аномалия</span></div>
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--warn)"></div><span class="ki-ev-name">gas_pressure</span><span class="ki-ev-type">Скор. ΔV</span></div>
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--warn)"></div><span class="ki-ev-name">vibro_front</span><span class="ki-ev-type">Залипание</span></div>
+      </div>
+    </div>
+    <div class="ki-tile">
+      <div class="ki-gpa-name">ГПА-2</div>
+      <div class="ki-score" style="color:var(--ok)">81</div>
+      <div class="ki-status" style="color:var(--ok)">Норма</div>
+      <div class="ki-nums">
+        <div><div class="ki-num-val" style="color:var(--crit)">0</div><div class="ki-num-lbl">Тревога</div></div>
+        <div><div class="ki-num-val" style="color:var(--warn)">5</div><div class="ki-num-lbl">Внимание</div></div>
+        <div><div class="ki-num-val" style="color:var(--t2)">28</div><div class="ki-num-lbl">Датчиков</div></div>
+      </div>
+      <div class="ki-events">
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--warn)"></div><span class="ki-ev-name">vibro_rear</span><span class="ki-ev-type">Скор. ΔV</span></div>
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--warn)"></div><span class="ki-ev-name">gas_leak_enc</span><span class="ki-ev-type">Залипание</span></div>
+      </div>
+    </div>
+    <div class="ki-tile">
+      <div class="ki-gpa-name">ГПА-3</div>
+      <div class="ki-score" style="color:var(--ok)">93</div>
+      <div class="ki-status" style="color:var(--ok)">Норма</div>
+      <div class="ki-nums">
+        <div><div class="ki-num-val" style="color:var(--crit)">1</div><div class="ki-num-lbl">Тревога</div></div>
+        <div><div class="ki-num-val" style="color:var(--warn)">2</div><div class="ki-num-lbl">Внимание</div></div>
+        <div><div class="ki-num-val" style="color:var(--t2)">35</div><div class="ki-num-lbl">Датчиков</div></div>
+      </div>
+      <div class="ki-events">
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--crit)"></div><span class="ki-ev-name">fuel_gas_p</span><span class="ki-ev-type">ML-аномалия</span></div>
+        <div class="ki-event"><div class="ki-ev-dot" style="background:var(--warn)"></div><span class="ki-ev-name">gas_temp_out</span><span class="ki-ev-type">Сезонная</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function setTheme(t) {
+  document.body.className = t;
+  document.getElementById('d').classList.toggle('on', t==='dark');
+  document.getElementById('l').classList.toggle('on', t==='light');
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelector('.kiosk').classList.remove('on'); });
+setInterval(()=>{
+  const n=new Date(), p=x=>String(x).padStart(2,'0');
+  document.getElementById('kclk').textContent = `${p(n.getDate())}.${p(n.getMonth()+1)}.${n.getFullYear()} · ${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+},1000);
+</script>
+</body>
+</html>

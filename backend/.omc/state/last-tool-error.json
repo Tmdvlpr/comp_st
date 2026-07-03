@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"for pid in $(netstat -ano | grep \\\":8000\\\" | grep LISTENING | awk '{print $NF}' | sort -u); do taskkill //PID $pid //F 2>&1; done; cd \\\"c:/Users/Timur/Desktop/UTG/КС/cs_4/backend\\\" && \\\"c:...",
+  "error": "Exit code 28\nSUCCESS: The process with PID 5208 has been terminated.\r\nwarmup 000",
+  "timestamp": "2026-06-12T06:23:11.267Z",
+  "retry_count": 1
+}

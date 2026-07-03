@@ -1,0 +1,31 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: 🜂
+      - text: UTG
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - button "UZ" [ref=e9] [cursor=pointer]
+        - button "RU" [ref=e10] [cursor=pointer]
+      - button "☀" [ref=e11] [cursor=pointer]
+      - button "🔔" [ref=e12] [cursor=pointer]
+      - button "☰" [ref=e13] [cursor=pointer]
+  - main [ref=e14]:
+    - heading "Компрессорные станции" [level=1] [ref=e15]
+    - button "Охангаронская КС В резерве ТРАНЗИТ —млн м³/сут Агрегаты 0/3 Pвх —МПа Pвых —МПа" [ref=e17] [cursor=pointer]:
+      - generic [ref=e18]:
+        - generic [ref=e19]: Охангаронская КС
+        - generic [ref=e21]: В резерве
+        - generic [ref=e23]:
+          - generic [ref=e24]: ТРАНЗИТ
+          - generic [ref=e25]: —млн м³/сут
+      - generic [ref=e28]:
+        - generic [ref=e29]:
+          - generic [ref=e30]: Агрегаты
+          - generic [ref=e31]: 0/3
+        - generic [ref=e32]:
+          - generic [ref=e33]: Pвх
+          - generic [ref=e34]: —МПа
+        - generic [ref=e35]:
+          - generic [ref=e36]: Pвых
+          - generic [ref=e37]: —МПа

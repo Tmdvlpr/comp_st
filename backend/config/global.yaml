@@ -1,0 +1,3 @@
+default_station: ohangaron
+anomaly_table: anomalies
+journal_table: "journal notifications"

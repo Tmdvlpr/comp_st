@@ -1,0 +1,188 @@
+<!-- @dsCard group="Экраны" name="Дежурный режим" -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дежурный режим — CS Monitor AI</title>
+<style>
+:root{
+  --bg:#0d1426;
+  --app-grad:radial-gradient(1100px 620px at 12% -12%,rgba(96,66,168,.34),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(40,86,168,.22),transparent 55%),linear-gradient(150deg,#1a1533 0%,#141b30 52%,#0c1222 100%);
+  --surface:rgba(26,31,56,.78);--surface-2:rgba(38,44,74,.82);--surface-3:rgba(52,58,94,.88);
+  --line:rgba(132,140,200,.16);--line-2:rgba(132,140,200,.30);
+  --text:#E6ECF6;--text-1:#fff;--text-2:#B7C0D6;--text-3:#9BA5BC;
+  --accent:#58A6FF;--accent-2:#7CC0FF;--accent-strong:#2563c4;--on-accent:#fff;--accent-glow:rgba(88,166,255,.16);
+  --crit:#FF5C6C;--warn:#F5B14C;--info:#8C93B0;--ok:#3FB950;--teal:#3FB8AF;
+  --crit-ink:#FF8893;--warn-ink:#F7C06B;--ok-ink:#6EE67D;--info-ink:#C5CBDF;--tl-ok:#22351f;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+  --fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:30px;--fs-2xl:56px;
+  --shadow-md:0 8px 30px rgba(0,0,0,.35);
+  --font-display:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',ui-monospace,'Cascadia Code',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--font-display);font-size:var(--fs-sm);color:var(--text);background:var(--app-grad) fixed,var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono)}
+.sev-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sev-dot.crit{background:var(--crit);box-shadow:0 0 4px var(--crit)}
+.sev-dot.warn{background:var(--warn)}.sev-dot.info{background:var(--info)}.sev-dot.ok{background:var(--ok)}
+.badge-sev{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono)}
+.badge-sev.crit{background:color-mix(in srgb,var(--crit) 20%,transparent);color:var(--crit-ink)}
+.badge-sev.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)}
+.badge-sev.info{background:color-mix(in srgb,var(--info) 20%,transparent);color:var(--info-ink)}
+
+/* ── Kiosk shell ────────────────────────────── */
+.kiosk{min-height:100vh;display:flex;flex-direction:column;padding:22px 34px 26px}
+
+.exit-wrap{display:flex;justify-content:center;margin-bottom:14px}
+.exit-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 22px;border-radius:10px;border:1px solid var(--line-2);
+  background:var(--surface-2);color:var(--text-2);font-family:var(--font-mono);font-size:13px;letter-spacing:.12em;cursor:pointer}
+.exit-btn:hover{border-color:var(--crit);color:var(--crit-ink)}
+
+.k-head{display:flex;align-items:center;justify-content:space-between;padding:10px 4px 20px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.k-status{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;color:var(--text-1);letter-spacing:.02em}
+.k-status .pulse{width:11px;height:11px;border-radius:50%;background:var(--crit);box-shadow:0 0 8px var(--crit);animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.k-status .cnt{color:var(--text-2);font-weight:400}
+.k-clock{text-align:right}
+.k-clock .time{font-family:var(--font-mono);font-size:44px;font-weight:700;color:var(--text-1);line-height:1;letter-spacing:.02em}
+.k-clock .date{margin-top:6px;font-size:14px;color:var(--text-2)}
+
+/* ── GPA tiles ──────────────────────────────── */
+.tiles{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;min-height:0}
+.tile{border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);
+  padding:22px 24px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-md)}
+.tile.sev-crit{box-shadow:var(--shadow-md),inset 0 0 0 1px color-mix(in srgb,var(--crit) 55%,transparent);border-color:color-mix(in srgb,var(--crit) 55%,var(--line))}
+.tile.sev-warn{border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}
+
+.t-head{display:flex;align-items:flex-start;justify-content:space-between}
+.t-id .nm{font-size:28px;font-weight:700;color:var(--text-1);letter-spacing:.01em}
+.t-id .sub{margin-top:2px;font-size:13px;color:var(--text-3)}
+.t-badge{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:6px;white-space:nowrap}
+.t-badge.crit{background:color-mix(in srgb,var(--crit) 22%,transparent);color:var(--crit-ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--crit) 50%,transparent)}
+.t-badge.warn{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn-ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--warn) 50%,transparent)}
+.t-badge.off{background:var(--surface-3);color:var(--text-3);box-shadow:inset 0 0 0 1px var(--line-2)}
+
+.rpm-wrap{display:flex;align-items:baseline;justify-content:center;gap:10px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.rpm-val{font-family:var(--font-mono);font-size:72px;font-weight:700;color:var(--text-1);line-height:1;letter-spacing:-.01em}
+.rpm-val.off{color:var(--text-3)}
+.rpm-unit{font-size:15px;color:var(--text-3)}
+
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cnt-box{border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface-2);padding:8px 6px;text-align:center}
+.cnt-box .cn-lab{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)}
+.cnt-box .cn-val{margin-top:4px;font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)}
+.cnt-box.crit .cn-val{color:var(--crit-ink)}
+.cnt-box.warn .cn-val{color:var(--warn-ink)}
+.cnt-box.info .cn-val{color:var(--info-ink)}
+
+.events{flex:1;min-height:0;display:flex;flex-direction:column}
+.ev-t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.ev-list{display:flex;flex-direction:column;gap:6px}
+.ev-row{display:flex;align-items:center;gap:10px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+.ev-row:last-child{border-bottom:none}
+.ev-row .t{font-family:var(--font-mono);color:var(--text-3);width:44px;flex-shrink:0}
+.ev-row .n{color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-empty{color:var(--text-3);font-size:13px;padding:10px 0}
+
+/* ── Footer ─────────────────────────────────── */
+.k-foot{display:flex;justify-content:center;gap:28px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.k-foot span{font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:.04em}
+.k-foot b{color:var(--text-2);font-weight:600}
+</style>
+</head>
+<body>
+<div class="kiosk">
+
+  <div class="exit-wrap">
+    <button class="exit-btn" title="Выйти (K или Esc)">⏻ ВЫЙТИ</button>
+  </div>
+
+  <div class="k-head">
+    <div class="k-status"><span class="pulse"></span>ДЕЖУРНЫЙ РЕЖИМ <span class="cnt">· 128 датчиков</span></div>
+    <div class="k-clock">
+      <div class="time mono">14:32:07</div>
+      <div class="date">12 июня 2026</div>
+    </div>
+  </div>
+
+  <div class="tiles">
+
+    <!-- ГПА-1 — КРИТИЧНО -->
+    <section class="tile sev-crit">
+      <div class="t-head">
+        <div class="t-id"><div class="nm">ГПА-1</div><div class="sub">Газоперекачивающий агрегат</div></div>
+        <span class="t-badge crit">КРИТИЧНО</span>
+      </div>
+      <div class="rpm-wrap"><span class="rpm-val mono">4820</span><span class="rpm-unit">об/мин</span></div>
+      <div class="counters">
+        <div class="cnt-box crit"><div class="cn-lab">Критич.</div><div class="cn-val">3</div></div>
+        <div class="cnt-box warn"><div class="cn-lab">Предупр.</div><div class="cn-val">2</div></div>
+        <div class="cnt-box info"><div class="cn-lab">Инфо</div><div class="cn-val">1</div></div>
+        <div class="cnt-box"><div class="cn-lab">Всего</div><div class="cn-val">6</div></div>
+      </div>
+      <div class="events">
+        <div class="ev-t">Последние события</div>
+        <div class="ev-list">
+          <div class="ev-row"><span class="badge-sev crit">КРИТ</span><span class="t">14:05</span><span class="n">Давление на выходе</span></div>
+          <div class="ev-row"><span class="badge-sev crit">КРИТ</span><span class="t">13:48</span><span class="n">Темп. газа за ТВД</span></div>
+          <div class="ev-row"><span class="badge-sev warn">ПРЕД</span><span class="t">11:40</span><span class="n">Темп. подшипника</span></div>
+          <div class="ev-row"><span class="badge-sev warn">ПРЕД</span><span class="t">09:12</span><span class="n">Вибрация ОС</span></div>
+          <div class="ev-row"><span class="badge-sev info">ИНФО</span><span class="t">08:03</span><span class="n">Кросс-ГПА отклонение</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ГПА-2 — ВНИМАНИЕ -->
+    <section class="tile sev-warn">
+      <div class="t-head">
+        <div class="t-id"><div class="nm">ГПА-2</div><div class="sub">Газоперекачивающий агрегат</div></div>
+        <span class="t-badge warn">ВНИМАНИЕ</span>
+      </div>
+      <div class="rpm-wrap"><span class="rpm-val mono">4715</span><span class="rpm-unit">об/мин</span></div>
+      <div class="counters">
+        <div class="cnt-box"><div class="cn-lab">Критич.</div><div class="cn-val">0</div></div>
+        <div class="cnt-box warn"><div class="cn-lab">Предупр.</div><div class="cn-val">2</div></div>
+        <div class="cnt-box"><div class="cn-lab">Инфо</div><div class="cn-val">0</div></div>
+        <div class="cnt-box"><div class="cn-lab">Всего</div><div class="cn-val">2</div></div>
+      </div>
+      <div class="events">
+        <div class="ev-t">Последние события</div>
+        <div class="ev-list">
+          <div class="ev-row"><span class="badge-sev warn">ПРЕД</span><span class="t">12:55</span><span class="n">Перепад на АВО</span></div>
+          <div class="ev-row"><span class="badge-sev warn">ПРЕД</span><span class="t">10:21</span><span class="n">Темп. подшипника</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ГПА-3 — ОСТАНОВЛЕН -->
+    <section class="tile">
+      <div class="t-head">
+        <div class="t-id"><div class="nm">ГПА-3</div><div class="sub">Газоперекачивающий агрегат</div></div>
+        <span class="t-badge off">ОСТАНОВЛЕН</span>
+      </div>
+      <div class="rpm-wrap"><span class="rpm-val mono off">—</span><span class="rpm-unit">об/мин</span></div>
+      <div class="counters">
+        <div class="cnt-box"><div class="cn-lab">Критич.</div><div class="cn-val">0</div></div>
+        <div class="cnt-box"><div class="cn-lab">Предупр.</div><div class="cn-val">0</div></div>
+        <div class="cnt-box"><div class="cn-lab">Инфо</div><div class="cn-val">0</div></div>
+        <div class="cnt-box"><div class="cn-lab">Всего</div><div class="cn-val">0</div></div>
+      </div>
+      <div class="events">
+        <div class="ev-t">Последние события</div>
+        <div class="ev-empty">Нет событий</div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="k-foot">
+    <span><b>K / Esc</b> — выйти</span>
+    <span><b>J</b> — журнал</span>
+  </div>
+
+</div>
+</body>
+</html>

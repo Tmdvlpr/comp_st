@@ -1,0 +1,177 @@
+<!-- @dsCard group="Экраны" name="Сменный отчёт" -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сменный отчёт — CS Monitor AI</title>
+<style>
+:root{
+  --bg:#0d1426;
+  --app-grad:radial-gradient(1100px 620px at 12% -12%,rgba(96,66,168,.34),transparent 58%),radial-gradient(900px 500px at 100% 0%,rgba(40,86,168,.22),transparent 55%),linear-gradient(150deg,#1a1533 0%,#141b30 52%,#0c1222 100%);
+  --surface:rgba(26,31,56,.78);--surface-2:rgba(38,44,74,.82);--surface-3:rgba(52,58,94,.88);
+  --line:rgba(132,140,200,.16);--line-2:rgba(132,140,200,.30);
+  --text:#E6ECF6;--text-1:#fff;--text-2:#B7C0D6;--text-3:#9BA5BC;
+  --accent:#58A6FF;--accent-2:#7CC0FF;--accent-strong:#2563c4;--on-accent:#fff;--accent-glow:rgba(88,166,255,.16);
+  --crit:#FF5C6C;--warn:#F5B14C;--info:#8C93B0;--ok:#3FB950;--teal:#3FB8AF;
+  --crit-ink:#FF8893;--warn-ink:#F7C06B;--ok-ink:#6EE67D;--info-ink:#C5CBDF;--tl-ok:#22351f;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+  --fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:30px;--fs-2xl:56px;
+  --shadow-md:0 8px 30px rgba(0,0,0,.35);
+  --font-display:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',ui-monospace,'Cascadia Code',monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--font-display);font-size:var(--fs-sm);color:var(--text);background:var(--app-grad) fixed,var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono)}
+.sev-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sev-dot.crit{background:var(--crit);box-shadow:0 0 4px var(--crit)}
+.sev-dot.warn{background:var(--warn)}.sev-dot.info{background:var(--info)}.sev-dot.ok{background:var(--ok)}
+.badge-sev{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono)}
+.badge-sev.crit{background:color-mix(in srgb,var(--crit) 20%,transparent);color:var(--crit-ink)}
+.badge-sev.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn-ink)}
+.badge-sev.info{background:color-mix(in srgb,var(--info) 20%,transparent);color:var(--info-ink)}
+
+/* ── dialog shell ───────────────────────────── */
+.dialog{min-height:100vh;display:flex;flex-direction:column}
+
+/* topbar (hidden on print) */
+.topbar{display:flex;align-items:center;gap:10px;padding:0 12px;height:36px;flex-shrink:0;
+  background:var(--surface);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.spacer{flex:1}
+.tb-btn{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2);font-size:12px;cursor:pointer}
+.tb-btn:hover{border-color:var(--line-2);color:var(--text)}
+.tb-btn.danger:hover{border-color:var(--crit);color:var(--crit-ink)}
+.tb-title{color:var(--text-1);font-weight:600;font-size:13px}
+
+/* document */
+.doc-scroll{flex:1;overflow:auto;padding:28px 16px 60px}
+.doc{max-width:960px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:36px 40px;box-shadow:var(--shadow-md)}
+.doc h1{font-size:var(--fs-xl);font-weight:700;color:var(--text-1);margin:0 0 6px}
+.doc .meta{font-family:var(--font-mono);font-size:12px;color:var(--text-3);margin:0 0 28px}
+.doc h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2);border-bottom:1px solid var(--line);padding-bottom:8px;margin:28px 0 14px}
+.doc h2:first-of-type{margin-top:0}
+
+/* gpa cards */
+.gpa-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gpa-card{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface-2);padding:14px}
+.gpa-card.has-crit{box-shadow:inset 3px 0 0 var(--crit);border-color:color-mix(in srgb,var(--crit) 40%,var(--line))}
+.gpa-card .nm{font-size:var(--fs-md);font-weight:700;color:var(--text-1);margin-bottom:6px}
+.gpa-card .status{font-family:var(--font-mono);font-size:12px;color:var(--text-2)}
+.gpa-card .status.run{color:var(--ok-ink)}
+.gpa-card .status.stop{color:var(--text-3)}
+.gpa-card .warn-line{margin-top:8px;font-size:12px;color:var(--crit-ink);display:flex;align-items:center;gap:5px}
+
+/* kind chips summary */
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.kind-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--text-2)}
+.kind-chip b{font-family:var(--font-mono);color:var(--text-1);font-weight:700}
+
+/* events table */
+table.ev-table{width:100%;border-collapse:collapse;font-size:12.5px}
+table.ev-table thead th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);font-weight:600;padding:0 10px 8px;border-bottom:1px solid var(--line-2)}
+table.ev-table tbody td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--text-2);vertical-align:middle}
+table.ev-table tbody tr:last-child td{border-bottom:none}
+table.ev-table td.t,table.ev-table td.gpa{font-family:var(--font-mono);color:var(--text-1);white-space:nowrap}
+table.ev-table td.sensor{color:var(--text-1)}
+table.ev-table td.lvl.crit{color:var(--crit-ink);font-weight:700}
+table.ev-table td.ack{text-align:center;font-family:var(--font-mono)}
+table.ev-table td.ack.yes{color:var(--ok-ink)}
+table.ev-table td.ack.no{color:var(--text-3)}
+
+/* ── print ──────────────────────────────────── */
+@media print{
+  @page{size:A4 portrait;margin:14mm}
+  body{background:#fff !important}
+  .topbar{display:none !important}
+  .doc-scroll{overflow:visible;padding:0}
+  .doc{max-width:none;margin:0;background:#fff;border:none;box-shadow:none;border-radius:0;padding:0;color:#0a0e1c}
+  .doc h1{color:#0a0e1c}
+  .doc .meta{color:#3d4563}
+  .doc h2{color:#3c486a;border-bottom-color:#c7cbe0}
+  .gpa-card{background:#f4f5fa;border-color:#d7dae8}
+  .gpa-card.has-crit{border-color:#d8394a}
+  .gpa-card .nm{color:#0a0e1c}
+  .gpa-card .status{color:#3c486a}
+  .gpa-card .status.run{color:#1f9d54}
+  .gpa-card .status.stop{color:#3d4563}
+  .gpa-card .warn-line{color:#d8394a}
+  .kind-chip{background:#f4f5fa;border-color:#d7dae8;color:#3c486a}
+  .kind-chip b{color:#0a0e1c}
+  table.ev-table thead th{color:#3d4563;border-bottom-color:#9aa0c0}
+  table.ev-table tbody td{color:#3c486a;border-bottom-color:#e0e2ee}
+  table.ev-table td.t,table.ev-table td.gpa,table.ev-table td.sensor{color:#0a0e1c}
+  table.ev-table td.lvl.crit{color:#d8394a}
+  table.ev-table td.ack.yes{color:#1f9d54}
+  table.ev-table td.ack.no{color:#3d4563}
+}
+</style>
+</head>
+<body>
+<div class="dialog">
+
+  <!-- ── TOOLBAR (hidden on print) ── -->
+  <div class="topbar">
+    <span class="tb-title">Сменный отчёт</span>
+    <span class="spacer"></span>
+    <button class="tb-btn">⎙ Печать</button>
+    <button class="tb-btn danger">✕ Закрыть</button>
+  </div>
+
+  <!-- ── DOCUMENT ── -->
+  <div class="doc-scroll">
+    <div class="doc">
+      <h1>Отчёт смены — Охангаронская КС</h1>
+      <p class="meta">Сформировано: 12.06.2026 14:32 · период: последние 12 часов</p>
+
+      <h2>Состояние агрегатов</h2>
+      <div class="gpa-cards">
+        <div class="gpa-card has-crit">
+          <div class="nm">ГПА-1</div>
+          <div class="status run">В РАБОТЕ · 4820 об/мин</div>
+          <div class="warn-line">⚠ есть критические датчики</div>
+        </div>
+        <div class="gpa-card">
+          <div class="nm">ГПА-2</div>
+          <div class="status run">В РАБОТЕ · 4610 об/мин</div>
+        </div>
+        <div class="gpa-card">
+          <div class="nm">ГПА-3</div>
+          <div class="status stop">ОСТАНОВЛЕН</div>
+        </div>
+      </div>
+
+      <h2>Сводка по типам (34 событий)</h2>
+      <div class="chip-row">
+        <span class="kind-chip">Стат. выброс: <b>14</b></span>
+        <span class="kind-chip">Скачок ΔV: <b>5</b></span>
+        <span class="kind-chip">Кросс-ГПА отклонение: <b>11</b></span>
+        <span class="kind-chip">Смена режима: <b>2</b></span>
+        <span class="kind-chip">Сбой физичности: <b>2</b></span>
+      </div>
+
+      <h2>События за последние 12 часов</h2>
+      <table class="ev-table">
+        <thead>
+          <tr><th>Время</th><th>ГПА</th><th>Датчик</th><th>Тип</th><th>Уровень</th><th>Квитировано</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="t">14:05</td><td class="gpa">ГПА-1</td><td class="sensor">Давление на выходе</td><td>Стат. выброс</td><td class="lvl crit">Критично</td><td class="ack no">—</td></tr>
+          <tr><td class="t">13:52</td><td class="gpa">ГПА-1</td><td class="sensor">Кросс-ГПА z</td><td>Кросс-ГПА отклонение</td><td class="lvl">Инфо</td><td class="ack yes">✓ да</td></tr>
+          <tr><td class="t">13:20</td><td class="gpa">ГПА-2</td><td class="sensor">Темп. подшипника</td><td>Скачок ΔV</td><td class="lvl">Предупрежд.</td><td class="ack yes">✓ да</td></tr>
+          <tr><td class="t">12:44</td><td class="gpa">ГПА-1</td><td class="sensor">Темп. газа за ТВД</td><td>Стат. выброс</td><td class="lvl crit">Критично</td><td class="ack no">—</td></tr>
+          <tr><td class="t">11:40</td><td class="gpa">ГПА-1</td><td class="sensor">Давление на выходе</td><td>Скачок ΔV</td><td class="lvl">Предупрежд.</td><td class="ack yes">✓ да</td></tr>
+          <tr><td class="t">10:58</td><td class="gpa">ГПА-2</td><td class="sensor">Перепад на АВО</td><td>Кросс-ГПА отклонение</td><td class="lvl">Инфо</td><td class="ack no">—</td></tr>
+          <tr><td class="t">09:12</td><td class="gpa">ГПА-1</td><td class="sensor">Давление на выходе</td><td>Стат. выброс</td><td class="lvl crit">Критично</td><td class="ack yes">✓ да</td></tr>
+          <tr><td class="t">08:37</td><td class="gpa">ГПА-3</td><td class="sensor">Обороты ТНД</td><td>Смена режима</td><td class="lvl">Инфо</td><td class="ack yes">✓ да</td></tr>
+          <tr><td class="t">07:15</td><td class="gpa">ГПА-2</td><td class="sensor">Расход топлива</td><td>Сбой физичности</td><td class="lvl crit">Критично</td><td class="ack yes">✓ да</td></tr>
+          <tr><td class="t">02:48</td><td class="gpa">ГПА-1</td><td class="sensor">Вибрация ОС</td><td>Кросс-ГПА отклонение</td><td class="lvl">Инфо</td><td class="ack yes">✓ да</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

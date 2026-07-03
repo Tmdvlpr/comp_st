@@ -1,0 +1,1043 @@
+2026-06-15 15:21:26,798 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-06-15 15:21:26,832 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-06-15 15:21:26,920 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-06-15 15:21:26,922 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-06-15 15:21:26,922 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-06-15 15:21:26,922 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-06-15 15:21:26,922 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-06-15 15:21:59,750 INFO live_predict detect-diag: датчиков=70 покрытие(медиана)=0.999 алармы(медиана)=0.0000 горячих(>5%)=15 states_gpa.7:1.00, states_gtd.0:1.00, states_gtd.5:1.00, te223.pv:1.00, te224.pv:1.00
+2026-06-26 15:59:09,169 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-06-26 15:59:09,195 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-06-26 15:59:10,267 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-06-26 15:59:10,269 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-06-26 15:59:10,269 INFO migrate_db migrate: ensure anomalies table
+2026-06-26 15:59:10,269 INFO migrate_db migrate: ensure anomalies_t table
+2026-06-26 15:59:10,269 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-06-26 15:59:10,269 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-06-26 15:59:10,269 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-06-26 15:59:10,269 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-06-26 16:02:08,732 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:08:27,654 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:14:56,449 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:21:03,389 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:27:28,839 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:33:39,441 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:39:47,972 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:46:06,397 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0102 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:52:25,928 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.13, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 16:58:54,947 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 17:05:09,520 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 17:11:36,478 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 17:17:55,631 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, vibro_rear_support:0.11, compressor_rotor_axial_shift_t1:0.11, vibro_rear_support:0.08
+2026-06-26 17:23:56,465 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t1:0.12, vibro_rear_support:0.11, vibro_rear_support:0.08
+2026-06-26 17:29:53,612 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t1:0.12, vibro_rear_support:0.11, vibro_rear_support:0.08
+2026-06-26 17:35:57,142 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t1:0.12, vibro_rear_support:0.12, vibro_rear_support:0.08
+2026-06-26 17:42:00,056 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t1:0.12, vibro_rear_support:0.12, vibro_rear_support:0.08
+2026-06-26 17:48:07,652 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t1:0.12, vibro_rear_support:0.12, vibro_rear_support:0.08
+2026-06-26 17:54:06,250 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0101 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.14, gas_temp_out_gpa:0.13, compressor_rotor_axial_shift_t1:0.12, vibro_rear_support:0.11, vibro_rear_support:0.08
+2026-06-29 14:34:09,946 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-06-29 14:34:09,988 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-06-29 14:34:15,524 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-06-29 14:34:15,532 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-06-29 14:34:15,532 INFO migrate_db migrate: ensure anomalies table
+2026-06-29 14:34:15,532 INFO migrate_db migrate: ensure anomalies_t table
+2026-06-29 14:34:15,532 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-06-29 14:34:15,532 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-06-29 14:34:15,532 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-06-29 14:34:15,532 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-06-29 17:13:39,846 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-06-29 17:13:39,886 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-06-29 17:13:41,242 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-06-29 17:13:41,245 INFO migrate_db migrate: ensure anomalies table
+2026-06-29 17:13:41,245 INFO migrate_db migrate: ensure anomalies_t table
+2026-06-29 17:13:41,245 INFO migrate_db migrate: ensure predictions table
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-06-29 17:13:41,245 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 11:33:22,797 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-01 11:33:22,816 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-01 11:33:24,477 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-01 11:33:24,478 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-01 11:33:24,478 INFO migrate_db migrate: ensure anomalies table
+2026-07-01 11:33:24,478 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-01 11:33:24,479 INFO migrate_db migrate: ensure predictions table
+2026-07-01 11:33:24,479 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-01 11:33:24,479 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-01 11:33:24,480 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-01 11:33:24,480 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-01 11:33:24,480 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-01 11:33:24,480 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 11:35:29,554 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 11:43:12,367 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-01 11:43:12,394 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-01 11:43:13,942 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-01 11:43:13,942 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-01 11:43:13,945 INFO migrate_db migrate: ensure anomalies table
+2026-07-01 11:43:13,946 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-01 11:43:13,946 INFO migrate_db migrate: ensure predictions table
+2026-07-01 11:43:13,947 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-01 11:43:13,948 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-01 11:43:13,948 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-01 11:43:13,948 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-01 11:43:13,949 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-01 11:43:13,949 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 12:02:27,200 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-01 12:02:27,215 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-01 12:02:28,706 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-01 12:02:28,706 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-01 12:02:28,708 INFO migrate_db migrate: ensure anomalies table
+2026-07-01 12:02:28,708 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-01 12:02:28,708 INFO migrate_db migrate: ensure predictions table
+2026-07-01 12:02:28,708 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-01 12:02:28,708 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-01 12:02:28,708 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-01 12:02:28,710 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-01 12:02:28,710 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-01 12:02:28,710 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 12:04:04,511 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 12:10:29,967 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 12:17:04,263 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:00:53,909 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:07:37,648 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:14:37,336 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:19:24,755 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.AX201.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 776, in _fetch_raw_db_series
+    cur.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-01 14:21:11,515 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:24:48,829 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.AX201.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 776, in _fetch_raw_db_series
+    cur.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-01 14:27:59,284 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:34:31,547 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:41:29,899 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:48:15,396 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 14:55:00,846 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:01:42,891 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:03:43,136 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-01 15:03:43,275 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-01 15:03:49,097 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-01 15:03:49,098 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-01 15:03:49,098 INFO migrate_db migrate: ensure anomalies table
+2026-07-01 15:03:49,098 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-01 15:03:49,098 INFO migrate_db migrate: ensure predictions table
+2026-07-01 15:03:49,099 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-01 15:03:49,099 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-01 15:03:49,099 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-01 15:03:49,099 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-01 15:03:49,103 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-01 15:03:49,103 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 15:05:52,522 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:07:26,764 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.TE221.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 779, in _fetch_raw_db_series
+    cur.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-01 15:11:52,196 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:17:51,480 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:23:56,529 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:30:01,456 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:36:05,871 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:42:19,416 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:48:39,180 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 15:48:39,259 WARNING data_loader write-batch: чанк 0 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 15:54:59,063 ERROR main _fetch_raw_db_series failed for tag='GPA-3.GPA-3.TE52.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-01 15:54:59,144 ERROR main _fetch_raw_db_series failed for tag='GPA-3.GPA-3.TE52.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-01 15:54:59,144 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1772, in _check_db
+    одной не должен применяться к другим (мультистанционная корректность)."""
+         ^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-01 15:56:44,413 ERROR main _fetch_raw_db_series failed for tag='GPA-3.GPA-3.TE52.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-01 15:56:44,413 ERROR main _fetch_raw_db_series failed for tag='GPA-3.GPA-3.TE52.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-01 15:56:44,749 WARNING data_loader write-batch: чанк 0 упал (connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+) — повтор 2/3
+2026-07-01 15:57:44,140 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-01 15:57:44,151 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-01 15:57:45,696 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-01 15:57:45,699 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-01 15:57:45,699 INFO migrate_db migrate: ensure anomalies table
+2026-07-01 15:57:45,700 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-01 15:57:45,700 INFO migrate_db migrate: ensure predictions table
+2026-07-01 15:57:45,700 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-01 15:57:45,700 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-01 15:57:45,701 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-01 15:57:45,701 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-01 15:57:45,701 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-01 15:57:45,701 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 15:59:40,356 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:06:10,129 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:12:26,364 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:18:48,550 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:25:06,568 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:31:36,280 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:32:50,300 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-01 16:32:50,322 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-01 16:32:53,406 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-01 16:32:53,406 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-01 16:32:53,406 INFO migrate_db migrate: ensure anomalies table
+2026-07-01 16:32:53,406 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-01 16:32:53,406 INFO migrate_db migrate: ensure predictions table
+2026-07-01 16:32:53,409 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-01 16:32:53,410 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-01 16:32:53,410 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-01 16:32:53,410 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-01 16:32:53,410 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-01 16:32:53,411 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-01 16:35:16,064 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:41:35,167 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:48:00,888 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 16:56:53,896 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 17:03:28,698 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 17:10:14,238 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 17:16:31,914 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 17:17:28,783 WARNING data_loader write-batch: чанк 0 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+2026-07-01 17:23:17,269 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 17:29:31,610 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-01 17:35:43,170 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.981 алармы(медиана)=0.0010 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.12, compressor_rotor_axial_shift_t1:0.11
+2026-07-02 16:05:50,088 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-02 16:05:50,120 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-02 16:05:52,520 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-02 16:05:52,520 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-02 16:05:52,520 INFO migrate_db migrate: ensure anomalies table
+2026-07-02 16:05:52,525 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-02 16:05:52,525 INFO migrate_db migrate: ensure predictions table
+2026-07-02 16:05:52,525 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-02 16:05:52,525 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-02 16:05:52,525 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-02 16:05:52,525 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-02 16:05:52,525 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-02 16:05:52,525 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-02 16:10:31,170 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 16:12:02,808 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.VT203.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 779, in _fetch_raw_db_series
+    cur.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-02 16:14:59,237 ERROR main _fetch_raw_db_series failed for tag='N/A'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 779, in _fetch_raw_db_series
+    cur.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-02 16:16:18,591 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1786, in _check_db
+    cur.execute("SELECT 1")
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-02 16:17:56,720 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 16:21:11,364 ERROR main _fetch_raw_db_series failed for tag='N/A'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 779, in _fetch_raw_db_series
+    cur.execute(sql, params)
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-02 16:24:13,698 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1784, in _check_db
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:27:02,094 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.TE52.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:29:50,364 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.TE221.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:29:50,370 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.TE52.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:31:56,579 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1784, in _check_db
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:40:42,724 ERROR main _fetch_raw_db_series failed for tag='N/A'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:40:42,739 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1784, in _check_db
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 16:41:46,706 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1787, in _check_db
+    ok = cur.fetchone() is not None
+         ^^^^^^^^^^^^^^
+psycopg2.InterfaceError: cursor already closed
+2026-07-02 16:47:33,490 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 16:54:42,501 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:01:47,740 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:09:10,141 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:16:10,943 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:23:21,417 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:30:15,675 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:37:01,009 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 17:54:02,061 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-02 18:00:57,167 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.980 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_out_st:0.07
+2026-07-03 10:22:27,413 ERROR run_system Миграции БД не выполнены — продолжаю (БД могла быть недоступна)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\run_system.py", line 101, in main
+    steps = migrate_db.migrate(station)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\migrate_db.py", line 220, in migrate
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 10:23:41,390 ERROR live_predict ensure_anomalies_table при старте не выполнен — продолжаем
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 74, in _init_station
+    _loader.ensure_anomalies_table()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 305, in ensure_anomalies_table
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 10:24:55,049 WARNING run_system system_monitor rc=1: e-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+
+2026-07-03 10:27:01,649 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-03 10:27:01,678 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-03 10:27:03,300 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-03 10:27:03,301 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-03 10:27:03,301 INFO migrate_db migrate: ensure anomalies table
+2026-07-03 10:27:03,301 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-03 10:27:03,301 INFO migrate_db migrate: ensure predictions table
+2026-07-03 10:27:03,301 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-03 10:27:03,302 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-03 10:27:03,302 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-03 10:27:03,302 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-03 10:27:03,302 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-03 10:27:03,302 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-03 10:37:19,446 WARNING run_system system_monitor rc=1: se last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\\u041a\u0421\cs_4\backend\data_loader.py", line 62, in _fetch_df_streaming
+    batch = cur.fetchmany(itersize)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
+2026-07-03 10:41:16,955 ERROR run_system Миграции БД не выполнены — продолжаю (БД могла быть недоступна)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\run_system.py", line 101, in main
+    steps = migrate_db.migrate(station)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\migrate_db.py", line 220, in migrate
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 10:42:30,961 ERROR live_predict ensure_anomalies_table при старте не выполнен — продолжаем
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\live_predict.py", line 74, in _init_station
+    _loader.ensure_anomalies_table()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 305, in ensure_anomalies_table
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 11:44:36,868 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-03 11:44:36,902 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-03 11:44:39,020 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-03 11:44:39,020 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-03 11:44:39,020 INFO migrate_db migrate: ensure anomalies table
+2026-07-03 11:44:39,020 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-03 11:44:39,021 INFO migrate_db migrate: ensure predictions table
+2026-07-03 11:44:39,021 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-03 11:44:39,021 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-03 11:44:39,021 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-03 11:44:39,021 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-03 11:44:39,022 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-03 11:44:39,022 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-03 11:45:02,527 INFO weather ambient кэш обновлён: 4416 часов до 2026-07-03 23:00:00
+2026-07-03 11:45:11,359 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.995 алармы(медиана)=0.0052 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 compressor_rotor_axial_shift_t2:0.50, compressor_rotor_axial_shift_t1:0.42, oil_temp_out_st:0.35, gas_temp_out_gpa:0.16, vibro_rotor_front_horiz:0.12
+2026-07-03 11:49:46,902 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.979 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t2:0.11, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t1:0.10, oil_temp_out_st:0.07
+2026-07-03 13:39:15,779 INFO migrate_db raw_data.health уже TEXT — пропускаю
+2026-07-03 13:39:15,806 INFO migrate_db журнал "journal notifications" уже имеет нужные столбцы — пропускаю
+2026-07-03 13:39:17,698 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_ts ON "ohangaron"."journal notifications" (event_ts DESC)
+2026-07-03 13:39:17,698 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_journal_notif_status ON "ohangaron"."journal notifications" (status, event_ts DESC)
+2026-07-03 13:39:17,698 INFO migrate_db migrate: ensure anomalies table
+2026-07-03 13:39:17,699 INFO migrate_db migrate: ensure anomalies_t table
+2026-07-03 13:39:17,699 INFO migrate_db migrate: ensure predictions table
+2026-07-03 13:39:17,699 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_point_dt ON "ohangaron"."raw_data" ("point", "datetime" DESC)
+2026-07-03 13:39:17,699 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_ts ON "ohangaron".anomalies (event_ts DESC)
+2026-07-03 13:39:17,699 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_sensor_ts ON "ohangaron".anomalies (sensor_id, event_ts DESC)
+2026-07-03 13:39:17,700 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_raw_data_health_dt ON "ohangaron"."raw_data" ("datetime" DESC) WHERE health IS NOT NULL
+2026-07-03 13:39:17,700 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_sensor_ts ON "ohangaron".anomalies_t (sensor_id, event_ts DESC)
+2026-07-03 13:39:17,700 INFO migrate_db migrate: CREATE INDEX IF NOT EXISTS idx_anomalies_t_ts ON "ohangaron".anomalies_t (event_ts DESC)
+2026-07-03 13:42:22,195 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.979 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t1:0.11, oil_temp_out_st:0.07
+2026-07-03 13:48:46,803 INFO run_system system_monitor ok
+2026-07-03 13:49:31,210 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.979 алармы(медиана)=0.0106 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t2:0.12, compressor_rotor_axial_shift_t1:0.11, compressor_rotor_axial_shift_t1:0.11, oil_temp_out_st:0.07
+2026-07-03 13:58:11,835 WARNING run_system drift_monitor rc=1: e-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+
+2026-07-03 14:02:03,591 ERROR main _fetch_raw_db_series failed for tag='GPA-3.GPA-3.VT102.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 14:03:27,863 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1784, in _check_db
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 14:03:27,867 ERROR main _fetch_raw_db_series failed for tag='N/A'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 14:51:40,152 ERROR main _fetch_raw_db_series failed for tag='N/A'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 14:52:22,247 WARNING main health: БД недоступна (ohangaron)
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 1784, in _check_db
+    with get_db_connection(cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 14:53:49,441 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.VT202.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-03 14:53:49,442 ERROR main _fetch_raw_db_series failed for tag='GPA-1.GPA-1.VT204.PV'
+Traceback (most recent call last):
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\main.py", line 777, in _fetch_raw_db_series
+    with get_db_connection(cfg_obj) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
+

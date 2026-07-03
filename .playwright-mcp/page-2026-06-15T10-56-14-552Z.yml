@@ -1,0 +1,83 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - textbox "Поиск датчика..." [ref=e6]
+    - navigation [ref=e7]
+  - generic [ref=e8]:
+    - generic [ref=e9]:
+      - generic [ref=e10]: 15:56
+      - generic [ref=e13]: "Датчиков: 0 · Аномалий: 0"
+      - button "Журнал (J) ↗" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: Журнал (J)
+        - generic [ref=e16]: ↗
+      - generic [ref=e18]:
+        - button "⎙ Отчёт" [ref=e20] [cursor=pointer]
+        - button "⇄ Сравнить" [ref=e21] [cursor=pointer]
+        - button "Мониторинг" [ref=e22] [cursor=pointer]
+        - button "Схема КС" [ref=e23] [cursor=pointer]
+        - button "Двигатель" [ref=e24] [cursor=pointer]
+        - button "Дежурный режим (K)" [ref=e26] [cursor=pointer]:
+          - img [ref=e27]
+        - 'button "Тема: dark (T)" [ref=e30] [cursor=pointer]':
+          - img [ref=e31]
+    - main [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]: Тепловая карта
+            - generic [ref=e39]: "0"
+          - generic [ref=e40]:
+            - generic [ref=e41]:
+              - generic [ref=e42]: Суперважно
+              - generic [ref=e44]: Внимание
+              - generic [ref=e46]: Норма
+              - generic [ref=e48]: Нет модели
+            - table [ref=e51]:
+              - rowgroup:
+                - row
+              - rowgroup
+        - generic [ref=e53]:
+          - img [ref=e54]
+          - generic [ref=e56]: Нажмите на датчик или ячейку тепловой карты
+  - dialog "Журнал событий":
+    - generic:
+      - generic:
+        - heading "Журнал событий" [level=2]
+        - paragraph: 0 непринятых · 0 всего
+      - button "✕"
+    - generic:
+      - generic:
+        - button "Все"
+        - button "1д"
+        - button "3д"
+        - button "7д"
+        - button "30д"
+      - button "Все 0":
+        - text: Все
+        - generic: "0"
+      - button "Критично 0":
+        - text: Критично
+        - generic: "0"
+      - button "Предупрежд. 0":
+        - text: Предупрежд.
+        - generic: "0"
+      - button "Инфо 0":
+        - text: Инфо
+        - generic: "0"
+      - button "Норма 0":
+        - text: Норма
+        - generic: "0"
+      - generic:
+        - button "Все типы"
+        - button "Стат. выброс": Стат. выброс
+        - button "Датчик завис": Датчик завис
+        - button "Сбой физичности": Сбой физичности
+        - button "Скачок ΔV": Скачок ΔV
+        - button "Сезонная аномалия": Сезонная аномалия
+        - button "Смена режима": Смена режима
+        - button "Кросс-ГПА отклонение": Кросс-ГПА отклонение
+      - generic:
+        - button "✓ Принять все"
+    - generic:
+      - generic: Нет событий для выбранных фильтров
+    - generic:
+      - generic: 0 из 0 событий

@@ -1,0 +1,239 @@
+🏭 Станция: Охангаронская КС (ohangaron)
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_front_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ temp_rear_bearing_pads: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_front_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rear_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_st_support: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_rotor_front_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_horiz: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ vibro_disp_rotor_rear_vert: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ polytropic_head: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t1: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ compressor_rotor_axial_shift_t2: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ gas_temp_out_gpa: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_zod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_out_st: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+  ✅ oil_temp_in_pod: загружена [CatBoostUnc-v2]
+🔁 reprocess_history: 2026-05-25 00:00:00+00:00 → 2026-07-02 10:33:35.638849+00:00, окно 2д, перекрытие 1д
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:34:11,348 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=1.000 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.10, compressor_rotor_axial_shift_t1:0.09, oil_temp_in_pod:0.06
+💾 БД: anomalies_t — 85 новых записей (SHAP у 85/85)
+💾 health: обновлено 37020 точек
+💾 domain: upsert 2550 строк
+💾 БД: predictions — 25773 точек серии
+  ✓ 2026-05-25..2026-05-27: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:36:29,112 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.980 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=5 compressor_rotor_axial_shift_t2:0.15, compressor_rotor_axial_shift_t1:0.15, vibro_disp_rotor_rear_vert:0.13, vibro_disp_rotor_rear_vert:0.08, vibro_rotor_front_vert:0.05
+💾 БД: anomalies_t — 112 новых записей (SHAP у 112/112)
+2026-07-02 15:38:57,769 WARNING data_loader write-batch: чанк 17 упал (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор 1/3
+💾 health: обновлено 37269 точек
+💾 domain: upsert 2556 строк
+💾 БД: predictions — 26205 точек серии
+  ✓ 2026-05-27..2026-05-29: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:40:39,530 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_disp_rotor_rear_vert:0.13
+💾 БД: anomalies_t — 79 новых записей (SHAP у 79/79)
+💾 health: обновлено 37401 точек
+💾 domain: upsert 2562 строк
+💾 БД: predictions — 26057 точек серии
+  ✓ 2026-05-29..2026-05-31: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:41:55,554 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.970 алармы(медиана)=0.0035 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 compressor_rotor_axial_shift_t2:0.20, compressor_rotor_axial_shift_t1:0.17, oil_temp_in_pod:0.07, oil_temp_out_st:0.06
+💾 БД: anomalies_t — 88 новых записей (SHAP у 88/88)
+💾 health: обновлено 37395 точек
+💾 domain: upsert 2568 строк
+💾 БД: predictions — 26105 точек серии
+  ✓ 2026-05-31..2026-06-02: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (1): ['06-03 09:45']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:43:34,827 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.970 алармы(медиана)=0.0006 n_sigma_cal(медиана)=3.00 горячих(>5%)=6 compressor_rotor_axial_shift_t2:0.19, compressor_rotor_axial_shift_t1:0.16, oil_temp_out_st:0.07, vibro_st_support:0.06, oil_temp_in_pod:0.06
+💾 БД: anomalies_t — 125 новых записей (SHAP у 125/125)
+💾 health: обновлено 37426 точек
+💾 domain: upsert 2568 строк
+💾 БД: predictions — 26138 точек серии
+  ✓ 2026-06-02..2026-06-04: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (1): ['06-03 09:45']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:45:05,126 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.998 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.11, compressor_rotor_axial_shift_t1:0.09, vibro_front_support:0.06
+💾 БД: anomalies_t — 133 новых записей (SHAP у 133/133)
+💾 health: обновлено 37652 точек
+💾 domain: upsert 2568 строк
+💾 БД: predictions — 26220 точек серии
+  ✓ 2026-06-04..2026-06-06: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:46:40,113 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_front_support:0.05
+💾 БД: anomalies_t — 105 новых записей (SHAP у 105/105)
+💾 health: обновлено 37620 точек
+💾 domain: upsert 2565 строк
+💾 БД: predictions — 26220 точек серии
+  ✓ 2026-06-06..2026-06-08: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (1): ['06-09 11:10']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:48:19,638 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.996 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 compressor_rotor_axial_shift_t2:0.09, vibro_disp_rotor_rear_horiz:0.08, compressor_rotor_axial_shift_t1:0.07
+💾 БД: anomalies_t — 103 новых записей (SHAP у 103/103)
+💾 health: обновлено 37778 точек
+💾 domain: upsert 2562 строк
+💾 БД: predictions — 26422 точек серии
+  ✓ 2026-06-08..2026-06-10: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (1): ['06-09 11:10']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:49:50,331 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 compressor_rotor_axial_shift_t2:0.05
+💾 БД: anomalies_t — 100 новых записей (SHAP у 100/100)
+💾 health: обновлено 38436 точек
+💾 domain: upsert 2568 строк
+💾 БД: predictions — 26837 точек серии
+  ✓ 2026-06-10..2026-06-12: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (1): ['06-13 12:35']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:51:14,623 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=1 vibro_disp_rotor_rear_horiz:0.06
+💾 БД: anomalies_t — 92 новых записей (SHAP у 92/92)
+💾 health: обновлено 38610 точек
+💾 domain: upsert 2574 строк
+💾 БД: predictions — 26884 точек серии
+  ✓ 2026-06-12..2026-06-14: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (3): ['06-13 12:35', '06-14 13:45', '06-15 20:35']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['06-15 20:20']
+2026-07-02 15:53:10,620 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.997 алармы(медиана)=0.0037 n_sigma_cal(медиана)=3.00 горячих(>5%)=8 compressor_rotor_axial_shift_t2:0.70, vibro_disp_rotor_rear_horiz:0.25, compressor_rotor_axial_shift_t1:0.24, compressor_rotor_axial_shift_t1:0.15, compressor_rotor_axial_shift_t2:0.15
+💾 БД: anomalies_t — 152 новых записей (SHAP у 152/152)
+💾 health: обновлено 38253 точек
+💾 domain: upsert 2571 строк
+💾 БД: predictions — 26593 точек серии
+  ✓ 2026-06-14..2026-06-16: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (1): ['06-15 20:35']
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['06-15 20:20']
+2026-07-02 15:54:59,913 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.994 алармы(медиана)=0.0037 n_sigma_cal(медиана)=3.00 горячих(>5%)=6 compressor_rotor_axial_shift_t2:0.21, compressor_rotor_axial_shift_t1:0.18, compressor_rotor_axial_shift_t2:0.17, compressor_rotor_axial_shift_t1:0.13, vibro_disp_rotor_rear_horiz:0.06
+ℹ️ MODEL DRIFT (информационно): 2 моделей с ошибкой >2× валидационной (vibro_disp_rotor_rear_horiz__GPA3, vibro_rotor_front_vert__GPA3)
+💾 БД: anomalies_t — 116 новых записей (SHAP у 116/116)
+💾 health: обновлено 37807 точек
+💾 domain: upsert 2571 строк
+💾 БД: predictions — 26560 точек серии
+  ✓ 2026-06-16..2026-06-18: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:56:07,433 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.13, compressor_rotor_axial_shift_t1:0.13
+💾 БД: anomalies_t — 55 новых записей (SHAP у 55/55)
+💾 health: обновлено 37608 точек
+💾 domain: upsert 2565 строк
+💾 БД: predictions — 26323 точек серии
+  ✓ 2026-06-18..2026-06-20: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:57:03,633 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.14, compressor_rotor_axial_shift_t1:0.13
+💾 БД: anomalies_t — 55 новых записей (SHAP у 55/55)
+💾 health: обновлено 37443 точек
+💾 domain: upsert 2556 строк
+💾 БД: predictions — 26363 точек серии
+  ✓ 2026-06-20..2026-06-22: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:57:55,854 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.997 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=2 compressor_rotor_axial_shift_t2:0.16, compressor_rotor_axial_shift_t1:0.15
+💾 БД: anomalies_t — 52 новых записей (SHAP у 52/52)
+💾 health: обновлено 37485 точек
+💾 domain: upsert 2559 строк
+💾 БД: predictions — 26294 точек серии
+  ✓ 2026-06-22..2026-06-24: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 15:58:47,103 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.999 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=3 oil_temp_out_st:0.14, compressor_rotor_axial_shift_t2:0.14, compressor_rotor_axial_shift_t1:0.13
+💾 БД: anomalies_t — 38 новых записей (SHAP у 38/38)
+💾 health: обновлено 36759 точек
+💾 domain: upsert 2511 строк
+💾 БД: predictions — 25511 точек серии
+  ✓ 2026-06-24..2026-06-26: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 16:00:20,610 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.979 алармы(медиана)=0.0023 n_sigma_cal(медиана)=3.00 горячих(>5%)=7 oil_temp_out_st:0.24, oil_temp_in_pod:0.15, temp_front_bearing_pads:0.10, compressor_rotor_axial_shift_t1:0.08, compressor_rotor_axial_shift_t2:0.08
+ℹ️ MODEL DRIFT (информационно): 1 моделей с ошибкой >2× валидационной (gas_temp_out_gpa__GPA2)
+💾 БД: anomalies_t — 85 новых записей (SHAP у 85/85)
+💾 health: обновлено 37427 точек
+💾 domain: upsert 2556 строк
+💾 БД: predictions — 26235 точек серии
+  ✓ 2026-06-26..2026-06-28: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 16:01:34,515 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.942 алармы(медиана)=0.0041 n_sigma_cal(медиана)=3.34 горячих(>5%)=6 oil_temp_out_st:0.21, oil_temp_in_pod:0.16, temp_front_bearing_pads:0.10, temp_rear_bearing_pads:0.10, oil_temp_out_zod:0.07
+ℹ️ MODEL DRIFT (информационно): 2 моделей с ошибкой >2× валидационной (gas_temp_out_gpa__GPA2, vibro_disp_rotor_rear_vert__GPA1)
+💾 БД: anomalies_t — 96 новых записей (SHAP у 96/96)
+💾 health: обновлено 37200 точек
+💾 domain: upsert 2538 строк
+💾 БД: predictions — 26351 точек серии
+  ✓ 2026-06-28..2026-06-30: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (0): []
+2026-07-02 16:03:54,437 INFO live_predict detect-diag: датчиков=32 покрытие(медиана)=0.993 алармы(медиана)=0.0000 n_sigma_cal(медиана)=3.00 горячих(>5%)=4 vibro_front_support:0.21, oil_temp_out_st:0.09, compressor_rotor_axial_shift_t2:0.07, compressor_rotor_axial_shift_t1:0.07
+💾 БД: anomalies_t — 74 новых записей (SHAP у 74/74)
+💾 health: обновлено 36917 точек
+💾 domain: upsert 2520 строк
+💾 БД: predictions — 25981 точек серии
+  ✓ 2026-06-30..2026-07-02: записано (health/anomalies_t/журнал/predictions/domain)
+  📍 ГПА-1: смены режима (0): []
+  📍 ГПА-2: смены режима (0): []
+  📍 ГПА-3: смены режима (1): ['07-02 09:25']
+2026-07-02 16:04:40,411 INFO live_predict detect-diag: датчиков=48 покрытие(медиана)=0.997 алармы(медиана)=0.0029 n_sigma_cal(медиана)=3.00 горячих(>5%)=6 compressor_rotor_axial_shift_t1:0.94, compressor_rotor_axial_shift_t2:0.94, oil_temp_out_st:0.33, vibro_front_support:0.17, vibro_front_support:0.12
+ℹ️ MODEL DRIFT (информационно): 4 моделей с ошибкой >2× валидационной (compressor_rotor_axial_shift_t1__GPA3, compressor_rotor_axial_shift_t2__GPA3, gas_temp_out_gpa__GPA2, gas_temp_out_gpa__GPA3)
+💾 БД: anomalies_t — 75 новых записей (SHAP у 75/75)
+💾 health: обновлено 17839 точек
+💾 domain: upsert 1218 строк
+💾 БД: predictions — 5724 точек серии
+  ✓ 2026-07-02..2026-07-02: записано (health/anomalies_t/журнал/predictions/domain)
+🎉 reprocess_history готов: обработано окон 20

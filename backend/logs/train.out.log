@@ -1,0 +1,1465 @@
+2026-06-15 12:21:13 🏭 Станция: Охангаронская КС (ohangaron)
+2026-06-15 12:21:13 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-15 12:21:13 🔑 Строим маппинг тегов из БД...
+2026-06-15 12:21:15    Найдено 138 тегов
+2026-06-15 12:21:15 📡 Загрузка данных из БД (cutoff=2026-06-12)...
+2026-06-15 12:45:12 Traceback (most recent call last):
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 173, in get_db_connection
+    yield conn
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 34, in _fetch_df
+    cur.execute(query, params)
+2026-06-15 12:45:12 psycopg2.OperationalError: server closed the connection unexpectedly
+2026-06-15 12:45:12 	This probably means the server terminated abnormally
+2026-06-15 12:45:12 	before or while processing the request.
+
+
+2026-06-15 12:45:12 During handling of the above exception, another exception occurred:
+
+2026-06-15 12:45:12 Traceback (most recent call last):
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 328, in <module>
+    train_all(args)
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 200, in train_all
+    raw_wide = loader.fetch_training_data(cutoff_date=args.cutoff_date)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 64, in fetch_training_data
+    df = self._fetch_df(query, params)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 32, in _fetch_df
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:45:12   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+2026-06-15 12:45:12   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 175, in get_db_connection
+    conn.rollback()
+2026-06-15 12:45:12 psycopg2.InterfaceError: connection already closed
+2026-06-15 12:47:18 🏭 Станция: Охангаронская КС (ohangaron)
+2026-06-15 12:47:18 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-15 12:47:18 🔑 Строим маппинг тегов из БД...
+2026-06-15 12:47:28 Traceback (most recent call last):
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 328, in <module>
+    train_all(args)
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 195, in train_all
+    tag_to_name = loader.build_tag_mapping()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 136, in build_tag_mapping
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:47:28   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 170, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 148, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:47:28   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:47:28 psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: timeout expired
+
+2026-06-15 12:49:43 🏭 Станция: Охангаронская КС (ohangaron)
+2026-06-15 12:49:43 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-15 12:49:43 🔑 Строим маппинг тегов из БД...
+2026-06-15 12:49:53 Traceback (most recent call last):
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 331, in <module>
+    train_all(args)
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 195, in train_all
+    tag_to_name = loader.build_tag_mapping()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 160, in build_tag_mapping
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:49:53   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 170, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 148, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:49:53   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 12:49:53 psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: timeout expired
+
+2026-06-15 13:43:16 🏭 Станция: Охангаронская КС (ohangaron)
+2026-06-15 13:43:16 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-15 13:43:16 🔑 Строим маппинг тегов из БД...
+2026-06-15 13:43:18    Найдено 138 тегов
+2026-06-15 13:43:18 📡 Загрузка данных из БД (from=2026-03-29, cutoff=2026-06-12)...
+2026-06-15 13:43:18 Traceback (most recent call last):
+2026-06-15 13:43:18   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 331, in <module>
+    train_all(args)
+2026-06-15 13:43:18   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 201, in train_all
+    raw_wide = loader.fetch_training_data(cutoff_date=args.cutoff_date,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 13:43:18   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 108, in fetch_training_data
+    df = self._fetch_df_streaming(query, params)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-15 13:43:18   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 56, in _fetch_df_streaming
+    cols = [d[0] for d in cur.description]
+                          ^^^^^^^^^^^^^^^
+2026-06-15 13:43:18 TypeError: 'NoneType' object is not iterable
+2026-06-15 13:44:50 🏭 Станция: Охангаронская КС (ohangaron)
+2026-06-15 13:44:50 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-15 13:44:50 🔑 Строим маппинг тегов из БД...
+2026-06-15 13:44:51    Найдено 138 тегов
+2026-06-15 13:44:51 📡 Загрузка данных из БД (from=2026-03-29, cutoff=2026-06-12)...
+2026-06-15 13:49:31 🏭 Станция: Охангаронская КС (ohangaron)
+2026-06-15 13:49:31 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-15 13:49:31 🔑 Строим маппинг тегов из БД...
+2026-06-15 13:49:32    Найдено 138 тегов
+2026-06-15 13:49:32 📡 Загрузка данных из БД (from=нет, cutoff=2026-06-12)...
+2026-06-15 14:05:00 📅 Последняя метка: 2026-06-11 23:55:00+05:00
+2026-06-15 14:05:00 🖥️  Параллелизм: 6 задач × 2 потоков/модель (всего 12 ядер)
+
+2026-06-15 14:05:00 ⚙️  ГПА-1: 46 моделей параллельно...
+2026-06-15 14:07:42   ✗ asv_in.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+2026-06-15 14:07:42   ✗ ax201.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+2026-06-15 14:07:42   ✓ ax202.pv                                      R²(val)=-0.487  MAE=0.3124  nMAE=0.290  trim=2433  iter=13
+2026-06-15 14:07:42   ✗ gc_bfs.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+2026-06-15 14:07:42   ✗ gc_bftg.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+2026-06-15 14:07:42   ✗ gc_com1.pv: catboost/libs/train_lib/dir_helper.cpp:20: Can't create train working dir: catboost_info
+2026-06-15 14:07:42   ✓ gc_com2.pv                                    R²(val)=0.338  MAE=0.007797  nMAE=0.132  trim=1  iter=151
+2026-06-15 14:07:42   ✓ gc_cover.pv                                   R²(val)=0.833  MAE=0.0006714  nMAE=0.061  trim=7  iter=174
+2026-06-15 14:07:42   ✗ gc_fcv.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✓ gc_fg7001.pv                                  R²(val)=-1.242  MAE=0.9342  nMAE=0.445  trim=4381  iter=10
+2026-06-15 14:07:42   ✓ gc_uptg.pv                                    R²(val)=0.008  MAE=0.005513  nMAE=0.165  trim=16  iter=82
+2026-06-15 14:07:42   ✓ pd.pv                                         R²(val)=-0.781  MAE=0.83  nMAE=0.235  trim=0  iter=15
+2026-06-15 14:07:42   ✓ pe101.pv                                      R²(val)=-331660.746  MAE=0.2036  nMAE=0.084  trim=14117  iter=56
+2026-06-15 14:07:42   ✓ pg_airc.pv                                    R²(val)=-0.635  MAE=0.7785  nMAE=0.223  trim=0  iter=18
+2026-06-15 14:07:42   ✓ program:flowcalc.tot_unit.in                  R²(val)=0.000  MAE=0.05963  nMAE=0.042  trim=14856  iter=57
+2026-06-15 14:07:42   ✓ ps.pv                                         R²(val)=-0.104  MAE=0.5724  nMAE=0.252  trim=0  iter=9
+2026-06-15 14:07:42   ✗ states_gpa.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.1: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.2: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.3: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.4: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.6: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gpa.7: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gtd.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ states_gtd.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✓ td.pv                                         R²(val)=0.155  MAE=2.956  nMAE=0.039  trim=2  iter=51
+2026-06-15 14:07:42   ✓ te221.pv                                      R²(val)=-1.613  MAE=12.71  nMAE=0.201  trim=0  iter=24
+2026-06-15 14:07:42   ✓ te222.pv                                      R²(val)=0.068  MAE=22.97  nMAE=0.333  trim=248  iter=800
+2026-06-15 14:07:42   ✗ te223.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✗ te224.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:07:42   ✓ te51.pv                                       R²(val)=-4.773  MAE=4.996  nMAE=0.061  trim=27  iter=52
+2026-06-15 14:07:42   ✓ te52.pv                                       R²(val)=-1.505  MAE=3.625  nMAE=0.052  trim=30  iter=54
+2026-06-15 14:07:42   ✓ te54.pv                                       R²(val)=0.889  MAE=0.8101  nMAE=0.019  trim=106  iter=66
+2026-06-15 14:07:42   ✓ ts.pv                                         R²(val)=0.959  MAE=0.4558  nMAE=0.017  trim=490  iter=111
+2026-06-15 14:07:42   ✓ t_airc_out.pv                                 R²(val)=0.949  MAE=1.01  nMAE=0.021  trim=153  iter=82
+2026-06-15 14:07:42   ✓ vt101.pv                                      R²(val)=-61.381  MAE=0.2245  nMAE=0.026  trim=3308  iter=69
+2026-06-15 14:07:42   ✓ vt102.pv                                      R²(val)=-368.135  MAE=0.4959  nMAE=0.039  trim=5813  iter=60
+2026-06-15 14:07:42   ✓ vt103.pv                                      R²(val)=-6628.615  MAE=0.9185  nMAE=0.067  trim=13092  iter=43
+2026-06-15 14:07:42   ✓ vt201.pv                                      R²(val)=0.137  MAE=8.346  nMAE=0.091  trim=17425  iter=27
+2026-06-15 14:07:42   ✓ vt202.pv                                      R²(val)=0.179  MAE=6.544  nMAE=0.256  trim=17137  iter=22
+2026-06-15 14:07:42   ✓ vt203.pv                                      R²(val)=0.273  MAE=7.922  nMAE=0.142  trim=3705  iter=36
+2026-06-15 14:07:42   ✓ vt204.pv                                      R²(val)=0.315  MAE=5.294  nMAE=0.126  trim=6204  iter=49
+2026-06-15 14:07:42   ✓ gt01.ctrl.in[1].value                         R²(val)=-10393.978  MAE=740.7  nMAE=0.111  trim=15404  iter=52
+2026-06-15 14:07:42   ✓ gt01.ctrl.in[2].value                         R²(val)=0.000  MAE=343.9  nMAE=0.069  trim=15392  iter=56
+2026-06-15 14:07:42   ✓ gt01.ctrl.in[5].value                         R²(val)=-33352.578  MAE=577.7  nMAE=0.110  trim=15435  iter=51
+2026-06-15 14:07:42   ✅ ГПА-1: 28 моделей (1090s)
+
+2026-06-15 14:07:42 ⚙️  ГПА-2: 46 моделей параллельно...
+2026-06-15 14:11:40   ✓ asv_in.pv                                     R²(val)=0.977  MAE=0.5088  nMAE=0.007  trim=1490  iter=105
+2026-06-15 14:11:40   ✓ ax201.pv                                      R²(val)=0.913  MAE=0.006302  nMAE=0.006  trim=494  iter=103
+2026-06-15 14:11:40   ✓ ax202.pv                                      R²(val)=0.964  MAE=0.004036  nMAE=0.004  trim=312  iter=123
+2026-06-15 14:11:40   ✗ gc_bfs.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ gc_bftg.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ gc_com1.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ gc_com2.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✓ gc_cover.pv                                   R²(val)=0.729  MAE=0.0008668  nMAE=0.079  trim=2  iter=236
+2026-06-15 14:11:40   ✗ gc_fcv.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ gc_fg7001.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ gc_uptg.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✓ pd.pv                                         R²(val)=0.956  MAE=0.02691  nMAE=0.008  trim=221  iter=143
+2026-06-15 14:11:40   ✓ pe101.pv                                      R²(val)=0.130  MAE=0.006304  nMAE=0.003  trim=798  iter=251
+2026-06-15 14:11:40   ✓ pg_airc.pv                                    R²(val)=0.984  MAE=0.01548  nMAE=0.004  trim=142  iter=163
+2026-06-15 14:11:40   ✓ program:flowcalc.tot_unit.in                  R²(val)=0.940  MAE=0.01748  nMAE=0.013  trim=328  iter=136
+2026-06-15 14:11:40   ✓ ps.pv                                         R²(val)=0.993  MAE=0.01109  nMAE=0.005  trim=166  iter=163
+2026-06-15 14:11:40   ✗ states_gpa.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ states_gpa.1: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ states_gpa.2: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ states_gpa.3: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ states_gpa.4: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ states_gpa.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✗ states_gpa.6: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:11:40   ✓ states_gpa.7                                  R²(val)=0.000  MAE=0.003239  nMAE=0.003  trim=992  iter=93
+2026-06-15 14:11:40   ✓ states_gtd.0                                  R²(val)=0.000  MAE=0.001366  nMAE=0.001  trim=1602  iter=108
+2026-06-15 14:11:40   ✓ states_gtd.5                                  R²(val)=0.000  MAE=0.001135  nMAE=0.001  trim=1082  iter=129
+2026-06-15 14:11:40   ✓ td.pv                                         R²(val)=0.809  MAE=2.382  nMAE=0.035  trim=161  iter=72
+2026-06-15 14:11:40   ✓ te221.pv                                      R²(val)=0.851  MAE=0.721  nMAE=0.012  trim=270  iter=126
+2026-06-15 14:11:40   ✓ te222.pv                                      R²(val)=0.872  MAE=0.7599  nMAE=0.013  trim=250  iter=147
+2026-06-15 14:11:40   ✓ te223.pv                                      R²(val)=0.000  MAE=0.08664  nMAE=0.008  trim=1686  iter=101
+2026-06-15 14:11:40   ✓ te224.pv                                      R²(val)=0.000  MAE=0.1324  nMAE=0.040  trim=803  iter=178
+2026-06-15 14:11:40   ✓ te51.pv                                       R²(val)=0.929  MAE=0.9941  nMAE=0.012  trim=179  iter=173
+2026-06-15 14:11:40   ✓ te52.pv                                       R²(val)=0.962  MAE=0.6537  nMAE=0.010  trim=157  iter=189
+2026-06-15 14:11:40   ✓ te54.pv                                       R²(val)=0.954  MAE=0.6061  nMAE=0.014  trim=67  iter=185
+2026-06-15 14:11:40   ✓ ts.pv                                         R²(val)=0.990  MAE=0.1546  nMAE=0.007  trim=903  iter=291
+2026-06-15 14:11:40   ✓ t_airc_out.pv                                 R²(val)=0.222  MAE=1.462  nMAE=0.034  trim=135  iter=52
+2026-06-15 14:11:40   ✓ vt101.pv                                      R²(val)=0.811  MAE=0.1566  nMAE=0.025  trim=749  iter=325
+2026-06-15 14:11:40   ✓ vt102.pv                                      R²(val)=0.616  MAE=0.9902  nMAE=0.057  trim=1992  iter=67
+2026-06-15 14:11:40   ✓ vt103.pv                                      R²(val)=0.944  MAE=0.4309  nMAE=0.025  trim=635  iter=338
+2026-06-15 14:11:40   ✓ vt201.pv                                      R²(val)=0.837  MAE=0.7867  nMAE=0.010  trim=1610  iter=49
+2026-06-15 14:11:40   ✓ vt202.pv                                      R²(val)=0.746  MAE=1.013  nMAE=0.017  trim=182  iter=74
+2026-06-15 14:11:40   ✓ vt203.pv                                      R²(val)=0.682  MAE=0.5418  nMAE=0.009  trim=1237  iter=35
+2026-06-15 14:11:40   ✓ vt204.pv                                      R²(val)=0.866  MAE=0.4156  nMAE=0.006  trim=1045  iter=40
+2026-06-15 14:11:40   ✓ gt01.ctrl.in[1].value                         R²(val)=0.885  MAE=18.86  nMAE=0.003  trim=222  iter=473
+2026-06-15 14:11:40   ✓ gt01.ctrl.in[2].value                         R²(val)=0.975  MAE=33.2  nMAE=0.007  trim=569  iter=135
+2026-06-15 14:11:40   ✓ gt01.ctrl.in[5].value                         R²(val)=0.866  MAE=27.88  nMAE=0.005  trim=231  iter=183
+2026-06-15 14:11:40   ✅ ГПА-2: 32 моделей (1328s)
+
+2026-06-15 14:11:40 ⚙️  ГПА-3: 46 моделей параллельно...
+2026-06-15 14:17:37   ✓ asv_in.pv                                     R²(val)=-4.192  MAE=0.5267  nMAE=0.005  trim=192  iter=99
+2026-06-15 14:17:37   ✓ ax201.pv                                      R²(val)=0.946  MAE=0.004107  nMAE=0.013  trim=69  iter=92
+2026-06-15 14:17:37   ✓ ax202.pv                                      R²(val)=0.876  MAE=0.007158  nMAE=0.022  trim=131  iter=70
+2026-06-15 14:17:37   ✓ gc_bfs.pv                                     R²(val)=0.000  MAE=0.001511  nMAE=0.001  trim=736  iter=149
+2026-06-15 14:17:37   ✓ gc_bftg.pv                                    R²(val)=0.000  MAE=0.0003683  nMAE=0.007  trim=3672  iter=231
+2026-06-15 14:17:37   ✓ gc_com1.pv                                    R²(val)=0.000  MAE=0.0004617  nMAE=0.001  trim=7556  iter=201
+2026-06-15 14:17:37   ✓ gc_com2.pv                                    R²(val)=0.000  MAE=0.001537  nMAE=0.001  trim=535  iter=187
+2026-06-15 14:17:37   ✓ gc_cover.pv                                   R²(val)=0.502  MAE=0.001054  nMAE=0.061  trim=1  iter=644
+2026-06-15 14:17:37   ✓ gc_fcv.pv                                     R²(val)=0.000  MAE=0.001563  nMAE=0.002  trim=1365  iter=136
+2026-06-15 14:17:37   ✗ gc_fg7001.pv: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✓ gc_uptg.pv                                    R²(val)=0.000  MAE=0.000157  nMAE=0.004  trim=7020  iter=207
+2026-06-15 14:17:37   ✓ pd.pv                                         R²(val)=0.915  MAE=0.04019  nMAE=0.016  trim=52  iter=97
+2026-06-15 14:17:37   ✓ pe101.pv                                      R²(val)=-2.279  MAE=0.011  nMAE=0.004  trim=1143  iter=187
+2026-06-15 14:17:37   ✓ pg_airc.pv                                    R²(val)=0.888  MAE=0.04536  nMAE=0.018  trim=48  iter=88
+2026-06-15 14:17:37   ✓ program:flowcalc.tot_unit.in                  R²(val)=0.988  MAE=0.007615  nMAE=0.006  trim=351  iter=243
+2026-06-15 14:17:37   ✓ ps.pv                                         R²(val)=0.996  MAE=0.009003  nMAE=0.007  trim=144  iter=363
+2026-06-15 14:17:37   ✗ states_gpa.0: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✗ states_gpa.1: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✗ states_gpa.2: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✗ states_gpa.3: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✗ states_gpa.4: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✗ states_gpa.5: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✗ states_gpa.6: catboost/libs/metrics/metric.cpp:7011: All train targets are equal
+2026-06-15 14:17:37   ✓ states_gpa.7                                  R²(val)=0.000  MAE=0.004621  nMAE=0.005  trim=883  iter=95
+2026-06-15 14:17:37   ✓ states_gtd.0                                  R²(val)=0.000  MAE=0.001638  nMAE=0.002  trim=1460  iter=145
+2026-06-15 14:17:37   ✓ states_gtd.5                                  R²(val)=0.000  MAE=0.002185  nMAE=0.002  trim=996  iter=212
+2026-06-15 14:17:37   ✓ td.pv                                         R²(val)=0.885  MAE=2.205  nMAE=0.029  trim=126  iter=88
+2026-06-15 14:17:37   ✓ te221.pv                                      R²(val)=0.914  MAE=0.7522  nMAE=0.012  trim=109  iter=77
+2026-06-15 14:17:37   ✓ te222.pv                                      R²(val)=0.976  MAE=0.4467  nMAE=0.007  trim=144  iter=299
+2026-06-15 14:17:37   ✓ te223.pv                                      R²(val)=0.000  MAE=6.085  nMAE=0.082  trim=0  iter=34
+2026-06-15 14:17:37   ✓ te224.pv                                      R²(val)=0.961  MAE=0.6424  nMAE=0.013  trim=195  iter=96
+2026-06-15 14:17:37   ✓ te51.pv                                       R²(val)=0.961  MAE=0.591  nMAE=0.007  trim=72  iter=186
+2026-06-15 14:17:37   ✓ te52.pv                                       R²(val)=0.965  MAE=0.6125  nMAE=0.009  trim=95  iter=265
+2026-06-15 14:17:37   ✓ te54.pv                                       R²(val)=0.868  MAE=0.7763  nMAE=0.017  trim=139  iter=233
+2026-06-15 14:17:37   ✓ ts.pv                                         R²(val)=0.933  MAE=0.1435  nMAE=0.005  trim=400  iter=218
+2026-06-15 14:17:37   ✓ t_airc_out.pv                                 R²(val)=0.355  MAE=0.5471  nMAE=0.010  trim=259  iter=104
+2026-06-15 14:17:37   ✓ vt101.pv                                      R²(val)=0.879  MAE=0.06512  nMAE=0.016  trim=1434  iter=587
+2026-06-15 14:17:37   ✓ vt102.pv                                      R²(val)=0.743  MAE=0.158  nMAE=0.028  trim=1075  iter=527
+2026-06-15 14:17:37   ✓ vt103.pv                                      R²(val)=0.133  MAE=0.2777  nMAE=0.086  trim=472  iter=103
+2026-06-15 14:17:37   ✓ vt201.pv                                      R²(val)=0.988  MAE=0.2203  nMAE=0.011  trim=541  iter=384
+2026-06-15 14:17:37   ✓ vt202.pv                                      R²(val)=0.921  MAE=0.2546  nMAE=0.016  trim=126  iter=82
+2026-06-15 14:17:37   ✓ vt203.pv                                      R²(val)=0.782  MAE=0.2443  nMAE=0.012  trim=256  iter=100
+2026-06-15 14:17:37   ✓ vt204.pv                                      R²(val)=0.719  MAE=0.08943  nMAE=0.006  trim=564  iter=145
+2026-06-15 14:17:37   ✓ gt01.ctrl.in[1].value                         R²(val)=0.948  MAE=17.4  nMAE=0.003  trim=274  iter=147
+2026-06-15 14:17:37   ✓ gt01.ctrl.in[2].value                         R²(val)=0.978  MAE=36.54  nMAE=0.007  trim=323  iter=103
+2026-06-15 14:17:37   ✓ gt01.ctrl.in[5].value                         R²(val)=0.963  MAE=15.65  nMAE=0.003  trim=388  iter=125
+2026-06-15 14:17:37   ✅ ГПА-3: 38 моделей (1685s)
+
+2026-06-15 14:17:37 🎉 Готово! 98 моделей сохранено, 40 ошибок.
+2026-06-15 14:17:37    Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron\metadata.json
+2026-06-15 14:17:37    Общее время: 1685 сек
+2026-06-19 11:01:28 🏭 Станция: Охангаронская КС (ohangaron_test) | методология v21.0-research
+2026-06-19 11:01:28 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron
+2026-06-19 11:01:28 🔑 Семантический маппинг тегов...
+2026-06-19 11:02:40 Traceback (most recent call last):
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 431, in <module>
+    train_all(args)
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 294, in train_all
+    tag_to_name = loader.build_tag_mapping()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 226, in build_tag_mapping
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 206, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 197, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 156, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:02:40   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:02:40 psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+2026-06-19 11:02:40 	Is the server running on that host and accepting TCP/IP connections?
+
+2026-06-19 11:47:42 🏭 Станция: Охангаронская КС (ohangaron_test) | методология v21.0-research
+2026-06-19 11:47:42 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron
+2026-06-19 11:47:42 🔑 Семантический маппинг тегов...
+2026-06-19 11:47:43    138 тегов; семантических имён: 138
+2026-06-19 11:47:43 📡 Загрузка данных (from=2026-05-01, до сегодня; cutoff=2026-06-12)...
+2026-06-19 11:51:07 📅 Период данных: 2026-05-01 00:05:00+05:00 .. 2026-06-19 11:45:00+05:00
+2026-06-19 11:51:08 Traceback (most recent call last):
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arrays\datetimelike.py", line 555, in _validate_comparison_value
+    self._check_compatible_with(other)
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arrays\datetimes.py", line 557, in _check_compatible_with
+    self._assert_tzawareness_compat(other)
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arrays\datetimes.py", line 800, in _assert_tzawareness_compat
+    raise TypeError(
+2026-06-19 11:51:08 TypeError: Cannot compare tz-naive and tz-aware datetime-like objects
+
+2026-06-19 11:51:08 The above exception was the direct cause of the following exception:
+
+2026-06-19 11:51:08 Traceback (most recent call last):
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arrays\datetimelike.py", line 991, in _cmp_method
+    other = self._validate_comparison_value(other)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arrays\datetimelike.py", line 558, in _validate_comparison_value
+    raise InvalidComparison(other) from err
+2026-06-19 11:51:08 pandas.errors.InvalidComparison: 2026-06-12 00:00:00
+
+2026-06-19 11:51:08 During handling of the above exception, another exception occurred:
+
+2026-06-19 11:51:08 Traceback (most recent call last):
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 431, in <module>
+    train_all(args)
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 354, in train_all
+    vdf = DQ.column_verdict(df_unit, cutoff_ts)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_quality.py", line 138, in column_verdict
+    tr = df_gpa.index <= train_cutoff
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\ops\common.py", line 85, in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arraylike.py", line 54, in __le__
+    return self._cmp_method(other, operator.le)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\indexes\base.py", line 7406, in _cmp_method
+    result = ops.comparison_op(self._values, other, op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\ops\array_ops.py", line 341, in comparison_op
+    res_values = op(lvalues, rvalues)
+                 ^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\ops\common.py", line 85, in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arraylike.py", line 54, in __le__
+    return self._cmp_method(other, operator.le)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\arrays\datetimelike.py", line 995, in _cmp_method
+    return invalid_comparison(self, other, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-19 11:51:08   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\ops\invalid.py", line 55, in invalid_comparison
+    raise TypeError(f"Invalid comparison between dtype={left.dtype} and {typ}")
+2026-06-19 11:51:08 TypeError: Invalid comparison between dtype=datetime64[us, UTC+05:00] and Timestamp
+2026-06-19 11:51:56 🏭 Станция: Охангаронская КС (ohangaron_test) | методология v21.0-research
+2026-06-19 11:51:56 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron
+2026-06-19 11:51:56 🔑 Семантический маппинг тегов...
+2026-06-19 11:51:57    138 тегов; семантических имён: 138
+2026-06-19 11:51:57 📡 Загрузка данных (from=2026-05-01, до сегодня; cutoff=2026-06-12)...
+2026-06-19 11:55:30 📅 Период данных: 2026-05-01 00:05:00 .. 2026-06-19 11:45:00
+
+2026-06-19 11:55:31 ⚙️  ГПА-1: 16 откликов · KEEP=28 · мульти-модель параллельно...
+2026-06-19 11:56:26   ✓ temp_front_bearing_pads            [RandomForest] MAE=3.257 nMAE=0.048 R²(ho)=0.975 naive=0.0906
+2026-06-19 11:56:26   ✓ temp_rear_bearing_pads             [RandomForest] MAE=2.141 nMAE=0.037 R²(ho)=0.904 naive=0.10345
+2026-06-19 11:56:26   ✓ vibro_front_support                [XGBoost    ] MAE=0.1698 nMAE=0.021 R²(ho)=0.991 naive=0.04198
+2026-06-19 11:56:26   ✓ vibro_rear_support                 [Ridge      ] MAE=0.5602 nMAE=0.055 R²(ho)=0.752 naive=0.16269
+2026-06-19 11:56:26   ✓ vibro_st_support                   [LightGBM   ] MAE=0.6513 nMAE=0.061 R²(ho)=0.896 naive=0.14452
+2026-06-19 11:56:26   ✓ vibro_rotor_front_horiz            [CatBoost   ] MAE=4.09 nMAE=0.045 R²(ho)=0.195 naive=0.24622
+2026-06-19 11:56:26   ✓ vibro_rotor_front_vert             [CatBoost   ] MAE=21.86 nMAE=0.214 R²(ho)=-0.027 naive=0.30003
+2026-06-19 11:56:26   ✓ vibro_disp_rotor_rear_horiz        [RandomForest] MAE=2.561 nMAE=0.043 R²(ho)=0.960 naive=0.09348
+2026-06-19 11:56:26   ✓ vibro_disp_rotor_rear_vert         [Ridge      ] MAE=28.93 nMAE=0.273 R²(ho)=-0.600 naive=0.22155
+2026-06-19 11:56:26   ✓ polytropic_head                    [Ridge      ] MAE=9.287 nMAE=0.277 R²(ho)=-0.938 naive=0.90293
+2026-06-19 11:56:26   ✓ compressor_rotor_axial_shift_t1    [LightGBM   ] MAE=0.04358 nMAE=0.041 R²(ho)=0.968 naive=0.00182
+2026-06-19 11:56:26   ✓ compressor_rotor_axial_shift_t2    [RandomForest] MAE=0.05897 nMAE=0.055 R²(ho)=0.959 naive=0.00199
+2026-06-19 11:56:26   ✓ gas_temp_out_gpa                   [LightGBM   ] MAE=1.304 nMAE=0.021 R²(ho)=0.993 naive=0.25266
+2026-06-19 11:56:26   ✓ oil_temp_out_zod                   [LightGBM   ] MAE=1.919 nMAE=0.025 R²(ho)=0.992 naive=0.16968
+2026-06-19 11:56:26   ✓ oil_temp_out_st                    [XGBoost    ] MAE=1.642 nMAE=0.025 R²(ho)=0.992 naive=0.14636
+2026-06-19 11:56:26   ✓ oil_temp_in_pod                    [XGBoost    ] MAE=2.056 nMAE=0.052 R²(ho)=0.951 naive=0.19226
+2026-06-19 11:56:26   ✅ ГПА-1: готово (269s)
+
+2026-06-19 11:56:26 ⚙️  ГПА-2: 16 откликов · KEEP=32 · мульти-модель параллельно...
+2026-06-19 11:57:29   ✓ temp_front_bearing_pads            [CatBoost   ] MAE=1.107 nMAE=0.020 R²(ho)=0.340 naive=0.0637
+2026-06-19 11:57:29   ✓ temp_rear_bearing_pads             [CatBoost   ] MAE=1.45 nMAE=0.029 R²(ho)=0.365 naive=0.07822
+2026-06-19 11:57:29   ✓ vibro_front_support                [CatBoost   ] MAE=0.299 nMAE=0.115 R²(ho)=-0.194 naive=0.07787
+2026-06-19 11:57:29   ✓ vibro_rear_support                 [CatBoost   ] MAE=1.304 nMAE=0.110 R²(ho)=-0.026 naive=0.8591
+2026-06-19 11:57:29   ✓ vibro_st_support                   [CatBoost   ] MAE=0.9597 nMAE=0.104 R²(ho)=-0.114 naive=0.40375
+2026-06-19 11:57:29   ✓ vibro_rotor_front_horiz            [CatBoost   ] MAE=0.5226 nMAE=0.020 R²(ho)=0.577 naive=0.12106
+2026-06-19 11:57:29   ✓ vibro_rotor_front_vert             [CatBoost   ] MAE=0.5906 nMAE=0.018 R²(ho)=0.367 naive=0.12069
+2026-06-19 11:57:29   ✓ vibro_disp_rotor_rear_horiz        [CatBoost   ] MAE=0.3948 nMAE=0.017 R²(ho)=0.693 naive=0.0471
+2026-06-19 11:57:29   ✓ vibro_disp_rotor_rear_vert         [LightGBM   ] MAE=0.3826 nMAE=0.014 R²(ho)=0.334 naive=0.05814
+2026-06-19 11:57:29   ✓ polytropic_head                    [XGBoost    ] MAE=3.526 nMAE=0.033 R²(ho)=-0.425 naive=0.09039
+2026-06-19 11:57:29   ✓ compressor_rotor_axial_shift_t1    [CatBoost   ] MAE=0.009502 nMAE=0.053 R²(ho)=0.409 naive=0.00063
+2026-06-19 11:57:29   ✓ compressor_rotor_axial_shift_t2    [CatBoost   ] MAE=0.008793 nMAE=0.051 R²(ho)=0.411 naive=0.00061
+2026-06-19 11:57:29   ✓ gas_temp_out_gpa                   [CatBoost   ] MAE=0.5742 nMAE=0.009 R²(ho)=0.770 naive=0.04927
+2026-06-19 11:57:29   ✓ oil_temp_out_zod                   [CatBoost   ] MAE=1.902 nMAE=0.024 R²(ho)=0.312 naive=0.19045
+2026-06-19 11:57:29   ✓ oil_temp_out_st                    [CatBoost   ] MAE=1.746 nMAE=0.027 R²(ho)=0.158 naive=0.16712
+2026-06-19 11:57:29   ✓ oil_temp_in_pod                    [CatBoost   ] MAE=1.899 nMAE=0.048 R²(ho)=0.345 naive=0.23279
+2026-06-19 11:57:29   ✅ ГПА-2: готово (333s)
+
+2026-06-19 11:57:30 ⚙️  ГПА-3: 16 откликов · KEEP=33 · мульти-модель параллельно...
+2026-06-19 11:58:32   ✓ temp_front_bearing_pads            [RandomForest] MAE=2.185 nMAE=0.041 R²(ho)=0.973 naive=0.08232
+2026-06-19 11:58:32   ✓ temp_rear_bearing_pads             [Ridge      ] MAE=3.309 nMAE=0.059 R²(ho)=0.952 naive=0.11117
+2026-06-19 11:58:32   ✓ vibro_front_support                [LightGBM   ] MAE=0.08215 nMAE=0.021 R²(ho)=0.994 naive=0.02926
+2026-06-19 11:58:32   ✓ vibro_rear_support                 [OLS        ] MAE=0.2254 nMAE=0.043 R²(ho)=0.978 naive=0.07556
+2026-06-19 11:58:32   ✓ vibro_st_support                   [Ridge      ] MAE=0.2378 nMAE=0.114 R²(ho)=-0.366 naive=0.0921
+2026-06-19 11:58:32   ✓ vibro_rotor_front_horiz            [RandomForest] MAE=0.2077 nMAE=0.010 R²(ho)=0.999 naive=0.04097
+2026-06-19 11:58:32   ✓ vibro_rotor_front_vert             [RandomForest] MAE=0.4558 nMAE=0.027 R²(ho)=0.990 naive=0.05052
+2026-06-19 11:58:32   ✓ vibro_disp_rotor_rear_horiz        [LightGBM   ] MAE=0.2824 nMAE=0.013 R²(ho)=0.998 naive=0.03737
+2026-06-19 11:58:32   ✓ vibro_disp_rotor_rear_vert         [RandomForest] MAE=0.1128 nMAE=0.008 R²(ho)=1.000 naive=0.02264
+2026-06-19 11:58:32   ✓ polytropic_head                    [CatBoost   ] MAE=1.525 nMAE=0.014 R²(ho)=0.997 naive=0.12864
+2026-06-19 11:58:32   ✓ compressor_rotor_axial_shift_t1    [LightGBM   ] MAE=0.01857 nMAE=0.057 R²(ho)=0.956 naive=0.00056
+2026-06-19 11:58:32   ✓ compressor_rotor_axial_shift_t2    [LightGBM   ] MAE=0.01707 nMAE=0.055 R²(ho)=0.940 naive=0.00055
+2026-06-19 11:58:32   ✓ gas_temp_out_gpa                   [RandomForest] MAE=1.882 nMAE=0.029 R²(ho)=0.985 naive=0.08449
+2026-06-19 11:58:32   ✓ oil_temp_out_zod                   [RandomForest] MAE=2.348 nMAE=0.029 R²(ho)=0.989 naive=0.38981
+2026-06-19 11:58:32   ✓ oil_temp_out_st                    [RandomForest] MAE=2.442 nMAE=0.035 R²(ho)=0.984 naive=0.31924
+2026-06-19 11:58:32   ✓ oil_temp_in_pod                    [XGBoost    ] MAE=3.372 nMAE=0.074 R²(ho)=0.922 naive=0.55709
+2026-06-19 11:58:32   ✅ ГПА-3: готово (396s)
+
+2026-06-19 11:58:32 🎉 Готово! 48 моделей, 0 ошибок. Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron\metadata.json
+2026-06-19 11:58:32    Общее время: 396 сек
+2026-06-19 13:25:07 🏭 Станция: Охангаронская КС (ohangaron_test) | методология v21.0-research
+2026-06-19 13:25:07 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron
+2026-06-19 13:25:07 🔑 Семантический маппинг тегов...
+2026-06-19 13:25:08    138 тегов; семантических имён: 138
+2026-06-19 13:25:08 📡 Загрузка данных (from=2026-05-01, до сегодня; cutoff=2026-06-12)...
+2026-06-19 13:27:01 🌡️  ambient: 0/14041 точек (Open-Meteo, 5-мин)
+2026-06-19 13:27:01 📅 Период данных: 2026-05-01 00:05:00 .. 2026-06-19 13:25:00
+
+2026-06-19 13:27:01 ⚙️  ГПА-1: 16 откликов · KEEP=28 · мульти-модель параллельно...
+2026-06-19 13:27:49   ✓ temp_front_bearing_pads            [RandomForest] MAE=3.28 nMAE=0.048 R²(ho)=0.975 naive=0.09086
+2026-06-19 13:27:49   ✓ temp_rear_bearing_pads             [RandomForest] MAE=2.157 nMAE=0.037 R²(ho)=0.904 naive=0.10362
+2026-06-19 13:27:49   ✓ vibro_front_support                [XGBoost    ] MAE=0.1708 nMAE=0.021 R²(ho)=0.991 naive=0.0422
+2026-06-19 13:27:49   ✓ vibro_rear_support                 [Ridge      ] MAE=0.5656 nMAE=0.055 R²(ho)=0.754 naive=0.16448
+2026-06-19 13:27:49   ✓ vibro_st_support                   [LightGBM   ] MAE=0.659 nMAE=0.061 R²(ho)=0.896 naive=0.14532
+2026-06-19 13:27:49   ✓ vibro_rotor_front_horiz            [CatBoost   ] MAE=4.087 nMAE=0.044 R²(ho)=0.199 naive=0.24819
+2026-06-19 13:27:49   ✓ vibro_rotor_front_vert             [CatBoost   ] MAE=21.72 nMAE=0.213 R²(ho)=-0.026 naive=0.30313
+2026-06-19 13:27:49   ✓ vibro_disp_rotor_rear_horiz        [RandomForest] MAE=2.567 nMAE=0.043 R²(ho)=0.960 naive=0.09422
+2026-06-19 13:27:49   ✓ vibro_disp_rotor_rear_vert         [Ridge      ] MAE=28.68 nMAE=0.271 R²(ho)=-0.596 naive=0.22222
+2026-06-19 13:27:49   ✓ polytropic_head                    [Ridge      ] MAE=9.246 nMAE=0.276 R²(ho)=-0.940 naive=0.89145
+2026-06-19 13:27:49   ✓ compressor_rotor_axial_shift_t1    [LightGBM   ] MAE=0.04341 nMAE=0.041 R²(ho)=0.968 naive=0.00182
+2026-06-19 13:27:49   ✓ compressor_rotor_axial_shift_t2    [RandomForest] MAE=0.05906 nMAE=0.055 R²(ho)=0.959 naive=0.00199
+2026-06-19 13:27:49   ✓ gas_temp_out_gpa                   [LightGBM   ] MAE=1.303 nMAE=0.021 R²(ho)=0.994 naive=0.25503
+2026-06-19 13:27:49   ✓ oil_temp_out_zod                   [LightGBM   ] MAE=1.927 nMAE=0.025 R²(ho)=0.992 naive=0.17134
+2026-06-19 13:27:49   ✓ oil_temp_out_st                    [XGBoost    ] MAE=1.641 nMAE=0.025 R²(ho)=0.992 naive=0.1468
+2026-06-19 13:27:49   ✓ oil_temp_in_pod                    [XGBoost    ] MAE=2.069 nMAE=0.053 R²(ho)=0.951 naive=0.19383
+2026-06-19 13:27:49   ✅ ГПА-1: готово (161s)
+
+2026-06-19 13:27:49 ⚙️  ГПА-2: 16 откликов · KEEP=32 · мульти-модель параллельно...
+2026-06-19 13:28:45   ✓ temp_front_bearing_pads            [CatBoost   ] MAE=1.103 nMAE=0.020 R²(ho)=0.341 naive=0.06406
+2026-06-19 13:28:45   ✓ temp_rear_bearing_pads             [CatBoost   ] MAE=1.442 nMAE=0.029 R²(ho)=0.366 naive=0.0782
+2026-06-19 13:28:45   ✓ vibro_front_support                [CatBoost   ] MAE=0.2987 nMAE=0.114 R²(ho)=-0.194 naive=0.07829
+2026-06-19 13:28:45   ✓ vibro_rear_support                 [CatBoost   ] MAE=1.299 nMAE=0.109 R²(ho)=-0.019 naive=0.85887
+2026-06-19 13:28:45   ✓ vibro_st_support                   [CatBoost   ] MAE=0.9658 nMAE=0.105 R²(ho)=-0.123 naive=0.40501
+2026-06-19 13:28:45   ✓ vibro_rotor_front_horiz            [CatBoost   ] MAE=0.5319 nMAE=0.020 R²(ho)=0.555 naive=0.12365
+2026-06-19 13:28:45   ✓ vibro_rotor_front_vert             [CatBoost   ] MAE=0.5911 nMAE=0.018 R²(ho)=0.366 naive=0.12225
+2026-06-19 13:28:45   ✓ vibro_disp_rotor_rear_horiz        [CatBoost   ] MAE=0.3968 nMAE=0.017 R²(ho)=0.690 naive=0.04775
+2026-06-19 13:28:45   ✓ vibro_disp_rotor_rear_vert         [LightGBM   ] MAE=0.3836 nMAE=0.014 R²(ho)=0.330 naive=0.05884
+2026-06-19 13:28:45   ✓ polytropic_head                    [XGBoost    ] MAE=3.563 nMAE=0.034 R²(ho)=-0.442 naive=0.09142
+2026-06-19 13:28:45   ✓ compressor_rotor_axial_shift_t1    [CatBoost   ] MAE=0.009586 nMAE=0.053 R²(ho)=0.395 naive=0.00063
+2026-06-19 13:28:45   ✓ compressor_rotor_axial_shift_t2    [CatBoost   ] MAE=0.008897 nMAE=0.052 R²(ho)=0.393 naive=0.00061
+2026-06-19 13:28:45   ✓ gas_temp_out_gpa                   [LightGBM   ] MAE=0.5923 nMAE=0.010 R²(ho)=0.778 naive=0.05007
+2026-06-19 13:28:45   ✓ oil_temp_out_zod                   [CatBoost   ] MAE=1.903 nMAE=0.024 R²(ho)=0.308 naive=0.19188
+2026-06-19 13:28:45   ✓ oil_temp_out_st                    [CatBoost   ] MAE=1.759 nMAE=0.027 R²(ho)=0.143 naive=0.16813
+2026-06-19 13:28:45   ✓ oil_temp_in_pod                    [CatBoost   ] MAE=1.903 nMAE=0.048 R²(ho)=0.339 naive=0.2342
+2026-06-19 13:28:45   ✅ ГПА-2: готово (217s)
+
+2026-06-19 13:28:45 ⚙️  ГПА-3: 16 откликов · KEEP=33 · мульти-модель параллельно...
+2026-06-19 13:29:45   ✓ temp_front_bearing_pads            [RandomForest] MAE=2.168 nMAE=0.041 R²(ho)=0.973 naive=0.082
+2026-06-19 13:29:45   ✓ temp_rear_bearing_pads             [Ridge      ] MAE=3.301 nMAE=0.059 R²(ho)=0.953 naive=0.11108
+2026-06-19 13:29:45   ✓ vibro_front_support                [LightGBM   ] MAE=0.0819 nMAE=0.021 R²(ho)=0.994 naive=0.02911
+2026-06-19 13:29:45   ✓ vibro_rear_support                 [OLS        ] MAE=0.2241 nMAE=0.043 R²(ho)=0.979 naive=0.07494
+2026-06-19 13:29:45   ✓ vibro_st_support                   [Ridge      ] MAE=0.238 nMAE=0.114 R²(ho)=-0.250 naive=0.09342
+2026-06-19 13:29:45   ✓ vibro_rotor_front_horiz            [RandomForest] MAE=0.2062 nMAE=0.010 R²(ho)=0.999 naive=0.04064
+2026-06-19 13:29:45   ✓ vibro_rotor_front_vert             [RandomForest] MAE=0.4531 nMAE=0.027 R²(ho)=0.990 naive=0.05012
+2026-06-19 13:29:45   ✓ vibro_disp_rotor_rear_horiz        [LightGBM   ] MAE=0.2804 nMAE=0.013 R²(ho)=0.998 naive=0.03709
+2026-06-19 13:29:45   ✓ vibro_disp_rotor_rear_vert         [RandomForest] MAE=0.1124 nMAE=0.008 R²(ho)=1.000 naive=0.02252
+2026-06-19 13:29:45   ✓ polytropic_head                    [CatBoost   ] MAE=1.518 nMAE=0.014 R²(ho)=0.997 naive=0.12809
+2026-06-19 13:29:45   ✓ compressor_rotor_axial_shift_t1    [LightGBM   ] MAE=0.01872 nMAE=0.057 R²(ho)=0.955 naive=0.00056
+2026-06-19 13:29:45   ✓ compressor_rotor_axial_shift_t2    [LightGBM   ] MAE=0.01705 nMAE=0.055 R²(ho)=0.940 naive=0.00055
+2026-06-19 13:29:45   ✓ gas_temp_out_gpa                   [RandomForest] MAE=1.884 nMAE=0.029 R²(ho)=0.985 naive=0.0857
+2026-06-19 13:29:45   ✓ oil_temp_out_zod                   [RandomForest] MAE=2.353 nMAE=0.029 R²(ho)=0.989 naive=0.38784
+2026-06-19 13:29:45   ✓ oil_temp_out_st                    [RandomForest] MAE=2.439 nMAE=0.035 R²(ho)=0.984 naive=0.31764
+2026-06-19 13:29:45   ✓ oil_temp_in_pod                    [XGBoost    ] MAE=3.36 nMAE=0.074 R²(ho)=0.923 naive=0.55337
+2026-06-19 13:29:45   ✅ ГПА-3: готово (278s)
+
+2026-06-19 13:29:45 🎉 Готово! 48 моделей, 0 ошибок. Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron\metadata.json
+2026-06-19 13:29:45    Общее время: 278 сек
+2026-06-19 13:30:21 🏭 Станция: Охангаронская КС (ohangaron_test) | методология v21.0-research
+2026-06-19 13:30:21 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron
+2026-06-19 13:30:21 🔑 Семантический маппинг тегов...
+2026-06-19 13:30:22    138 тегов; семантических имён: 138
+2026-06-19 13:30:22 📡 Загрузка данных (from=2026-05-01, до сегодня; cutoff=2026-06-12)...
+2026-06-19 13:32:04 🌡️  ambient: 14042/14042 точек (Open-Meteo, 5-мин)
+2026-06-19 13:32:04 📅 Период данных: 2026-05-01 00:05:00 .. 2026-06-19 13:30:00
+
+2026-06-19 13:32:08 ⚙️  ГПА-1: 16 откликов · KEEP=35 · мульти-модель параллельно...
+2026-06-19 13:33:14   ✓ temp_front_bearing_pads            [RandomForest] MAE=3.218 nMAE=0.047 R²(ho)=0.975 naive=0.09087
+2026-06-19 13:33:14   ✓ temp_rear_bearing_pads             [RandomForest] MAE=2.406 nMAE=0.041 R²(ho)=0.894 naive=0.10363
+2026-06-19 13:33:14   ✓ vibro_front_support                [LightGBM   ] MAE=0.2211 nMAE=0.028 R²(ho)=0.976 naive=0.0422
+2026-06-19 13:33:14   ✓ vibro_rear_support                 [LightGBM   ] MAE=0.5206 nMAE=0.051 R²(ho)=0.948 naive=0.16463
+2026-06-19 13:33:14   ✓ vibro_st_support                   [Ridge      ] MAE=0.6941 nMAE=0.065 R²(ho)=0.840 naive=0.14526
+2026-06-19 13:33:14   ✓ vibro_rotor_front_horiz            [XGBoost    ] MAE=4.446 nMAE=0.048 R²(ho)=-0.061 naive=0.24833
+2026-06-19 13:33:14   ✓ vibro_rotor_front_vert             [XGBoost    ] MAE=21.56 nMAE=0.211 R²(ho)=0.005 naive=0.3031
+2026-06-19 13:33:14   ✓ vibro_disp_rotor_rear_horiz        [CatBoost   ] MAE=2.561 nMAE=0.043 R²(ho)=0.946 naive=0.09419
+2026-06-19 13:33:14   ✓ vibro_disp_rotor_rear_vert         [Ridge      ] MAE=28.31 nMAE=0.267 R²(ho)=-0.592 naive=0.22238
+2026-06-19 13:33:14   ✓ polytropic_head                    [Ridge      ] MAE=2.647 nMAE=0.079 R²(ho)=0.171 naive=0.89064
+2026-06-19 13:33:14   ✓ compressor_rotor_axial_shift_t1    [CatBoost   ] MAE=0.07141 nMAE=0.067 R²(ho)=0.900 naive=0.00182
+2026-06-19 13:33:14   ✓ compressor_rotor_axial_shift_t2    [RandomForest] MAE=0.06087 nMAE=0.056 R²(ho)=0.958 naive=0.00199
+2026-06-19 13:33:14   ✓ gas_temp_out_gpa                   [LightGBM   ] MAE=1.247 nMAE=0.020 R²(ho)=0.994 naive=0.25539
+2026-06-19 13:33:14   ✓ oil_temp_out_zod                   [LightGBM   ] MAE=1.97 nMAE=0.026 R²(ho)=0.992 naive=0.17133
+2026-06-19 13:33:14   ✓ oil_temp_out_st                    [LightGBM   ] MAE=1.619 nMAE=0.025 R²(ho)=0.991 naive=0.14673
+2026-06-19 13:33:14   ✓ oil_temp_in_pod                    [RandomForest] MAE=1.647 nMAE=0.042 R²(ho)=0.969 naive=0.19375
+2026-06-19 13:33:14   ✅ ГПА-1: готово (173s)
+
+2026-06-19 13:33:14 ⚙️  ГПА-2: 16 откликов · KEEP=40 · мульти-модель параллельно...
+2026-06-19 13:34:49   ✓ temp_front_bearing_pads            [LightGBM   ] MAE=0.6458 nMAE=0.012 R²(ho)=0.733 naive=0.06403
+2026-06-19 13:34:49   ✓ temp_rear_bearing_pads             [CatBoost   ] MAE=0.7467 nMAE=0.015 R²(ho)=0.842 naive=0.07817
+2026-06-19 13:34:49   ✓ vibro_front_support                [CatBoost   ] MAE=0.2791 nMAE=0.107 R²(ho)=-0.038 naive=0.07829
+2026-06-19 13:34:49   ✓ vibro_rear_support                 [OLS        ] MAE=1.274 nMAE=0.107 R²(ho)=0.035 naive=0.8587
+2026-06-19 13:34:49   ✓ vibro_st_support                   [RandomForest] MAE=0.9201 nMAE=0.100 R²(ho)=-0.036 naive=0.40517
+2026-06-19 13:34:49   ✓ vibro_rotor_front_horiz            [XGBoost    ] MAE=0.4417 nMAE=0.017 R²(ho)=0.686 naive=0.12366
+2026-06-19 13:34:49   ✓ vibro_rotor_front_vert             [XGBoost    ] MAE=0.5996 nMAE=0.018 R²(ho)=0.364 naive=0.12222
+2026-06-19 13:34:49   ✓ vibro_disp_rotor_rear_horiz        [LightGBM   ] MAE=0.3374 nMAE=0.014 R²(ho)=0.783 naive=0.04774
+2026-06-19 13:34:49   ✓ vibro_disp_rotor_rear_vert         [CatBoost   ] MAE=0.352 nMAE=0.012 R²(ho)=0.455 naive=0.05882
+2026-06-19 13:34:49   ✓ polytropic_head                    [XGBoost    ] MAE=2.96 nMAE=0.028 R²(ho)=-0.001 naive=0.09138
+2026-06-19 13:34:49   ✓ compressor_rotor_axial_shift_t1    [CatBoost   ] MAE=0.009409 nMAE=0.052 R²(ho)=0.416 naive=0.00063
+2026-06-19 13:34:49   ✓ compressor_rotor_axial_shift_t2    [CatBoost   ] MAE=0.008947 nMAE=0.052 R²(ho)=0.372 naive=0.00061
+2026-06-19 13:34:49   ✓ gas_temp_out_gpa                   [LightGBM   ] MAE=0.6054 nMAE=0.010 R²(ho)=0.777 naive=0.05008
+2026-06-19 13:34:49   ✓ oil_temp_out_zod                   [XGBoost    ] MAE=0.9144 nMAE=0.012 R²(ho)=0.827 naive=0.19191
+2026-06-19 13:34:49   ✓ oil_temp_out_st                    [CatBoost   ] MAE=0.9353 nMAE=0.015 R²(ho)=0.757 naive=0.16807
+2026-06-19 13:34:49   ✓ oil_temp_in_pod                    [CatBoost   ] MAE=0.9113 nMAE=0.023 R²(ho)=0.825 naive=0.2341
+2026-06-19 13:34:49   ✅ ГПА-2: готово (268s)
+
+2026-06-19 13:34:50 ⚙️  ГПА-3: 16 откликов · KEEP=41 · мульти-модель параллельно...
+2026-06-19 13:36:33   ✓ temp_front_bearing_pads            [RandomForest] MAE=1.72 nMAE=0.033 R²(ho)=0.980 naive=0.08197
+2026-06-19 13:36:33   ✓ temp_rear_bearing_pads             [Ridge      ] MAE=2.956 nMAE=0.053 R²(ho)=0.965 naive=0.11103
+2026-06-19 13:36:33   ✓ vibro_front_support                [LightGBM   ] MAE=0.07382 nMAE=0.018 R²(ho)=0.995 naive=0.02909
+2026-06-19 13:36:33   ✓ vibro_rear_support                 [RandomForest] MAE=0.2888 nMAE=0.055 R²(ho)=0.977 naive=0.07491
+2026-06-19 13:36:33   ✓ vibro_st_support                   [CatBoost   ] MAE=0.2723 nMAE=0.131 R²(ho)=-0.737 naive=0.09342
+2026-06-19 13:36:33   ✓ vibro_rotor_front_horiz            [RandomForest] MAE=0.1505 nMAE=0.007 R²(ho)=0.999 naive=0.04062
+2026-06-19 13:36:33   ✓ vibro_rotor_front_vert             [LightGBM   ] MAE=0.2874 nMAE=0.017 R²(ho)=0.996 naive=0.05011
+2026-06-19 13:36:33   ✓ vibro_disp_rotor_rear_horiz        [RandomForest] MAE=0.2149 nMAE=0.010 R²(ho)=0.999 naive=0.03707
+2026-06-19 13:36:33   ✓ vibro_disp_rotor_rear_vert         [RandomForest] MAE=0.095 nMAE=0.007 R²(ho)=1.000 naive=0.02252
+2026-06-19 13:36:33   ✓ polytropic_head                    [RandomForest] MAE=1.041 nMAE=0.010 R²(ho)=0.999 naive=0.12809
+2026-06-19 13:36:33   ✓ compressor_rotor_axial_shift_t1    [Ridge      ] MAE=0.01057 nMAE=0.032 R²(ho)=0.984 naive=0.00056
+2026-06-19 13:36:33   ✓ compressor_rotor_axial_shift_t2    [RandomForest] MAE=0.01202 nMAE=0.039 R²(ho)=0.970 naive=0.00055
+2026-06-19 13:36:33   ✓ gas_temp_out_gpa                   [RandomForest] MAE=1.952 nMAE=0.030 R²(ho)=0.985 naive=0.08569
+2026-06-19 13:36:33   ✓ oil_temp_out_zod                   [RandomForest] MAE=1.82 nMAE=0.023 R²(ho)=0.993 naive=0.38773
+2026-06-19 13:36:33   ✓ oil_temp_out_st                    [RandomForest] MAE=1.932 nMAE=0.027 R²(ho)=0.988 naive=0.3175
+2026-06-19 13:36:33   ✓ oil_temp_in_pod                    [OLS        ] MAE=3.013 nMAE=0.066 R²(ho)=0.935 naive=0.55312
+2026-06-19 13:36:33   ✅ ГПА-3: готово (372s)
+
+2026-06-19 13:36:33 🎉 Готово! 48 моделей, 0 ошибок. Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\_test_ohangaron\metadata.json
+2026-06-19 13:36:33    Общее время: 372 сек
+2026-06-19 15:38:58 🏭 Станция: Охангаронская КС (ohangaron) | методология v21.0-research
+2026-06-19 15:38:58 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-19 15:38:58 🔑 Семантический маппинг тегов...
+2026-06-19 15:39:10    138 тегов; семантических имён: 138
+2026-06-19 15:39:10 📡 Загрузка данных (from=2026-04-01, до сегодня; cutoff=2026-06-12)...
+2026-06-19 15:47:00 🌡️  ambient: 22510/22510 точек (Open-Meteo, 5-мин)
+2026-06-19 15:47:00 📅 Период данных: 2026-04-01 00:05:00 .. 2026-06-19 15:35:00
+
+2026-06-19 15:47:06 ⚙️  ГПА-1: 16 откликов · KEEP=36 · мульти-модель параллельно...
+2026-06-19 15:49:24   ✓ temp_front_bearing_pads            [RandomForest] MAE=2.831 nMAE=0.042 R²(ho)=0.979 naive=0.09149
+2026-06-19 15:49:24   ✓ temp_rear_bearing_pads             [XGBoost    ] MAE=1.613 nMAE=0.028 R²(ho)=0.951 naive=0.10366
+2026-06-19 15:49:24   ✓ vibro_front_support                [OLS        ] MAE=0.2762 nMAE=0.032 R²(ho)=0.965 naive=0.04215
+2026-06-19 15:49:24   ✓ vibro_rear_support                 [RandomForest] MAE=0.3729 nMAE=0.030 R²(ho)=0.976 naive=0.16587
+2026-06-19 15:49:24   ✓ vibro_st_support                   [CatBoost   ] MAE=0.6426 nMAE=0.056 R²(ho)=0.894 naive=0.14684
+2026-06-19 15:49:24   ✓ vibro_rotor_front_horiz            [CatBoost   ] MAE=4.386 nMAE=0.048 R²(ho)=0.118 naive=0.25138
+2026-06-19 15:49:24   ✓ vibro_rotor_front_vert             [Ridge      ] MAE=22.85 nMAE=0.224 R²(ho)=-0.092 naive=0.30439
+2026-06-19 15:49:24   ✓ vibro_disp_rotor_rear_horiz        [RandomForest] MAE=2.54 nMAE=0.043 R²(ho)=0.958 naive=0.09459
+2026-06-19 15:49:24   ✓ vibro_disp_rotor_rear_vert         [Ridge      ] MAE=28.23 nMAE=0.266 R²(ho)=-0.582 naive=0.22352
+2026-06-19 15:49:24   ✓ polytropic_head                    [OLS        ] MAE=3.468 nMAE=0.098 R²(ho)=-0.950 naive=0.87424
+2026-06-19 15:49:24   ✓ compressor_rotor_axial_shift_t1    [CatBoost   ] MAE=0.04805 nMAE=0.045 R²(ho)=0.971 naive=0.00181
+2026-06-19 15:49:24   ✓ compressor_rotor_axial_shift_t2    [RandomForest] MAE=0.04491 nMAE=0.041 R²(ho)=0.968 naive=0.00198
+2026-06-19 15:49:24   ✓ gas_temp_out_gpa                   [CatBoost   ] MAE=1.6 nMAE=0.025 R²(ho)=0.989 naive=0.25822
+2026-06-19 15:49:24   ✓ oil_temp_out_zod                   [XGBoost    ] MAE=1.681 nMAE=0.022 R²(ho)=0.992 naive=0.17285
+2026-06-19 15:49:24   ✓ oil_temp_out_st                    [RandomForest] MAE=1.68 nMAE=0.025 R²(ho)=0.990 naive=0.1479
+2026-06-19 15:49:24   ✓ oil_temp_in_pod                    [RandomForest] MAE=1.579 nMAE=0.040 R²(ho)=0.972 naive=0.1965
+2026-06-19 15:49:24   ✅ ГПА-1: готово (626s)
+
+2026-06-19 15:49:25 ⚙️  ГПА-2: 16 откликов · KEEP=36 · мульти-модель параллельно...
+2026-06-19 15:51:34   ✓ temp_front_bearing_pads            [LightGBM   ] MAE=0.5733 nMAE=0.009 R²(ho)=0.820 naive=0.06434
+2026-06-19 15:51:34   ✓ temp_rear_bearing_pads             [LightGBM   ] MAE=0.6841 nMAE=0.011 R²(ho)=0.875 naive=0.07855
+2026-06-19 15:51:34   ✓ vibro_front_support                [CatBoost   ] MAE=0.2826 nMAE=0.108 R²(ho)=-0.076 naive=0.07837
+2026-06-19 15:51:34   ✓ vibro_rear_support                 [OLS        ] MAE=1.279 nMAE=0.107 R²(ho)=0.037 naive=0.85991
+2026-06-19 15:51:34   ✓ vibro_st_support                   [XGBoost    ] MAE=0.913 nMAE=0.099 R²(ho)=-0.002 naive=0.40531
+2026-06-19 15:51:34   ✓ vibro_rotor_front_horiz            [XGBoost    ] MAE=0.4463 nMAE=0.006 R²(ho)=0.690 naive=0.12386
+2026-06-19 15:51:34   ✓ vibro_rotor_front_vert             [RandomForest] MAE=0.5544 nMAE=0.009 R²(ho)=0.449 naive=0.12224
+2026-06-19 15:51:34   ✓ vibro_disp_rotor_rear_horiz        [RandomForest] MAE=0.3798 nMAE=0.006 R²(ho)=0.748 naive=0.04798
+2026-06-19 15:51:34   ✓ vibro_disp_rotor_rear_vert         [RandomForest] MAE=0.3569 nMAE=0.005 R²(ho)=0.441 naive=0.05893
+2026-06-19 15:51:34   ✓ polytropic_head                    [CatBoost   ] MAE=3.004 nMAE=0.028 R²(ho)=-0.007 naive=0.09115
+2026-06-19 15:51:34   ✓ compressor_rotor_axial_shift_t1    [LightGBM   ] MAE=0.009318 nMAE=0.011 R²(ho)=0.419 naive=0.00063
+2026-06-19 15:51:34   ✓ compressor_rotor_axial_shift_t2    [XGBoost    ] MAE=0.01014 nMAE=0.012 R²(ho)=0.215 naive=0.00061
+2026-06-19 15:51:34   ✓ gas_temp_out_gpa                   [LightGBM   ] MAE=0.5962 nMAE=0.009 R²(ho)=0.790 naive=0.05016
+2026-06-19 15:51:34   ✓ oil_temp_out_zod                   [LightGBM   ] MAE=0.9075 nMAE=0.011 R²(ho)=0.828 naive=0.19451
+2026-06-19 15:51:34   ✓ oil_temp_out_st                    [LightGBM   ] MAE=0.8865 nMAE=0.013 R²(ho)=0.787 naive=0.16934
+2026-06-19 15:51:34   ✓ oil_temp_in_pod                    [LightGBM   ] MAE=0.8787 nMAE=0.020 R²(ho)=0.841 naive=0.23657
+2026-06-19 15:51:34   ✅ ГПА-2: готово (755s)
+
+2026-06-19 15:51:35 ⚙️  ГПА-3: 16 откликов · KEEP=41 · мульти-модель параллельно...
+2026-06-19 15:54:39   ✓ temp_front_bearing_pads            [RandomForest] MAE=1.679 nMAE=0.032 R²(ho)=0.981 naive=0.08416
+2026-06-19 15:54:39   ✓ temp_rear_bearing_pads             [Ridge      ] MAE=3.077 nMAE=0.055 R²(ho)=0.966 naive=0.11383
+2026-06-19 15:54:39   ✓ vibro_front_support                [LightGBM   ] MAE=0.07699 nMAE=0.020 R²(ho)=0.995 naive=0.02879
+2026-06-19 15:54:39   ✓ vibro_rear_support                 [Ridge      ] MAE=0.2941 nMAE=0.054 R²(ho)=0.975 naive=0.07407
+2026-06-19 15:54:39   ✓ vibro_st_support                   [Ridge      ] MAE=0.2566 nMAE=0.114 R²(ho)=-0.599 naive=0.09342
+2026-06-19 15:54:39   ✓ vibro_rotor_front_horiz            [RandomForest] MAE=0.152 nMAE=0.007 R²(ho)=0.999 naive=0.04022
+2026-06-19 15:54:39   ✓ vibro_rotor_front_vert             [RandomForest] MAE=0.3223 nMAE=0.019 R²(ho)=0.995 naive=0.0496
+2026-06-19 15:54:39   ✓ vibro_disp_rotor_rear_horiz        [RandomForest] MAE=0.1873 nMAE=0.009 R²(ho)=0.999 naive=0.03671
+2026-06-19 15:54:39   ✓ vibro_disp_rotor_rear_vert         [LightGBM   ] MAE=0.06759 nMAE=0.005 R²(ho)=1.000 naive=0.02233
+2026-06-19 15:54:39   ✓ polytropic_head                    [RandomForest] MAE=0.9822 nMAE=0.009 R²(ho)=0.999 naive=0.12716
+2026-06-19 15:54:39   ✓ compressor_rotor_axial_shift_t1    [Ridge      ] MAE=0.01395 nMAE=0.039 R²(ho)=0.974 naive=0.00057
+2026-06-19 15:54:39   ✓ compressor_rotor_axial_shift_t2    [RandomForest] MAE=0.01038 nMAE=0.031 R²(ho)=0.977 naive=0.00055
+2026-06-19 15:54:39   ✓ gas_temp_out_gpa                   [RandomForest] MAE=1.969 nMAE=0.031 R²(ho)=0.985 naive=0.08664
+2026-06-19 15:54:39   ✓ oil_temp_out_zod                   [RandomForest] MAE=1.808 nMAE=0.023 R²(ho)=0.993 naive=0.38478
+2026-06-19 15:54:39   ✓ oil_temp_out_st                    [RandomForest] MAE=1.879 nMAE=0.027 R²(ho)=0.988 naive=0.31537
+2026-06-19 15:54:39   ✓ oil_temp_in_pod                    [OLS        ] MAE=2.994 nMAE=0.067 R²(ho)=0.936 naive=0.54775
+2026-06-19 15:54:39   ✅ ГПА-3: готово (941s)
+
+2026-06-19 15:54:40 🎉 Готово! 48 моделей, 0 ошибок. Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron\metadata.json
+2026-06-19 15:54:40    Общее время: 941 сек
+2026-06-19 16:01:49 🏭 Станция: Охангаронская КС (ohangaron) | методология v21.0-research
+2026-06-19 16:01:49 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-19 16:01:49 🔑 Семантический маппинг тегов...
+2026-06-19 16:01:52    138 тегов; семантических имён: 138
+2026-06-19 16:01:52 📡 Загрузка данных (from=2026-04-01, до сегодня; cutoff=2026-06-12)...
+2026-06-19 16:10:16 🌡️  ambient: 22513/22513 точек (Open-Meteo, 5-мин)
+2026-06-19 16:10:16 📅 Период данных: 2026-04-01 00:05:00 .. 2026-06-19 16:00:00
+
+2026-06-19 16:10:20 ⚙️  ГПА-1: 16 откликов · KEEP=36 · мульти-модель параллельно...
+2026-06-19 16:11:22   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=3.46 nMAE=0.051 R²(ho)=0.977 naive=0.09165
+2026-06-19 16:11:22   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=2.852 nMAE=0.049 R²(ho)=0.922 naive=0.10383
+2026-06-19 16:11:22   ✓ vibro_front_support                [CatBoostUnc] MAE=0.4127 nMAE=0.048 R²(ho)=0.959 naive=0.04212
+2026-06-19 16:11:22   ✓ vibro_rear_support                 [CatBoostUnc] MAE=0.3724 nMAE=0.030 R²(ho)=0.975 naive=0.16571
+2026-06-19 16:11:22   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.6653 nMAE=0.058 R²(ho)=0.890 naive=0.14682
+2026-06-19 16:11:22   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=6.634 nMAE=0.072 R²(ho)=-2.990 naive=0.25152
+2026-06-19 16:11:22   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=22.36 nMAE=0.219 R²(ho)=0.044 naive=0.30472
+2026-06-19 16:11:22   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=3.041 nMAE=0.051 R²(ho)=0.949 naive=0.09478
+2026-06-19 16:11:22   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=28.09 nMAE=0.265 R²(ho)=-0.661 naive=0.22369
+2026-06-19 16:11:22   ✓ polytropic_head                    [CatBoostUnc] MAE=8.414 nMAE=0.238 R²(ho)=-0.664 naive=0.87252
+2026-06-19 16:11:22   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.06701 nMAE=0.062 R²(ho)=0.919 naive=0.00181
+2026-06-19 16:11:22   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.04712 nMAE=0.043 R²(ho)=0.967 naive=0.00198
+2026-06-19 16:11:22   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=1.808 nMAE=0.029 R²(ho)=0.988 naive=0.25869
+2026-06-19 16:11:22   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=2.405 nMAE=0.031 R²(ho)=0.987 naive=0.17288
+2026-06-19 16:11:22   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=2.088 nMAE=0.032 R²(ho)=0.987 naive=0.14802
+2026-06-19 16:11:22   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=1.748 nMAE=0.045 R²(ho)=0.964 naive=0.19681
+2026-06-19 16:11:22   ✅ ГПА-1: готово (572s)
+
+2026-06-19 16:11:22 ⚙️  ГПА-2: 16 откликов · KEEP=36 · мульти-модель параллельно...
+2026-06-19 16:12:09   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=0.6172 nMAE=0.010 R²(ho)=0.793 naive=0.06449
+2026-06-19 16:12:09   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=0.7476 nMAE=0.012 R²(ho)=0.857 naive=0.07873
+2026-06-19 16:12:09   ✓ vibro_front_support                [CatBoostUnc] MAE=0.2716 nMAE=0.104 R²(ho)=0.025 naive=0.07835
+2026-06-19 16:12:09   ✓ vibro_rear_support                 [CatBoostUnc] MAE=1.339 nMAE=0.112 R²(ho)=-0.019 naive=0.85964
+2026-06-19 16:12:09   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.9477 nMAE=0.102 R²(ho)=-0.140 naive=0.40546
+2026-06-19 16:12:09   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=0.4579 nMAE=0.006 R²(ho)=0.641 naive=0.12371
+2026-06-19 16:12:09   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=0.5915 nMAE=0.010 R²(ho)=0.373 naive=0.12245
+2026-06-19 16:12:09   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=0.4311 nMAE=0.007 R²(ho)=0.661 naive=0.04809
+2026-06-19 16:12:09   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=0.4586 nMAE=0.006 R²(ho)=0.118 naive=0.05903
+2026-06-19 16:12:09   ✓ polytropic_head                    [CatBoostUnc] MAE=3.111 nMAE=0.029 R²(ho)=-0.084 naive=0.0912
+2026-06-19 16:12:09   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.01002 nMAE=0.012 R²(ho)=0.345 naive=0.00064
+2026-06-19 16:12:09   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.01027 nMAE=0.013 R²(ho)=0.233 naive=0.00061
+2026-06-19 16:12:09   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=0.8576 nMAE=0.012 R²(ho)=0.584 naive=0.05023
+2026-06-19 16:12:09   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=0.9669 nMAE=0.012 R²(ho)=0.821 naive=0.19503
+2026-06-19 16:12:09   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=1.011 nMAE=0.015 R²(ho)=0.720 naive=0.16989
+2026-06-19 16:12:09   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=1.057 nMAE=0.024 R²(ho)=0.783 naive=0.23712
+2026-06-19 16:12:09   ✅ ГПА-2: готово (619s)
+
+2026-06-19 16:12:09 ⚙️  ГПА-3: 16 откликов · KEEP=41 · мульти-модель параллельно...
+2026-06-19 16:13:15   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=5.89 nMAE=0.113 R²(ho)=0.778 naive=0.08416
+2026-06-19 16:13:15   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=7.343 nMAE=0.132 R²(ho)=0.720 naive=0.11402
+2026-06-19 16:13:15   ✓ vibro_front_support                [CatBoostUnc] MAE=0.3042 nMAE=0.077 R²(ho)=0.933 naive=0.02875
+2026-06-19 16:13:15   ✓ vibro_rear_support                 [CatBoostUnc] MAE=0.9761 nMAE=0.179 R²(ho)=0.694 naive=0.07396
+2026-06-19 16:13:15   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.2981 nMAE=0.133 R²(ho)=-0.989 naive=0.09342
+2026-06-19 16:13:15   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=1.84 nMAE=0.091 R²(ho)=0.929 naive=0.04017
+2026-06-19 16:13:15   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=2.103 nMAE=0.127 R²(ho)=0.839 naive=0.04956
+2026-06-19 16:13:15   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=2.877 nMAE=0.136 R²(ho)=0.820 naive=0.03666
+2026-06-19 16:13:15   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=0.9852 nMAE=0.068 R²(ho)=0.962 naive=0.0223
+2026-06-19 16:13:15   ✓ polytropic_head                    [CatBoostUnc] MAE=2.054 nMAE=0.019 R²(ho)=0.995 naive=0.12701
+2026-06-19 16:13:15   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.04237 nMAE=0.118 R²(ho)=0.699 naive=0.00057
+2026-06-19 16:13:15   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.01759 nMAE=0.052 R²(ho)=0.919 naive=0.00055
+2026-06-19 16:13:15   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=2.657 nMAE=0.041 R²(ho)=0.974 naive=0.08683
+2026-06-19 16:13:15   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=6.192 nMAE=0.078 R²(ho)=0.906 naive=0.38427
+2026-06-19 16:13:15   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=4.849 nMAE=0.069 R²(ho)=0.925 naive=0.31506
+2026-06-19 16:13:15   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=3.709 nMAE=0.083 R²(ho)=0.882 naive=0.54703
+2026-06-19 16:13:15   ✅ ГПА-3: готово (685s)
+
+2026-06-19 16:13:15 🎉 Готово! 48 моделей, 0 ошибок. Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron\metadata.json
+2026-06-19 16:13:15    Общее время: 685 сек
+2026-06-22 15:04:42 🏭 Станция: Охангаронская КС (ohangaron) | методология v21.0-research
+2026-06-22 15:04:42 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-22 15:04:42 🔑 Семантический маппинг тегов...
+2026-06-22 15:04:43    138 тегов; семантических имён: 138
+2026-06-22 15:04:43 📡 Загрузка данных (from=min, до сегодня; cutoff=2026-06-12)...
+2026-06-22 15:14:13 🌡️  ambient: 39248/39248 точек (Open-Meteo, 5-мин)
+2026-06-22 15:14:13 📅 Период данных: 2026-02-02 12:30:00 .. 2026-06-22 15:05:00
+
+2026-06-22 15:14:19 ⚙️  ГПА-1: 16 откликов · KEEP=35 · мульти-модель параллельно...
+2026-06-22 15:15:59   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=3.155 nMAE=0.047 R²(ho)=0.981 naive=0.08775
+2026-06-22 15:15:59   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=2.569 nMAE=0.037 R²(ho)=0.921 naive=0.10247
+2026-06-22 15:15:59   ✓ vibro_front_support                [CatBoostUnc] MAE=0.3925 nMAE=0.046 R²(ho)=0.959 naive=0.04527
+2026-06-22 15:15:59   ✓ vibro_rear_support                 [CatBoostUnc] MAE=0.4894 nMAE=0.039 R²(ho)=0.966 naive=0.19036
+2026-06-22 15:15:59   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.7106 nMAE=0.052 R²(ho)=0.892 naive=0.18155
+2026-06-22 15:15:59   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=6.676 nMAE=0.226 R²(ho)=-2.547 naive=0.29422
+2026-06-22 15:15:59   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=17.65 nMAE=0.173 R²(ho)=0.110 naive=0.34709
+2026-06-22 15:15:59   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=2.697 nMAE=0.046 R²(ho)=0.944 naive=0.09212
+2026-06-22 15:15:59   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=20.38 nMAE=0.192 R²(ho)=-0.539 naive=0.1951
+2026-06-22 15:15:59   ✓ polytropic_head                    [CatBoostUnc] MAE=7.234 nMAE=0.155 R²(ho)=-0.730 naive=0.53587
+2026-06-22 15:15:59   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.05068 nMAE=0.048 R²(ho)=0.934 naive=0.0016
+2026-06-22 15:15:59   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.03864 nMAE=0.036 R²(ho)=0.973 naive=0.00173
+2026-06-22 15:15:59   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=1.635 nMAE=0.022 R²(ho)=0.990 naive=0.26626
+2026-06-22 15:15:59   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=1.687 nMAE=0.021 R²(ho)=0.994 naive=0.18253
+2026-06-22 15:15:59   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=1.816 nMAE=0.026 R²(ho)=0.990 naive=0.16007
+2026-06-22 15:15:59   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=1.785 nMAE=0.040 R²(ho)=0.966 naive=0.2177
+2026-06-22 15:15:59   ✅ ГПА-1: готово (677s)
+
+2026-06-22 15:16:01 ⚙️  ГПА-2: 15 откликов · KEEP=39 · мульти-модель параллельно...
+2026-06-22 15:17:30   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=0.6211 nMAE=0.010 R²(ho)=0.785 naive=0.06269
+2026-06-22 15:17:30   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=0.7993 nMAE=0.014 R²(ho)=0.836 naive=0.07706
+2026-06-22 15:17:30   ✓ vibro_front_support                [CatBoostUnc] MAE=0.2397 nMAE=0.061 R²(ho)=0.309 naive=0.0725
+2026-06-22 15:17:30   ✓ vibro_rear_support                 [CatBoostUnc] MAE=1.319 nMAE=0.108 R²(ho)=0.003 naive=0.8317
+2026-06-22 15:17:30   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.9234 nMAE=0.062 R²(ho)=0.023 naive=0.41235
+2026-06-22 15:17:30   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=0.4395 nMAE=0.006 R²(ho)=0.631 naive=0.11397
+2026-06-22 15:17:30   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=0.6275 nMAE=0.010 R²(ho)=0.255 naive=0.11392
+2026-06-22 15:17:30   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=0.3691 nMAE=0.006 R²(ho)=0.738 naive=0.04528
+2026-06-22 15:17:30   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=0.4016 nMAE=0.006 R²(ho)=0.269 naive=0.05465
+2026-06-22 15:17:30   ✓ polytropic_head                    [CatBoostUnc] MAE=3.72 nMAE=0.035 R²(ho)=-0.536 naive=0.08563
+2026-06-22 15:17:30   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.0108 nMAE=0.011 R²(ho)=0.434 naive=0.00059
+2026-06-22 15:17:30   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.01121 nMAE=0.012 R²(ho)=0.290 naive=0.00057
+2026-06-22 15:17:30   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=0.6526 nMAE=0.010 R²(ho)=0.742 naive=0.04641
+2026-06-22 15:17:30   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=0.8522 nMAE=0.010 R²(ho)=0.837 naive=0.1896
+2026-06-22 15:17:30   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=0.9516 nMAE=0.022 R²(ho)=0.818 naive=0.23454
+2026-06-22 15:17:30   ✅ ГПА-2: готово (767s)
+
+2026-06-22 15:17:31 ⚙️  ГПА-3: 16 откликов · KEEP=41 · мульти-модель параллельно...
+2026-06-22 15:19:01   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=1.915 nMAE=0.030 R²(ho)=0.981 naive=0.07008
+2026-06-22 15:19:01   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=3.51 nMAE=0.054 R²(ho)=0.948 naive=0.1004
+2026-06-22 15:19:01   ✓ vibro_front_support                [CatBoostUnc] MAE=0.06806 nMAE=0.017 R²(ho)=0.995 naive=0.02126
+2026-06-22 15:19:01   ✓ vibro_rear_support                 [CatBoostUnc] MAE=0.1543 nMAE=0.027 R²(ho)=0.989 naive=0.05459
+2026-06-22 15:19:01   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.3059 nMAE=0.098 R²(ho)=-1.027 naive=0.09342
+2026-06-22 15:19:01   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=0.3733 nMAE=0.018 R²(ho)=0.997 naive=0.02927
+2026-06-22 15:19:01   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=0.367 nMAE=0.022 R²(ho)=0.994 naive=0.03677
+2026-06-22 15:19:01   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=0.4953 nMAE=0.023 R²(ho)=0.994 naive=0.02793
+2026-06-22 15:19:01   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=0.1337 nMAE=0.008 R²(ho)=0.999 naive=0.01755
+2026-06-22 15:19:01   ✓ polytropic_head                    [CatBoostUnc] MAE=1.801 nMAE=0.017 R²(ho)=0.997 naive=0.11135
+2026-06-22 15:19:01   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.03543 nMAE=0.096 R²(ho)=0.836 naive=0.00048
+2026-06-22 15:19:01   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.04252 nMAE=0.126 R²(ho)=0.640 naive=0.00047
+2026-06-22 15:19:01   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=6.25 nMAE=0.082 R²(ho)=0.893 naive=0.08295
+2026-06-22 15:19:01   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=2.575 nMAE=0.031 R²(ho)=0.989 naive=0.29862
+2026-06-22 15:19:01   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=3.162 nMAE=0.044 R²(ho)=0.975 naive=0.24795
+2026-06-22 15:19:01   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=2.492 nMAE=0.053 R²(ho)=0.953 naive=0.40858
+2026-06-22 15:19:01   ✅ ГПА-3: готово (858s)
+
+2026-06-22 15:19:01 🎉 Готово! 47 моделей, 0 ошибок. Метаданные: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron\metadata.json
+2026-06-22 15:19:01    Общее время: 858 сек
+2026-06-22 17:40:53 🏭 Станция: Охангаронская КС (ohangaron) | методология v21.0-research
+2026-06-22 17:40:53 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-22 17:40:53 🔑 Семантический маппинг тегов...
+2026-06-22 17:40:54    138 тегов; семантических имён: 138
+2026-06-22 17:40:54 📡 Загрузка данных (from=min, до сегодня; cutoff=2026-06-12)...
+2026-06-22 17:53:45 🌡️  ambient: 39279/39279 точек (Open-Meteo, 5-мин)
+2026-06-22 17:53:45 📅 Период данных: 2026-02-02 12:30:00 .. 2026-06-22 17:45:00
+
+2026-06-22 17:53:49 ⚙️  ГПА-1: 16 откликов · KEEP=35 · мульти-модель параллельно...
+2026-06-22 17:54:56   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=3.17 nMAE=0.047 R²(ho)=0.981 naive=0.08833
+2026-06-22 17:54:56   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=2.571 nMAE=0.037 R²(ho)=0.921 naive=0.10237
+2026-06-22 17:54:56   ✓ vibro_front_support                [CatBoostUnc] MAE=0.395 nMAE=0.046 R²(ho)=0.959 naive=0.04534
+2026-06-22 17:54:56   ✓ vibro_rear_support                 [CatBoostUnc] MAE=0.4908 nMAE=0.039 R²(ho)=0.966 naive=0.18977
+2026-06-22 17:54:56   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.7128 nMAE=0.053 R²(ho)=0.894 naive=0.18373
+2026-06-22 17:54:56   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=6.688 nMAE=0.227 R²(ho)=-2.532 naive=0.29614
+2026-06-22 17:54:56   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=17.54 nMAE=0.172 R²(ho)=0.111 naive=0.34735
+2026-06-22 17:54:56   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=2.69 nMAE=0.045 R²(ho)=0.944 naive=0.09211
+2026-06-22 17:54:56   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=20.25 nMAE=0.191 R²(ho)=-0.536 naive=0.19567
+2026-06-22 17:54:56   ✓ polytropic_head                    [CatBoostUnc] MAE=7.309 nMAE=0.156 R²(ho)=-0.744 naive=0.52876
+2026-06-22 17:54:56   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.05022 nMAE=0.047 R²(ho)=0.934 naive=0.00159
+2026-06-22 17:54:56   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.0383 nMAE=0.036 R²(ho)=0.973 naive=0.00172
+2026-06-22 17:54:56   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=1.635 nMAE=0.022 R²(ho)=0.990 naive=0.26493
+2026-06-22 17:54:56   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=1.71 nMAE=0.021 R²(ho)=0.994 naive=0.18269
+2026-06-22 17:54:56   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=1.846 nMAE=0.026 R²(ho)=0.990 naive=0.15995
+2026-06-22 17:54:56   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=1.799 nMAE=0.041 R²(ho)=0.966 naive=0.21787
+2026-06-22 17:54:56   ✅ ГПА-1: готово (843s)
+
+2026-06-22 17:54:57 ⚙️  ГПА-2: 16 откликов · KEEP=41 · мульти-модель параллельно...
+2026-06-22 17:55:58   ✓ temp_front_bearing_pads            [CatBoostUnc] MAE=0.6216 nMAE=0.010 R²(ho)=0.784 naive=0.06251
+2026-06-22 17:55:58   ✓ temp_rear_bearing_pads             [CatBoostUnc] MAE=0.7936 nMAE=0.013 R²(ho)=0.837 naive=0.0768
+2026-06-22 17:55:58   ✓ vibro_front_support                [CatBoostUnc] MAE=0.2388 nMAE=0.060 R²(ho)=0.310 naive=0.07216
+2026-06-22 17:55:58   ✓ vibro_rear_support                 [CatBoostUnc] MAE=1.317 nMAE=0.108 R²(ho)=0.002 naive=0.83152
+2026-06-22 17:55:58   ✓ vibro_st_support                   [CatBoostUnc] MAE=0.9295 nMAE=0.063 R²(ho)=0.015 naive=0.41128
+2026-06-22 17:55:58   ✓ vibro_rotor_front_horiz            [CatBoostUnc] MAE=0.4428 nMAE=0.006 R²(ho)=0.635 naive=0.11325
+2026-06-22 17:55:58   ✓ vibro_rotor_front_vert             [CatBoostUnc] MAE=0.6222 nMAE=0.010 R²(ho)=0.255 naive=0.11343
+2026-06-22 17:55:58   ✓ vibro_disp_rotor_rear_horiz        [CatBoostUnc] MAE=0.3675 nMAE=0.006 R²(ho)=0.744 naive=0.04514
+2026-06-22 17:55:58   ✓ vibro_disp_rotor_rear_vert         [CatBoostUnc] MAE=0.4008 nMAE=0.006 R²(ho)=0.266 naive=0.05451
+2026-06-22 17:55:58   ✓ polytropic_head                    [CatBoostUnc] MAE=3.749 nMAE=0.036 R²(ho)=-0.524 naive=0.08543
+2026-06-22 17:55:58   ✓ compressor_rotor_axial_shift_t1    [CatBoostUnc] MAE=0.01073 nMAE=0.011 R²(ho)=0.434 naive=0.00059
+2026-06-22 17:55:58   ✓ compressor_rotor_axial_shift_t2    [CatBoostUnc] MAE=0.01115 nMAE=0.012 R²(ho)=0.289 naive=0.00057
+2026-06-22 17:55:58   ✓ gas_temp_out_gpa                   [CatBoostUnc] MAE=0.6513 nMAE=0.009 R²(ho)=0.746 naive=0.04632
+2026-06-22 17:55:58   ✓ oil_temp_out_zod                   [CatBoostUnc] MAE=0.8521 nMAE=0.010 R²(ho)=0.838 naive=0.18944
+2026-06-22 17:55:58   ✓ oil_temp_out_st                    [CatBoostUnc] MAE=0.9111 nMAE=0.013 R²(ho)=0.727 naive=0.16462
+2026-06-22 17:55:58   ✓ oil_temp_in_pod                    [CatBoostUnc] MAE=0.9453 nMAE=0.022 R²(ho)=0.820 naive=0.23464
+2026-06-22 17:55:58   ✅ ГПА-2: готово (905s)
+
+2026-06-22 17:55:59 ⚙️  ГПА-3: 16 откликов · KEEP=42 · мульти-модель параллельно...
+2026-06-23 09:20:48 🏭 Станция: Охангаронская КС (ohangaron) | методология v21.0-research
+2026-06-23 09:20:48 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-23 09:20:48 🔑 Семантический маппинг тегов...
+2026-06-23 09:21:02    138 тегов; семантических имён: 138
+2026-06-23 09:21:02 📡 Загрузка данных (from=min, до сегодня; cutoff=2026-06-12)...
+2026-06-23 09:35:42 Traceback (most recent call last):
+2026-06-23 09:35:42   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 457, in <module>
+    train_all(args)
+2026-06-23 09:35:42   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 304, in train_all
+    raw_wide = loader.fetch_training_data(cutoff_date=None, from_date=args.from_date)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-23 09:35:42   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 160, in fetch_training_data
+    df = self._fetch_df_streaming(query, params)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-23 09:35:42   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 81, in _fetch_df_streaming
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+2026-06-23 09:35:42   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 61, in _fetch_df_streaming
+    batch = cur.fetchmany(itersize)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-23 09:35:42 psycopg2.OperationalError: server closed the connection unexpectedly
+2026-06-23 09:35:42 	This probably means the server terminated abnormally
+2026-06-23 09:35:42 	before or while processing the request.
+
+2026-06-23 09:47:39 🏭 Станция: Охангаронская КС (ohangaron) | методология v21.0-research
+2026-06-23 09:47:39 📁 Папка моделей: C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\models\ohangaron
+2026-06-23 09:47:39 🔑 Семантический маппинг тегов...
+2026-06-23 09:47:43    138 тегов; семантических имён: 138
+2026-06-23 09:47:43 📡 Загрузка данных (from=2026-03-01, до сегодня; cutoff=2026-06-12)...
+2026-06-29 16:22:09 ▶ Методология обучения: v2-CQR (conformal)
+2026-06-29 16:23:09     окно 1: 2026-02-02..2026-02-22 → 740711 строк
+2026-06-29 16:24:21     окно 2: 2026-02-22..2026-03-14 → 789040 строк
+2026-06-29 16:25:47     окно 3: 2026-03-14..2026-04-03 → 766220 строк
+2026-06-29 16:27:24     окно 4: 2026-04-03..2026-04-23 → 791420 строк
+2026-06-29 16:29:34     окно 5: 2026-04-23..2026-05-13 → 782040 строк
+2026-06-29 16:32:13     окно 6: 2026-05-13..2026-06-02 → 792120 строк
+2026-06-29 16:33:46     окно 7: 2026-06-02..2026-06-22 → 797580 строк
+2026-06-29 16:34:41     окно 8: 2026-06-22..2026-06-29 → 282240 строк
+2026-06-29 16:36:00 Traceback (most recent call last):
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_and_save_models.py", line 450, in <module>
+    TV.train_all_v2(args.station, cutoff_date=args.cutoff_date, from_date=args.from_date,
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_v2.py", line 469, in train_all_v2
+    raw = _load_wide_windowed(loader, from_date=from_date, window_days=window_days)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train_v2.py", line 422, in _load_wide_windowed
+    return loader._to_wide(pd.concat(frames, ignore_index=True))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 217, in _to_wide
+    wide = (df.pivot_table(index=dt, columns=pt, values=val)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\frame.py", line 11159, in pivot_table
+    return pivot_table(
+           ^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\pivot.py", line 267, in pivot_table
+    table = __internal_pivot_table(
+            ^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\pivot.py", line 364, in __internal_pivot_table
+    table = agged.unstack(to_unstack, fill_value=fill_value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\frame.py", line 11579, in unstack
+    result = unstack(self, level, fill_value, sort)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\reshape.py", line 583, in unstack
+    return _unstack_frame(obj, level, fill_value=fill_value, sort=sort)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\reshape.py", line 606, in _unstack_frame
+    unstacker = _Unstacker(
+                ^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\reshape.py", line 176, in __init__
+    self._make_selectors()
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\reshape.py", line 217, in _make_selectors
+    remaining_labels = self.sorted_labels[:-1]
+                       ^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "pandas/_libs/properties.pyx", line 36, in pandas._libs.properties.CachedProperty.__get__
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\reshape.py", line 203, in sorted_labels
+    indexer, to_sort = self._indexer_and_to_sort
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "pandas/_libs/properties.pyx", line 36, in pandas._libs.properties.CachedProperty.__get__
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\reshape\reshape.py", line 195, in _indexer_and_to_sort
+    comp_index, obs_ids = get_compressed_ids(to_sort, sizes)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\sorting.py", line 231, in get_compressed_ids
+    ids = get_group_index(labels, sizes, sort=True, xnull=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-29 16:36:00   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\pandas\core\sorting.py", line 190, in get_group_index
+    out += labels[i] * stride
+           ~~~~~~~~~~^~~~~~~~
+2026-06-29 16:36:00 numpy._core._exceptions._ArrayMemoryError: Unable to allocate 43.8 MiB for an array with shape (5740806,) and data type int64
+2026-06-29 16:38:39 ▶ Методология обучения: v2-CQR (conformal)
+2026-06-29 16:41:42     окно 1: 2026-05-01..2026-05-21 → 785680 строк
+2026-06-29 16:43:07     окно 2: 2026-05-21..2026-06-10 → 797160 строк
+2026-06-29 16:43:29 ▶ Методология обучения: v2-CQR (conformal)
+2026-06-29 16:48:07     окно 1: 2026-05-01..2026-05-21 → 785680 строк
+2026-06-29 16:48:09     окно 3: 2026-06-10..2026-06-29 → 782180 строк
+2026-06-29 16:48:33   temp_front_bearing_pads__GPA1: ml_corridor n_trees=45 R²_eval=-1.0301 [CQR]
+2026-06-29 16:48:37   temp_rear_bearing_pads__GPA1: univariate_only n_trees=47 R²_eval=0.2684 [CQR]
+2026-06-29 16:48:41   vibro_front_support__GPA1: univariate_only n_trees=11 R²_eval=0.3883 [CQR]
+2026-06-29 16:48:45   vibro_rear_support__GPA1: ml_corridor n_trees=13 R²_eval=0.1602 [CQR]
+2026-06-29 16:48:48   vibro_st_support__GPA1: univariate_only n_trees=27 R²_eval=-0.8341 [CQR]
+2026-06-29 16:48:52   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=49 R²_eval=-0.6459 [CQR]
+2026-06-29 16:48:57   vibro_rotor_front_vert__GPA1: univariate_only n_trees=65 R²_eval=-2.312 [CQR]
+2026-06-29 16:49:01   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=44 R²_eval=0.4484 [CQR]
+2026-06-29 16:49:06   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=73 R²_eval=0.4158 [CQR]
+2026-06-29 16:49:10   polytropic_head__GPA1: univariate_only n_trees=32 R²_eval=0.7654 [CQR]
+2026-06-29 16:49:13   compressor_rotor_axial_shift_t1__GPA1: univariate_only n_trees=17 R²_eval=-0.0855 [CQR]
+2026-06-29 16:49:16   compressor_rotor_axial_shift_t2__GPA1: univariate_only n_trees=17 R²_eval=-0.0122 [CQR]
+2026-06-29 16:49:20   gas_temp_out_gpa__GPA1: univariate_only n_trees=48 R²_eval=0.8429 [CQR]
+2026-06-29 16:49:24   oil_temp_out_zod__GPA1: univariate_only n_trees=55 R²_eval=-0.868 [CQR]
+2026-06-29 16:49:26     окно 2: 2026-05-21..2026-06-10 → 797160 строк
+2026-06-29 16:49:27   oil_temp_out_st__GPA1: univariate_only n_trees=11 R²_eval=-8.8123 [CQR]
+2026-06-29 16:49:32   oil_temp_in_pod__GPA1: univariate_only n_trees=54 R²_eval=0.21 [CQR]
+2026-06-29 16:49:37   temp_front_bearing_pads__GPA2: univariate_only n_trees=56 R²_eval=-0.4036 [CQR]
+2026-06-29 16:49:42   temp_rear_bearing_pads__GPA2: univariate_only n_trees=44 R²_eval=0.3482 [CQR]
+2026-06-29 16:49:50   vibro_front_support__GPA2: ml_corridor n_trees=242 R²_eval=0.5868 [CQR]
+2026-06-29 16:49:55   vibro_rear_support__GPA2: ml_corridor n_trees=53 R²_eval=0.0146 [CQR]
+2026-06-29 16:50:00   vibro_st_support__GPA2: ml_corridor n_trees=49 R²_eval=0.6002 [CQR]
+2026-06-29 16:50:09   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=223 R²_eval=0.9477 [CQR]
+2026-06-29 16:50:14   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=48 R²_eval=0.8581 [CQR]
+2026-06-29 16:50:23   vibro_disp_rotor_rear_horiz__GPA2: univariate_only n_trees=110 R²_eval=0.8378 [CQR]
+2026-06-29 16:50:30   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=101 R²_eval=0.5337 [CQR]
+2026-06-29 16:50:34   polytropic_head__GPA2: univariate_only n_trees=45 R²_eval=0.3808 [CQR]
+2026-06-29 16:50:37   compressor_rotor_axial_shift_t1__GPA2: univariate_only n_trees=26 R²_eval=0.261 [CQR]
+2026-06-29 16:50:41   compressor_rotor_axial_shift_t2__GPA2: univariate_only n_trees=35 R²_eval=0.2412 [CQR]
+2026-06-29 16:50:52   gas_temp_out_gpa__GPA2: univariate_only n_trees=62 R²_eval=0.9153 [CQR]
+2026-06-29 16:50:58   oil_temp_out_zod__GPA2: univariate_only n_trees=122 R²_eval=-0.5618 [CQR]
+2026-06-29 16:51:07   oil_temp_out_st__GPA2: univariate_only n_trees=103 R²_eval=-0.3219 [CQR]
+2026-06-29 16:51:14   oil_temp_in_pod__GPA2: ml_corridor n_trees=63 R²_eval=0.4056 [CQR]
+2026-06-29 16:51:19   temp_front_bearing_pads__GPA3: ml_corridor n_trees=53 R²_eval=0.8017 [CQR]
+2026-06-29 16:51:23   temp_rear_bearing_pads__GPA3: ml_corridor n_trees=37 R²_eval=0.6596 [CQR]
+2026-06-29 16:51:27   vibro_front_support__GPA3: ml_corridor n_trees=37 R²_eval=0.1474 [CQR]
+2026-06-29 16:51:30   vibro_rear_support__GPA3: ml_corridor n_trees=28 R²_eval=0.1075 [CQR]
+2026-06-29 16:51:34   vibro_st_support__GPA3: ml_corridor n_trees=51 R²_eval=-0.8186 [CQR]
+2026-06-29 16:51:38   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=34 R²_eval=0.7901 [CQR]
+2026-06-29 16:51:42   vibro_rotor_front_vert__GPA3: univariate_only n_trees=21 R²_eval=0.4916 [CQR]
+2026-06-29 16:51:46   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=67 R²_eval=0.5952 [CQR]
+2026-06-29 16:51:50   vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=79 R²_eval=-0.0415 [CQR]
+2026-06-29 16:51:53   polytropic_head__GPA3: ml_corridor n_trees=37 R²_eval=0.7192 [CQR]
+2026-06-29 16:51:57   compressor_rotor_axial_shift_t1__GPA3: ml_corridor n_trees=54 R²_eval=0.6765 [CQR]
+2026-06-29 16:52:01   compressor_rotor_axial_shift_t2__GPA3: ml_corridor n_trees=45 R²_eval=0.6153 [CQR]
+2026-06-29 16:52:08   gas_temp_out_gpa__GPA3: ml_corridor n_trees=34 R²_eval=0.5759 [CQR]
+2026-06-29 16:52:13   oil_temp_out_zod__GPA3: ml_corridor n_trees=81 R²_eval=0.7799 [CQR]
+2026-06-29 16:52:18   oil_temp_out_st__GPA3: ml_corridor n_trees=60 R²_eval=0.808 [CQR]
+2026-06-29 16:52:26   oil_temp_in_pod__GPA3: ml_corridor n_trees=80 R²_eval=0.5596 [CQR]
+2026-06-29 16:53:57     окно 3: 2026-06-10..2026-06-29 → 782180 строк
+2026-06-29 16:54:20   temp_front_bearing_pads__GPA1: ml_corridor n_trees=45 R²_eval=-1.0301 [CQR]
+2026-06-29 16:54:23   temp_rear_bearing_pads__GPA1: univariate_only n_trees=47 R²_eval=0.2684 [CQR]
+2026-06-29 16:54:26   vibro_front_support__GPA1: univariate_only n_trees=11 R²_eval=0.3883 [CQR]
+2026-06-29 16:54:28   vibro_rear_support__GPA1: ml_corridor n_trees=13 R²_eval=0.1602 [CQR]
+2026-06-29 16:54:30   vibro_st_support__GPA1: univariate_only n_trees=27 R²_eval=-0.8341 [CQR]
+2026-06-29 16:54:33   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=49 R²_eval=-0.6459 [CQR]
+2026-06-29 16:54:36   vibro_rotor_front_vert__GPA1: univariate_only n_trees=65 R²_eval=-2.312 [CQR]
+2026-06-29 16:54:39   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=44 R²_eval=0.4484 [CQR]
+2026-06-29 16:54:42   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=73 R²_eval=0.4158 [CQR]
+2026-06-29 16:54:43   polytropic_head__GPA1: univariate_only n_trees=32 R²_eval=0.7654 [CQR]
+2026-06-29 16:54:45   compressor_rotor_axial_shift_t1__GPA1: univariate_only n_trees=17 R²_eval=-0.0855 [CQR]
+2026-06-29 16:54:47   compressor_rotor_axial_shift_t2__GPA1: univariate_only n_trees=17 R²_eval=-0.0122 [CQR]
+2026-06-29 16:54:50   gas_temp_out_gpa__GPA1: univariate_only n_trees=48 R²_eval=0.8429 [CQR]
+2026-06-29 16:54:53   oil_temp_out_zod__GPA1: univariate_only n_trees=55 R²_eval=-0.868 [CQR]
+2026-06-29 16:54:55   oil_temp_out_st__GPA1: univariate_only n_trees=11 R²_eval=-8.8123 [CQR]
+2026-06-29 16:54:57   oil_temp_in_pod__GPA1: univariate_only n_trees=54 R²_eval=0.21 [CQR]
+2026-06-29 16:55:01   temp_front_bearing_pads__GPA2: univariate_only n_trees=56 R²_eval=-0.4036 [CQR]
+2026-06-29 16:55:04   temp_rear_bearing_pads__GPA2: univariate_only n_trees=44 R²_eval=0.3482 [CQR]
+2026-06-29 16:55:10   vibro_front_support__GPA2: ml_corridor n_trees=242 R²_eval=0.5868 [CQR]
+2026-06-29 16:55:14   vibro_rear_support__GPA2: ml_corridor n_trees=53 R²_eval=0.0146 [CQR]
+2026-06-29 16:55:18   vibro_st_support__GPA2: ml_corridor n_trees=49 R²_eval=0.6002 [CQR]
+2026-06-29 16:55:25   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=223 R²_eval=0.9477 [CQR]
+2026-06-29 16:55:27   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=48 R²_eval=0.8581 [CQR]
+2026-06-29 16:55:34   vibro_disp_rotor_rear_horiz__GPA2: univariate_only n_trees=110 R²_eval=0.8378 [CQR]
+2026-06-29 16:55:39   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=101 R²_eval=0.5337 [CQR]
+2026-06-29 16:55:41   polytropic_head__GPA2: univariate_only n_trees=45 R²_eval=0.3808 [CQR]
+2026-06-29 16:55:43   compressor_rotor_axial_shift_t1__GPA2: univariate_only n_trees=26 R²_eval=0.261 [CQR]
+2026-06-29 16:55:45   compressor_rotor_axial_shift_t2__GPA2: univariate_only n_trees=35 R²_eval=0.2412 [CQR]
+2026-06-29 16:55:53   gas_temp_out_gpa__GPA2: univariate_only n_trees=62 R²_eval=0.9153 [CQR]
+2026-06-29 16:55:56   oil_temp_out_zod__GPA2: univariate_only n_trees=122 R²_eval=-0.5618 [CQR]
+2026-06-29 16:56:03   oil_temp_out_st__GPA2: univariate_only n_trees=103 R²_eval=-0.3219 [CQR]
+2026-06-29 16:56:08   oil_temp_in_pod__GPA2: ml_corridor n_trees=63 R²_eval=0.4056 [CQR]
+2026-06-29 16:56:13   temp_front_bearing_pads__GPA3: ml_corridor n_trees=53 R²_eval=0.8017 [CQR]
+2026-06-29 16:56:16   temp_rear_bearing_pads__GPA3: ml_corridor n_trees=37 R²_eval=0.6596 [CQR]
+2026-06-29 16:56:20   vibro_front_support__GPA3: ml_corridor n_trees=37 R²_eval=0.1474 [CQR]
+2026-06-29 16:56:22   vibro_rear_support__GPA3: ml_corridor n_trees=28 R²_eval=0.1075 [CQR]
+2026-06-29 16:56:25   vibro_st_support__GPA3: ml_corridor n_trees=51 R²_eval=-0.8186 [CQR]
+2026-06-29 16:56:28   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=34 R²_eval=0.7901 [CQR]
+2026-06-29 16:56:31   vibro_rotor_front_vert__GPA3: univariate_only n_trees=21 R²_eval=0.4916 [CQR]
+2026-06-29 16:56:34   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=67 R²_eval=0.5952 [CQR]
+2026-06-29 16:56:37   vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=79 R²_eval=-0.0415 [CQR]
+2026-06-29 16:56:40   polytropic_head__GPA3: ml_corridor n_trees=37 R²_eval=0.7192 [CQR]
+2026-06-29 16:56:43   compressor_rotor_axial_shift_t1__GPA3: ml_corridor n_trees=54 R²_eval=0.6765 [CQR]
+2026-06-29 16:56:46   compressor_rotor_axial_shift_t2__GPA3: ml_corridor n_trees=45 R²_eval=0.6153 [CQR]
+2026-06-29 16:56:55   gas_temp_out_gpa__GPA3: ml_corridor n_trees=34 R²_eval=0.5759 [CQR]
+2026-06-29 16:56:59   oil_temp_out_zod__GPA3: ml_corridor n_trees=81 R²_eval=0.7799 [CQR]
+2026-06-29 16:57:02   oil_temp_out_st__GPA3: ml_corridor n_trees=60 R²_eval=0.808 [CQR]
+2026-06-29 16:57:07   oil_temp_in_pod__GPA3: ml_corridor n_trees=80 R²_eval=0.5596 [CQR]
+2026-06-30 11:42:57 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-06-30 11:49:38     окно 1: 2026-02-02..2026-02-22 → 740711 строк
+2026-06-30 11:55:13     окно 2: 2026-02-22..2026-03-14 → 789040 строк
+2026-06-30 11:59:22     окно 3: 2026-03-14..2026-04-03 → 766220 строк
+2026-06-30 12:04:31     окно 4: 2026-04-03..2026-04-23 → 791420 строк
+2026-06-30 12:05:54     окно 5: 2026-04-23..2026-05-13 → 782040 строк
+2026-06-30 12:07:33     окно 6: 2026-05-13..2026-06-02 → 792120 строк
+2026-06-30 12:09:43     окно 7: 2026-06-02..2026-06-22 → 797580 строк
+2026-06-30 12:10:22     окно 8: 2026-06-22..2026-06-30 → 313740 строк
+2026-06-30 12:11:09   temp_front_bearing_pads__GPA1: ml_corridor n_trees=55 R²_eval=-14.0953
+2026-06-30 12:11:12   temp_rear_bearing_pads__GPA1: ml_corridor n_trees=73 R²_eval=-0.6806
+2026-06-30 12:11:15   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3393
+2026-06-30 12:11:18   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0849
+2026-06-30 12:11:21   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.132
+2026-06-30 12:11:23   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.3697
+2026-06-30 12:11:25   vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.402
+2026-06-30 12:11:28   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.066
+2026-06-30 12:11:32   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3893
+2026-06-30 12:11:36   polytropic_head__GPA1: ml_corridor n_trees=72 R²_eval=-2.1101
+2026-06-30 12:11:39   compressor_rotor_axial_shift_t1__GPA1: ml_corridor n_trees=88 R²_eval=-0.5431
+2026-06-30 12:11:43   compressor_rotor_axial_shift_t2__GPA1: ml_corridor n_trees=77 R²_eval=-0.6547
+2026-06-30 12:11:46   gas_temp_out_gpa__GPA1: ml_corridor n_trees=44 R²_eval=0.0732
+2026-06-30 12:11:49   oil_temp_out_zod__GPA1: ml_corridor n_trees=67 R²_eval=-4.0627
+2026-06-30 12:11:52   oil_temp_out_st__GPA1: univariate_only n_trees=22 R²_eval=-4.1614
+2026-06-30 12:11:55   oil_temp_in_pod__GPA1: ml_corridor n_trees=59 R²_eval=-1.3982
+2026-06-30 12:12:00   temp_front_bearing_pads__GPA2: ml_corridor n_trees=109 R²_eval=0.2367
+2026-06-30 12:12:05   temp_rear_bearing_pads__GPA2: ml_corridor n_trees=121 R²_eval=0.466
+2026-06-30 12:12:09   vibro_front_support__GPA2: ml_corridor n_trees=68 R²_eval=0.324
+2026-06-30 12:12:13   vibro_rear_support__GPA2: ml_corridor n_trees=40 R²_eval=-0.2951
+2026-06-30 12:12:15   vibro_st_support__GPA2: univariate_only n_trees=4 R²_eval=-0.789
+2026-06-30 12:12:18   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=36 R²_eval=0.0144
+2026-06-30 12:12:22   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=67 R²_eval=-0.3826
+2026-06-30 12:12:25   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=43 R²_eval=0.6426
+2026-06-30 12:12:28   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=46 R²_eval=-0.2285
+2026-06-30 12:12:33   polytropic_head__GPA2: ml_corridor n_trees=137 R²_eval=0.6018
+2026-06-30 12:12:37   compressor_rotor_axial_shift_t1__GPA2: ml_corridor n_trees=86 R²_eval=-0.0914
+2026-06-30 12:12:41   compressor_rotor_axial_shift_t2__GPA2: ml_corridor n_trees=104 R²_eval=-0.2238
+2026-06-30 12:12:48   gas_temp_out_gpa__GPA2: ml_corridor n_trees=320 R²_eval=0.9114
+2026-06-30 12:12:52   oil_temp_out_zod__GPA2: ml_corridor n_trees=103 R²_eval=-0.2019
+2026-06-30 12:12:56   oil_temp_out_st__GPA2: ml_corridor n_trees=64 R²_eval=-1.1508
+2026-06-30 12:12:59   oil_temp_in_pod__GPA2: ml_corridor n_trees=79 R²_eval=0.2173
+2026-06-30 12:13:03   temp_front_bearing_pads__GPA3: univariate_only n_trees=42 R²_eval=0.5716
+2026-06-30 12:13:07   temp_rear_bearing_pads__GPA3: univariate_only n_trees=61 R²_eval=0.5329
+2026-06-30 12:13:09   vibro_front_support__GPA3: univariate_only n_trees=13 R²_eval=-1.5216
+2026-06-30 12:13:12   vibro_rear_support__GPA3: ml_corridor n_trees=71 R²_eval=-0.0666
+2026-06-30 12:13:15   vibro_st_support__GPA3: univariate_only n_trees=60 R²_eval=0.0508
+2026-06-30 12:13:19   vibro_rotor_front_horiz__GPA3: univariate_only n_trees=105 R²_eval=-0.0449
+2026-06-30 12:13:22   vibro_rotor_front_vert__GPA3: univariate_only n_trees=52 R²_eval=0.2607
+2026-06-30 12:13:25   vibro_disp_rotor_rear_horiz__GPA3: univariate_only n_trees=51 R²_eval=0.2017
+2026-06-30 12:13:28   vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=23 R²_eval=-0.3411
+2026-06-30 12:13:31   polytropic_head__GPA3: ml_corridor n_trees=108 R²_eval=0.31
+2026-06-30 12:13:36   compressor_rotor_axial_shift_t1__GPA3: univariate_only n_trees=150 R²_eval=0.5951
+2026-06-30 12:13:40   compressor_rotor_axial_shift_t2__GPA3: univariate_only n_trees=120 R²_eval=0.5904
+2026-06-30 12:13:43   gas_temp_out_gpa__GPA3: univariate_only n_trees=88 R²_eval=-2.6986
+2026-06-30 12:13:47   oil_temp_out_zod__GPA3: univariate_only n_trees=116 R²_eval=0.6668
+2026-06-30 12:13:51   oil_temp_out_st__GPA3: univariate_only n_trees=105 R²_eval=0.6302
+2026-06-30 12:13:55   oil_temp_in_pod__GPA3: ml_corridor n_trees=102 R²_eval=0.6194
+2026-06-30 14:50:47 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-06-30 14:50:48   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-06-30 14:50:48   merge: сохранено 32 моделей др. ГПА (перезапишу ГПА-1)
+2026-06-30 14:50:56   temp_front_bearing_pads__GPA1: univariate_only n_trees=54 R²_eval=-0.2866
+2026-06-30 14:50:59   temp_rear_bearing_pads__GPA1: ml_corridor n_trees=35 R²_eval=-0.353
+2026-06-30 14:51:02   vibro_front_support__GPA1: ml_corridor n_trees=35 R²_eval=0.2992
+2026-06-30 14:51:05   vibro_rear_support__GPA1: ml_corridor n_trees=36 R²_eval=0.1404
+2026-06-30 14:51:08   vibro_st_support__GPA1: ml_corridor n_trees=22 R²_eval=0.1285
+2026-06-30 14:51:10   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=48 R²_eval=-0.8678
+2026-06-30 14:51:13   vibro_rotor_front_vert__GPA1: univariate_only n_trees=61 R²_eval=-0.4148
+2026-06-30 14:51:16   vibro_disp_rotor_rear_horiz__GPA1: univariate_only n_trees=27 R²_eval=-0.1964
+2026-06-30 14:51:19   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=47 R²_eval=-0.0597
+2026-06-30 14:51:22   polytropic_head__GPA1: univariate_only n_trees=75 R²_eval=0.2089
+2026-06-30 14:51:26   compressor_rotor_axial_shift_t1__GPA1: ml_corridor n_trees=11 R²_eval=0.0696
+2026-06-30 14:51:29   compressor_rotor_axial_shift_t2__GPA1: ml_corridor n_trees=10 R²_eval=0.0687
+2026-06-30 14:51:31   gas_temp_out_gpa__GPA1: ml_corridor n_trees=29 R²_eval=-2.5564
+2026-06-30 14:51:34   oil_temp_out_zod__GPA1: ml_corridor n_trees=40 R²_eval=-0.9101
+2026-06-30 14:51:37   oil_temp_out_st__GPA1: ml_corridor n_trees=26 R²_eval=-1.8936
+2026-06-30 14:51:40   oil_temp_in_pod__GPA1: ml_corridor n_trees=47 R²_eval=-0.1951
+2026-06-30 14:59:48 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-06-30 14:59:49   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-06-30 14:59:49   merge: сохранено 32 моделей др. ГПА (перезапишу ГПА-1)
+2026-06-30 14:59:59   temp_front_bearing_pads__GPA1: univariate_only n_trees=7 R²_eval=-25.1617
+2026-06-30 15:00:02   temp_rear_bearing_pads__GPA1: univariate_only n_trees=10 R²_eval=-1.7437
+2026-06-30 15:00:05   vibro_front_support__GPA1: ml_corridor n_trees=16 R²_eval=-0.4044
+2026-06-30 15:00:10   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.1185
+2026-06-30 15:00:13   vibro_st_support__GPA1: univariate_only n_trees=17 R²_eval=0.0491
+2026-06-30 15:00:15   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=1 R²_eval=-7.157
+2026-06-30 15:00:17   vibro_rotor_front_vert__GPA1: univariate_only n_trees=1 R²_eval=-10.9298
+2026-06-30 15:00:20   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=1 R²_eval=-6.932
+2026-06-30 15:00:23   vibro_disp_rotor_rear_vert__GPA1: univariate_only n_trees=5 R²_eval=-0.6667
+2026-06-30 15:00:25   polytropic_head__GPA1: univariate_only n_trees=15 R²_eval=-1.5266
+2026-06-30 15:00:28   compressor_rotor_axial_shift_t1__GPA1: univariate_only n_trees=22 R²_eval=-1.1792
+2026-06-30 15:00:31   compressor_rotor_axial_shift_t2__GPA1: univariate_only n_trees=25 R²_eval=-0.8264
+2026-06-30 15:00:34   gas_temp_out_gpa__GPA1: univariate_only n_trees=48 R²_eval=0.0854
+2026-06-30 15:00:37   oil_temp_out_zod__GPA1: univariate_only n_trees=3 R²_eval=-37.3164
+2026-06-30 15:00:40   oil_temp_out_st__GPA1: univariate_only n_trees=31 R²_eval=-18.1434
+2026-06-30 15:00:44   oil_temp_in_pod__GPA1: univariate_only n_trees=31 R²_eval=-3.7337
+2026-06-30 15:11:58 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-06-30 15:11:59   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-06-30 15:11:59   merge: сохранено 32 моделей др. ГПА (перезапишу ГПА-1)
+2026-06-30 15:12:08   temp_front_bearing_pads__GPA1: ml_corridor n_trees=55 R²_eval=-14.1791
+2026-06-30 15:12:12   temp_rear_bearing_pads__GPA1: ml_corridor n_trees=73 R²_eval=-0.6836
+2026-06-30 15:12:15   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3368
+2026-06-30 15:12:19   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0762
+2026-06-30 15:12:22   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1315
+2026-06-30 15:12:24   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.4408
+2026-06-30 15:12:27   vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.4821
+2026-06-30 15:12:30   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0929
+2026-06-30 15:12:35   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-06-30 15:12:38   polytropic_head__GPA1: ml_corridor n_trees=72 R²_eval=-2.1163
+2026-06-30 15:12:42   compressor_rotor_axial_shift_t1__GPA1: ml_corridor n_trees=88 R²_eval=-0.5409
+2026-06-30 15:12:45   compressor_rotor_axial_shift_t2__GPA1: ml_corridor n_trees=77 R²_eval=-0.652
+2026-06-30 15:12:48   gas_temp_out_gpa__GPA1: ml_corridor n_trees=44 R²_eval=0.0744
+2026-06-30 15:12:52   oil_temp_out_zod__GPA1: ml_corridor n_trees=67 R²_eval=-4.064
+2026-06-30 15:12:55   oil_temp_out_st__GPA1: univariate_only n_trees=22 R²_eval=-4.1816
+2026-06-30 15:12:59   oil_temp_in_pod__GPA1: ml_corridor n_trees=59 R²_eval=-1.4004
+2026-06-30 15:47:01 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-06-30 15:47:08   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-06-30 15:48:14   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+2026-06-30 15:49:13   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+2026-06-30 15:49:17   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3368
+2026-06-30 15:49:23   vibro_front_support__GPA2: ml_corridor n_trees=68 R²_eval=0.3215
+2026-06-30 15:49:25   vibro_front_support__GPA3: univariate_only n_trees=13 R²_eval=-1.5216
+2026-06-30 15:49:30   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0762
+2026-06-30 15:49:35   vibro_rear_support__GPA2: ml_corridor n_trees=40 R²_eval=-0.2952
+2026-06-30 15:49:40   vibro_rear_support__GPA3: ml_corridor n_trees=71 R²_eval=-0.0666
+2026-06-30 15:49:43   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1315
+2026-06-30 15:49:46   vibro_st_support__GPA2: univariate_only n_trees=4 R²_eval=-0.7855
+2026-06-30 15:49:50   vibro_st_support__GPA3: univariate_only n_trees=60 R²_eval=0.0508
+2026-06-30 15:49:53   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.4408
+2026-06-30 15:49:57   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=36 R²_eval=0.0099
+2026-06-30 15:50:01   vibro_rotor_front_horiz__GPA3: univariate_only n_trees=105 R²_eval=-0.0449
+2026-06-30 15:50:05   vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.4821
+2026-06-30 15:50:09   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=67 R²_eval=-0.3996
+2026-06-30 15:50:12   vibro_rotor_front_vert__GPA3: univariate_only n_trees=52 R²_eval=0.2607
+2026-06-30 15:50:15   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0929
+2026-06-30 15:50:18   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=43 R²_eval=0.6422
+2026-06-30 15:50:22   vibro_disp_rotor_rear_horiz__GPA3: univariate_only n_trees=51 R²_eval=0.2017
+2026-06-30 15:50:26   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-06-30 15:50:30   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=46 R²_eval=-0.2293
+2026-06-30 15:50:32   vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=23 R²_eval=-0.3411
+2026-06-30 15:51:13   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+2026-06-30 15:52:01   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-06-30 15:52:55   compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-06-30 15:53:51   gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-06-30 15:54:45   oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-06-30 15:55:36   oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-06-30 15:56:35   oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 16:15:47 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-01 16:15:55   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-01 16:17:29   temp_front_bearing_pads [POOLED]: GPA1=univariate_only GPA2=ml_corridor GPA3=univariate_only
+2026-07-01 16:18:28   temp_rear_bearing_pads [POOLED]: GPA1=univariate_only GPA2=ml_corridor GPA3=univariate_only
+2026-07-01 16:18:32   vibro_front_support__GPA1: univariate_only n_trees=18 R²_eval=-0.0992
+2026-07-01 16:18:41   vibro_front_support__GPA2: ml_corridor n_trees=149 R²_eval=0.558
+2026-07-01 16:18:42   vibro_front_support__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:18:47   vibro_rear_support__GPA1: ml_corridor n_trees=74 R²_eval=0.0541
+2026-07-01 16:18:53   vibro_rear_support__GPA2: ml_corridor n_trees=72 R²_eval=0.0107
+2026-07-01 16:18:55   vibro_rear_support__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:19:00   vibro_st_support__GPA1: univariate_only n_trees=107 R²_eval=-0.1333
+2026-07-01 16:19:07   vibro_st_support__GPA2: ml_corridor n_trees=90 R²_eval=0.3648
+2026-07-01 16:19:07   vibro_st_support__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:19:12   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=16 R²_eval=-4.5562
+2026-07-01 16:19:20   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=158 R²_eval=0.9147
+2026-07-01 16:19:21   vibro_rotor_front_horiz__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:19:25   vibro_rotor_front_vert__GPA1: univariate_only n_trees=1 R²_eval=-9.4442
+2026-07-01 16:19:31   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=74 R²_eval=0.6772
+2026-07-01 16:19:32   vibro_rotor_front_vert__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:19:36   vibro_disp_rotor_rear_horiz__GPA1: univariate_only n_trees=41 R²_eval=-2.3156
+2026-07-01 16:19:45   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=69 R²_eval=0.8058
+2026-07-01 16:19:46   vibro_disp_rotor_rear_horiz__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:19:49   vibro_disp_rotor_rear_vert__GPA1: univariate_only n_trees=6 R²_eval=-0.7336
+2026-07-01 16:19:56   vibro_disp_rotor_rear_vert__GPA2: univariate_only n_trees=128 R²_eval=0.208
+2026-07-01 16:19:56   vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=0 R²_eval=nan
+2026-07-01 16:20:46   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+2026-07-01 16:21:45   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=univariate_only GPA2=univariate_only GPA3=univariate_only
+2026-07-01 16:22:48   compressor_rotor_axial_shift_t2 [POOLED]: GPA1=univariate_only GPA2=univariate_only GPA3=univariate_only
+2026-07-01 16:23:51   gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=univariate_only
+2026-07-01 16:24:52   oil_temp_out_zod [POOLED]: GPA1=univariate_only GPA2=univariate_only GPA3=univariate_only
+2026-07-01 16:25:55   oil_temp_out_st [POOLED]: GPA1=univariate_only GPA2=ml_corridor GPA3=univariate_only
+2026-07-01 16:26:55   oil_temp_in_pod [POOLED]: GPA1=univariate_only GPA2=ml_corridor GPA3=univariate_only
+2026-07-01 16:54:58 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-01 16:55:03   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-01 16:56:18   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 16:57:19   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 16:57:24   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3303
+2026-07-01 16:57:30   vibro_front_support__GPA2: ml_corridor n_trees=48 R²_eval=0.3023
+2026-07-01 16:57:35   vibro_front_support__GPA3: univariate_only n_trees=54 R²_eval=-3.2459
+2026-07-01 16:57:41   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0836
+2026-07-01 16:57:47   vibro_rear_support__GPA2: ml_corridor n_trees=33 R²_eval=-0.3776
+2026-07-01 16:57:54   vibro_rear_support__GPA3: ml_corridor n_trees=133 R²_eval=0.0605
+2026-07-01 16:57:58   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1319
+2026-07-01 16:58:02   vibro_st_support__GPA2: univariate_only n_trees=17 R²_eval=-0.794
+2026-07-01 16:58:09   vibro_st_support__GPA3: univariate_only n_trees=37 R²_eval=-1.7113
+2026-07-01 16:58:12   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.4514
+2026-07-01 16:58:15   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=12 R²_eval=-2.3621
+2026-07-01 16:58:21   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=128 R²_eval=0.5211
+2026-07-01 16:58:24   vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.4572
+2026-07-01 16:58:29   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=24 R²_eval=-6.5282
+2026-07-01 16:58:34   vibro_rotor_front_vert__GPA3: ml_corridor n_trees=33 R²_eval=0.2834
+2026-07-01 16:58:38   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0783
+2026-07-01 16:58:43   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=51 R²_eval=0.6222
+2026-07-01 16:58:47   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=56 R²_eval=0.2544
+2026-07-01 16:58:52   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-07-01 16:58:56   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=52 R²_eval=-0.3235
+2026-07-01 16:58:59   vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=39 R²_eval=-0.7249
+2026-07-01 16:59:09 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-01 16:59:11   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-01 17:00:24   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:01:32   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:01:37   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3303
+2026-07-01 17:01:42   vibro_front_support__GPA2: ml_corridor n_trees=48 R²_eval=0.3023
+2026-07-01 17:01:46   vibro_front_support__GPA3: univariate_only n_trees=54 R²_eval=-3.2459
+2026-07-01 17:01:51   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0836
+2026-07-01 17:01:57   vibro_rear_support__GPA2: ml_corridor n_trees=33 R²_eval=-0.3776
+2026-07-01 17:02:04   vibro_rear_support__GPA3: ml_corridor n_trees=133 R²_eval=0.0605
+2026-07-01 17:02:08   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1319
+2026-07-01 17:02:12   vibro_st_support__GPA2: univariate_only n_trees=17 R²_eval=-0.794
+2026-07-01 17:02:17   vibro_st_support__GPA3: univariate_only n_trees=37 R²_eval=-1.7113
+2026-07-01 17:02:19   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.4514
+2026-07-01 17:02:26   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=12 R²_eval=-2.3621
+2026-07-01 17:02:33   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=128 R²_eval=0.5211
+2026-07-01 17:02:37   vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.4572
+2026-07-01 17:02:42   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=24 R²_eval=-6.5282
+2026-07-01 17:02:47   vibro_rotor_front_vert__GPA3: ml_corridor n_trees=33 R²_eval=0.2834
+2026-07-01 17:02:53   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0783
+2026-07-01 17:03:00   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=51 R²_eval=0.6222
+2026-07-01 17:03:06   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=56 R²_eval=0.2544
+2026-07-01 17:03:13   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-07-01 17:03:19   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=52 R²_eval=-0.3235
+2026-07-01 17:03:25   vibro_disp_rotor_rear_vert__GPA3: univariate_only n_trees=39 R²_eval=-0.7249
+2026-07-01 17:04:27   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:05:30   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=univariate_only GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:06:25 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-01 17:06:27   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-01 17:07:37   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:08:34   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:08:39   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3303
+2026-07-01 17:08:43   vibro_front_support__GPA2: ml_corridor n_trees=30 R²_eval=-3.2022
+2026-07-01 17:08:46   vibro_front_support__GPA3: univariate_only n_trees=14 R²_eval=-0.9794
+2026-07-01 17:08:51   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0836
+2026-07-01 17:08:55   vibro_rear_support__GPA2: ml_corridor n_trees=28 R²_eval=-0.1058
+2026-07-01 17:08:59   vibro_rear_support__GPA3: ml_corridor n_trees=1 R²_eval=-0.0087
+2026-07-01 17:09:03   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1319
+2026-07-01 17:09:06   vibro_st_support__GPA2: univariate_only n_trees=22 R²_eval=-0.1045
+2026-07-01 17:09:10   vibro_st_support__GPA3: ml_corridor n_trees=17 R²_eval=-8.389
+2026-07-01 17:09:14   vibro_rotor_front_horiz__GPA1: univariate_only n_trees=27 R²_eval=-10.4514
+2026-07-01 17:09:18   vibro_rotor_front_horiz__GPA2: univariate_only n_trees=3 R²_eval=-3.1774
+2026-07-01 17:09:23   vibro_rotor_front_horiz__GPA3: univariate_only n_trees=11 R²_eval=-1.0615
+2026-07-01 17:09:26   vibro_rotor_front_vert__GPA1: univariate_only n_trees=67 R²_eval=-12.4572
+2026-07-01 17:09:30   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=16 R²_eval=-5.0822
+2026-07-01 17:09:33   vibro_rotor_front_vert__GPA3: ml_corridor n_trees=8 R²_eval=-0.1769
+2026-07-01 17:09:36   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0783
+2026-07-01 17:09:40   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=29 R²_eval=0.1663
+2026-07-01 17:09:43   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=10 R²_eval=-0.6259
+2026-07-01 17:09:48   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-07-01 17:09:52   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=25 R²_eval=0.5972
+2026-07-01 17:09:56   vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=21 R²_eval=-0.0645
+2026-07-01 17:10:43   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:11:39   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:12:32   compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:13:25   gas_temp_out_gpa [POOLED]: GPA1=univariate_only GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:14:19   oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:15:20   oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-01 17:16:20   oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 10:06:10 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-02 10:06:13   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-02 10:06:21   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3303
+2026-07-02 10:06:24   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0836
+2026-07-02 10:06:27   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1319
+2026-07-02 10:06:29   vibro_rotor_front_horiz__GPA1: ml_corridor n_trees=27 R²_eval=-10.4514
+2026-07-02 10:06:32   vibro_rotor_front_vert__GPA1: ml_corridor n_trees=67 R²_eval=-12.4572
+2026-07-02 10:06:35   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0783
+2026-07-02 10:06:39   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-07-02 10:50:24 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-02 10:51:37 Traceback (most recent call last):
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train.py", line 1780, in <module>
+    train_all(args.station, cutoff_date=args.cutoff_date, from_date=args.from_date,
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train.py", line 1602, in train_all
+    tag_to_name = loader.build_tag_mapping()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 234, in build_tag_mapping
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:51:37   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:51:37 psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+2026-07-02 10:51:37 	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 10:51:39 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-02 10:52:51 Traceback (most recent call last):
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train.py", line 1780, in <module>
+    train_all(args.station, cutoff_date=args.cutoff_date, from_date=args.from_date,
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\train.py", line 1602, in train_all
+    tag_to_name = loader.build_tag_mapping()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\data_loader.py", line 234, in build_tag_mapping
+    with get_db_connection(self.cfg) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 209, in get_db_connection
+    raise last_err  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 200, in get_db_connection
+    pool = _get_pool(cfg)
+           ^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\backend\station_config.py", line 159, in _get_pool
+    _pools[sid] = pg_pool.ThreadedConnectionPool(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 161, in __init__
+    AbstractConnectionPool.__init__(
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 59, in __init__
+    self._connect()
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\pool.py", line 63, in _connect
+    conn = psycopg2.connect(*self._args, **self._kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:52:51   File "C:\Users\Timur\Desktop\UTG\КС\cs_4\venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-07-02 10:52:51 psycopg2.OperationalError: connection to server at "10.1.30.164", port 5432 failed: Connection timed out (0x0000274C/10060)
+2026-07-02 10:52:51 	Is the server running on that host and accepting TCP/IP connections?
+
+2026-07-02 10:52:55 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-02 10:52:57   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-02 10:53:58   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 10:55:16 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-02 10:56:44     окно 1: 2026-02-02..2026-02-22 → 740711 строк
+2026-07-02 10:58:02     окно 2: 2026-02-22..2026-03-14 → 789040 строк
+2026-07-02 10:59:31     окно 3: 2026-03-14..2026-04-03 → 766220 строк
+2026-07-02 11:04:14     окно 4: 2026-04-03..2026-04-23 → 791420 строк
+2026-07-02 11:05:19     окно 5: 2026-04-23..2026-05-13 → 782040 строк
+2026-07-02 11:06:38     окно 6: 2026-05-13..2026-06-02 → 792120 строк
+2026-07-02 11:08:15     окно 7: 2026-06-02..2026-06-22 → 797580 строк
+2026-07-02 11:09:06     окно 8: 2026-06-22..2026-07-02 → 390740 строк
+2026-07-02 11:09:40   кэш не сохранён: Cannot save file into a non-existent directory: 'models\ohangaron_force_v24'
+2026-07-02 11:10:37   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:11:12   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:11:14   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.2064
+2026-07-02 11:11:17   vibro_front_support__GPA2: ml_corridor n_trees=30 R²_eval=-3.2757
+2026-07-02 11:11:20   vibro_front_support__GPA3: ml_corridor n_trees=14 R²_eval=-0.9825
+2026-07-02 11:11:23   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0713
+2026-07-02 11:11:26   vibro_rear_support__GPA2: ml_corridor n_trees=28 R²_eval=-0.1227
+2026-07-02 11:11:29   vibro_rear_support__GPA3: ml_corridor n_trees=1 R²_eval=-0.0085
+2026-07-02 11:11:32   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1343
+2026-07-02 11:11:35   vibro_st_support__GPA2: ml_corridor n_trees=22 R²_eval=-0.1179
+2026-07-02 11:11:37   vibro_st_support__GPA3: ml_corridor n_trees=17 R²_eval=-8.2643
+2026-07-02 11:11:40   vibro_rotor_front_horiz__GPA1: ml_corridor n_trees=27 R²_eval=-10.6556
+2026-07-02 11:11:42   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=3 R²_eval=-3.2754
+2026-07-02 11:11:44   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=11 R²_eval=-1.0635
+2026-07-02 11:11:47   vibro_rotor_front_vert__GPA1: ml_corridor n_trees=67 R²_eval=-12.8796
+2026-07-02 11:11:49   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=16 R²_eval=-5.3511
+2026-07-02 11:11:51   vibro_rotor_front_vert__GPA3: ml_corridor n_trees=8 R²_eval=-0.1775
+2026-07-02 11:11:54   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-7.7286
+2026-07-02 11:11:59   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=29 R²_eval=0.1734
+2026-07-02 11:12:04   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=10 R²_eval=-0.6264
+2026-07-02 11:12:10   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.357
+2026-07-02 11:12:15   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=25 R²_eval=0.584
+2026-07-02 11:12:19   vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=21 R²_eval=-0.0647
+2026-07-02 11:13:14   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:14:14   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:15:10   compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:16:05   gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:17:00   oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:17:54   oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 11:18:50   oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:13:02 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-02 17:13:05   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-02 17:14:03   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:14:47   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:14:50   vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.3303
+2026-07-02 17:14:54   vibro_front_support__GPA2: ml_corridor n_trees=30 R²_eval=-3.2022
+2026-07-02 17:14:57   vibro_front_support__GPA3: ml_corridor n_trees=14 R²_eval=-0.9794
+2026-07-02 17:15:01   vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0836
+2026-07-02 17:15:07   vibro_rear_support__GPA2: ml_corridor n_trees=28 R²_eval=-0.1058
+2026-07-02 17:15:10   vibro_rear_support__GPA3: ml_corridor n_trees=1 R²_eval=-0.0087
+2026-07-02 17:15:13   vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1319
+2026-07-02 17:15:16   vibro_st_support__GPA2: ml_corridor n_trees=22 R²_eval=-0.1045
+2026-07-02 17:15:19   vibro_st_support__GPA3: ml_corridor n_trees=17 R²_eval=-8.389
+2026-07-02 17:15:22   vibro_rotor_front_horiz__GPA1: ml_corridor n_trees=27 R²_eval=-10.4514
+2026-07-02 17:15:25   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=3 R²_eval=-3.1774
+2026-07-02 17:15:29   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=11 R²_eval=-1.0615
+2026-07-02 17:15:33   vibro_rotor_front_vert__GPA1: ml_corridor n_trees=67 R²_eval=-12.4572
+2026-07-02 17:15:37   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=16 R²_eval=-5.0822
+2026-07-02 17:15:40   vibro_rotor_front_vert__GPA3: ml_corridor n_trees=8 R²_eval=-0.1769
+2026-07-02 17:15:44   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-8.0783
+2026-07-02 17:15:48   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=29 R²_eval=0.1663
+2026-07-02 17:15:51   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=10 R²_eval=-0.6259
+2026-07-02 17:15:57   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.3874
+2026-07-02 17:16:00   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=25 R²_eval=0.5972
+2026-07-02 17:16:03   vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=21 R²_eval=-0.0645
+2026-07-02 17:16:43   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:17:36   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:18:26   compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:19:11   gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:20:02   oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:20:47   oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-02 17:21:36   oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 09:57:12 ▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+2026-07-03 09:57:15   wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+2026-07-03 09:58:04   temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 09:58:45   temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 09:58:50   vibro_front_support__GPA1: ml_corridor n_trees=64 R²_eval=-0.3721
+2026-07-03 09:58:53   vibro_front_support__GPA2: ml_corridor n_trees=33 R²_eval=-2.2721
+2026-07-03 09:58:57   vibro_front_support__GPA3: ml_corridor n_trees=25 R²_eval=-1.2975
+2026-07-03 09:59:01   vibro_rear_support__GPA1: ml_corridor n_trees=90 R²_eval=0.3758
+2026-07-03 09:59:07   vibro_rear_support__GPA2: ml_corridor n_trees=33 R²_eval=-0.3069
+2026-07-03 09:59:12   vibro_rear_support__GPA3: ml_corridor n_trees=2 R²_eval=-0.007
+2026-07-03 09:59:16   vibro_st_support__GPA1: ml_corridor n_trees=36 R²_eval=0.1973
+2026-07-03 09:59:21   vibro_st_support__GPA2: ml_corridor n_trees=24 R²_eval=-0.0713
+2026-07-03 09:59:26   vibro_st_support__GPA3: ml_corridor n_trees=15 R²_eval=-8.3331
+2026-07-03 09:59:30   vibro_rotor_front_horiz__GPA1: ml_corridor n_trees=24 R²_eval=-8.9856
+2026-07-03 09:59:34   vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=3 R²_eval=-3.4376
+2026-07-03 09:59:38   vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=15 R²_eval=-0.7293
+2026-07-03 09:59:43   vibro_rotor_front_vert__GPA1: ml_corridor n_trees=59 R²_eval=-9.3994
+2026-07-03 09:59:46   vibro_rotor_front_vert__GPA2: ml_corridor n_trees=6 R²_eval=-5.9066
+2026-07-03 09:59:50   vibro_rotor_front_vert__GPA3: ml_corridor n_trees=7 R²_eval=-0.2701
+2026-07-03 09:59:53   vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=20 R²_eval=-10.3433
+2026-07-03 09:59:57   vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=14 R²_eval=-0.1272
+2026-07-03 10:00:01   vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=1 R²_eval=-1.2227
+2026-07-03 10:00:05   vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=58 R²_eval=-0.5139
+2026-07-03 10:00:09   vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=39 R²_eval=0.6916
+2026-07-03 10:00:13   vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=16 R²_eval=-0.1403
+2026-07-03 10:00:53   polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 10:01:43   compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 10:02:23   compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 10:03:07   gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 10:03:47   oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 10:04:26   oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+2026-07-03 10:05:13   oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor

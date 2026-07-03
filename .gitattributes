@@ -1,0 +1,6 @@
+*.tar.gz filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
+backend/state/*.json filter=lfs diff=lfs merge=lfs -text
+backend/_archive/*.html filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.ipynb filter=lfs diff=lfs merge=lfs -text

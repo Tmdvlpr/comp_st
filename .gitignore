@@ -1,0 +1,29 @@
+# Secrets — реальные креды прод-БД SCADA, НИКОГДА не публиковать
+.env
+.env.local
+.env.*.local
+
+# Python virtualenv и кэши (переустанавливаемое, платформозависимое)
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Node зависимости (переустанавливаются из package.json)
+node_modules/
+frontend/node_modules/
+
+# ML-модели — не грузим (1.5 ГБ бинарников, по запросу пользователя)
+backend/models/
+
+# Git
+.git/
+
+# Крупные данные и дампы (не в VCS — раздувают .git)
+Рисёрч/
+backend/_db_backup*/
+backend/_archive/
+*.csv
+*.tar.gz

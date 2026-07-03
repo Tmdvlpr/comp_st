@@ -1,0 +1,27 @@
+# Шаблон конфигурации компрессорной станции.
+# Скопируйте этот файл как config/stations/{station_id}.yaml и заполните поля.
+
+station_id: my_station           # уникальный ID станции (латиница, без пробелов)
+display_name: "Моя КС"           # отображаемое название
+
+db:
+  host: ${CS_DB_HOST:localhost}  # можно переопределить через env
+  port: ${CS_DB_PORT:5432}
+  name: ${CS_DB_NAME:cs_db}
+  user: ${CS_DB_USER:postgres}
+  password: ${CS_DB_PASSWORD:}
+  schema: my_station              # PostgreSQL-схема для этой станции
+
+data:
+  table: raw_data                 # таблица с сырыми данными (long-format)
+  datetime_col: datetime          # столбец метки времени
+  point_col: point                # столбец названия тега/точки
+  value_col: value                # столбец значения
+
+units:                            # список агрегатов/юнитов станции
+  - GPA1
+  # - GPA2
+  # - GPA3
+
+models_dir: models/my_station    # папка для CatBoost-моделей этой станции
+state_file: state/my_station_live_state.json  # файл живого состояния

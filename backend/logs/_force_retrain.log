@@ -1,0 +1,44 @@
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+    окно 1: 2026-02-02..2026-02-22 → 740711 строк
+    окно 2: 2026-02-22..2026-03-14 → 789040 строк
+    окно 3: 2026-03-14..2026-04-03 → 766220 строк
+2026-07-02 11:02:39,288 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+    окно 4: 2026-04-03..2026-04-23 → 791420 строк
+    окно 5: 2026-04-23..2026-05-13 → 782040 строк
+    окно 6: 2026-05-13..2026-06-02 → 792120 строк
+    окно 7: 2026-06-02..2026-06-22 → 797580 строк
+    окно 8: 2026-06-22..2026-07-02 → 390740 строк
+  кэш не сохранён: Cannot save file into a non-existent directory: 'models\ohangaron_force_v24'
+  temp_front_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  temp_rear_bearing_pads [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  vibro_front_support__GPA1: ml_corridor n_trees=62 R²_eval=-1.2064
+  vibro_front_support__GPA2: ml_corridor n_trees=30 R²_eval=-3.2757
+  vibro_front_support__GPA3: ml_corridor n_trees=14 R²_eval=-0.9825
+  vibro_rear_support__GPA1: ml_corridor n_trees=109 R²_eval=0.0713
+  vibro_rear_support__GPA2: ml_corridor n_trees=28 R²_eval=-0.1227
+  vibro_rear_support__GPA3: ml_corridor n_trees=1 R²_eval=-0.0085
+  vibro_st_support__GPA1: ml_corridor n_trees=33 R²_eval=0.1343
+  vibro_st_support__GPA2: ml_corridor n_trees=22 R²_eval=-0.1179
+  vibro_st_support__GPA3: ml_corridor n_trees=17 R²_eval=-8.2643
+  vibro_rotor_front_horiz__GPA1: ml_corridor n_trees=27 R²_eval=-10.6556
+  vibro_rotor_front_horiz__GPA2: ml_corridor n_trees=3 R²_eval=-3.2754
+  vibro_rotor_front_horiz__GPA3: ml_corridor n_trees=11 R²_eval=-1.0635
+  vibro_rotor_front_vert__GPA1: ml_corridor n_trees=67 R²_eval=-12.8796
+  vibro_rotor_front_vert__GPA2: ml_corridor n_trees=16 R²_eval=-5.3511
+  vibro_rotor_front_vert__GPA3: ml_corridor n_trees=8 R²_eval=-0.1775
+  vibro_disp_rotor_rear_horiz__GPA1: ml_corridor n_trees=21 R²_eval=-7.7286
+  vibro_disp_rotor_rear_horiz__GPA2: ml_corridor n_trees=29 R²_eval=0.1734
+  vibro_disp_rotor_rear_horiz__GPA3: ml_corridor n_trees=10 R²_eval=-0.6264
+  vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=163 R²_eval=-0.357
+  vibro_disp_rotor_rear_vert__GPA2: ml_corridor n_trees=25 R²_eval=0.584
+  vibro_disp_rotor_rear_vert__GPA3: ml_corridor n_trees=21 R²_eval=-0.0647
+  polytropic_head [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  compressor_rotor_axial_shift_t1 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  compressor_rotor_axial_shift_t2 [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  gas_temp_out_gpa [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  oil_temp_out_zod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  oil_temp_out_st [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor
+  oil_temp_in_pod [POOLED]: GPA1=ml_corridor GPA2=ml_corridor GPA3=ml_corridor

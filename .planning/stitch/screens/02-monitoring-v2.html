@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CS Monitor AI - Мониторинг</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#36393f",
+                        "surface-glass-high": "rgba(52, 58, 94, 0.88)",
+                        "text-primary": "#E6ECF6",
+                        "secondary-fixed": "#cee5ff",
+                        "on-primary": "#00315c",
+                        "line-subtle": "rgba(132, 140, 200, 0.16)",
+                        "surface-container-highest": "#32353b",
+                        "severity-ok-ink": "#6EE67D",
+                        "tertiary": "#ffba42",
+                        "on-tertiary": "#432c00",
+                        "primary-fixed": "#d3e4ff",
+                        "text-tertiary": "#9BA5BC",
+                        "outline": "#8b919d",
+                        "on-secondary": "#003354",
+                        "on-primary-fixed-variant": "#004882",
+                        "inverse-on-surface": "#2d3136",
+                        "surface-container-low": "#181c21",
+                        "text-key": "#FFFFFF",
+                        "surface-dim": "#101419",
+                        "line-strong": "rgba(132, 140, 200, 0.30)",
+                        "secondary-fixed-dim": "#97cbff",
+                        "severity-info-ink": "#C5CBDF",
+                        "primary-container": "#58a6ff",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#97cbff",
+                        "on-tertiary-fixed-variant": "#614000",
+                        "severity-ok": "#3FB950",
+                        "on-secondary-fixed-variant": "#004a77",
+                        "surface-container": "#1c2025",
+                        "text-secondary": "#B7C0D6",
+                        "app-bg-deep": "#0d1426",
+                        "on-secondary-fixed": "#001d33",
+                        "severity-info": "#8C93B0",
+                        "severity-warn": "#F5B14C",
+                        "surface-glass-deep": "rgba(38, 44, 74, 0.82)",
+                        "on-surface": "#e0e2ea",
+                        "on-background": "#e0e2ea",
+                        "severity-crit": "#FF5C6C",
+                        "on-secondary-container": "#bcdcff",
+                        "background": "#101419",
+                        "on-primary-container": "#003a6b",
+                        "on-primary-fixed": "#001c38",
+                        "surface-container-lowest": "#0b0e14",
+                        "tertiary-fixed": "#ffddaf",
+                        "severity-warn-ink": "#F7C06B",
+                        "inverse-surface": "#e0e2ea",
+                        "surface-container-high": "#272a30",
+                        "tertiary-container": "#da9600",
+                        "outline-variant": "#414752",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "surface": "#101419",
+                        "on-tertiary-fixed": "#281800",
+                        "tertiary-fixed-dim": "#ffba42",
+                        "surface-glass": "rgba(26, 31, 56, 0.78)",
+                        "error": "#ffb4ab",
+                        "primary": "#a2c9ff",
+                        "secondary-container": "#00639c",
+                        "inverse-primary": "#0060aa",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#4f3400",
+                        "error-container": "#93000a",
+                        "surface-variant": "#32353b",
+                        "surface-tint": "#a2c9ff",
+                        "on-surface-variant": "#c0c7d4",
+                        "severity-crit-ink": "#FF8893"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "32px",
+                        "lg": "16px",
+                        "margin": "24px",
+                        "gutter": "16px",
+                        "xl": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "12px"
+                    },
+                    "fontFamily": {
+                        "section-lg": ["Inter"],
+                        "mono-label": ["JetBrains Mono"],
+                        "body-base": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "hero-2xl": ["Inter"],
+                        "page-xl": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "section-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-base": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "mono-data": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "hero-2xl": ["56px", { "lineHeight": "64px", "fontWeight": "700" }],
+                        "page-xl": ["30px", { "lineHeight": "38px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { margin: 0; overflow: hidden; } /* Fixed viewport */
+        .glass-panel {
+            background-color: theme('colors.surface-glass');
+            backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.line-subtle');
+        }
+        .severity-crit-glow { box-shadow: inset 2px 0 0 theme('colors.severity-crit'); }
+        /* Scrollbar styling for specific areas if needed, though prompt asks for no scroll overall. Adding minimal custom scroll just in case internal areas need it */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.line-strong'); border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-app-bg-deep text-text-primary h-screen w-screen flex flex-col font-body-base antialiased">
+<!-- TopAppBar -->
+<header class="bg-surface-glass-high dark:bg-surface-glass-high flex justify-between items-center w-full px-gutter h-9 z-50 border-b border-line-subtle backdrop-blur-md flex-shrink-0">
+<!-- Left Section -->
+<div class="flex items-center gap-md">
+<div class="w-2 h-2 rounded-full bg-severity-ok animate-pulse"></div>
+<span class="font-mono-data text-mono-data text-text-key">14:32</span>
+<span class="material-symbols-outlined text-text-secondary text-sm">wifi</span>
+<span class="material-symbols-outlined text-text-secondary text-sm">warning</span>
+</div>
+<!-- Center Spacer -->
+<div class="flex-1"></div>
+<!-- Right Section -->
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm bg-surface-glass px-sm py-xs rounded border border-line-subtle hover:bg-surface-bright/20 transition-colors">
+<span class="font-mono-label text-mono-label text-text-key">Журнал (J)</span>
+<span class="bg-severity-crit text-text-key rounded px-1 text-[10px] font-bold">3</span>
+</button>
+<div class="flex items-center gap-xs font-mono-label text-mono-label text-text-secondary">
+<span class="material-symbols-outlined text-sm">sync</span>
+<span>14:30</span>
+<span class="bg-surface-variant px-1 rounded">ML</span>
+<span class="bg-surface-variant px-1 rounded">БД</span>
+</div>
+<!-- View Switcher (Simulated) -->
+<div class="flex border border-line-subtle rounded ml-md overflow-hidden bg-surface-glass-deep">
+<button class="px-sm py-xs bg-primary-container text-on-primary-container opacity-80" title="Мониторинг">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</button>
+<button class="px-sm py-xs text-text-secondary hover:bg-surface-bright/20 transition-colors" title="Схема">
+<span class="material-symbols-outlined text-[16px]">account_tree</span>
+</button>
+<button class="px-sm py-xs text-text-secondary hover:bg-surface-bright/20 transition-colors" title="Движок">
+<span class="material-symbols-outlined text-[16px]">memory</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<main class="flex-1 flex overflow-hidden">
+<!-- SideNavBar (Left Sidebar) -->
+<aside class="bg-surface-glass-deep dark:bg-surface-glass-deep flex flex-col h-full w-[272px] border-r border-line-subtle backdrop-blur-xl flex-shrink-0 z-40">
+<div class="p-lg border-b border-line-subtle flex flex-col gap-sm">
+<h1 class="font-section-lg text-section-lg font-bold text-text-key tracking-tight">CS MONITOR AI</h1>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-text-secondary text-sm">search</span>
+<input class="w-full bg-surface-dim border border-line-strong rounded px-xl py-sm font-mono-label text-mono-label text-text-primary focus:border-accent-strong focus:outline-none transition-colors h-8" placeholder="Поиск датчика..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-sm font-mono-data text-mono-data">
+<!-- Tree Item: ГПА-1 -->
+<div class="mb-xs">
+<div class="flex items-center gap-xs p-xs text-text-key cursor-pointer hover:bg-line-subtle rounded">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+<span class="material-symbols-outlined text-sm text-text-secondary">settings_input_component</span>
+<span>ГПА-1</span>
+</div>
+<!-- Subsystem -->
+<div class="pl-xl border-l border-line-subtle ml-sm mt-xs">
+<div class="flex items-center gap-xs p-xs text-text-primary cursor-pointer hover:bg-line-subtle rounded">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+<span>Компрессор ВД</span>
+</div>
+<!-- Sensors -->
+<div class="pl-xl mt-xs flex flex-col gap-xs">
+<div class="flex items-center justify-between p-xs bg-secondary-container/30 text-secondary-fixed border-l-2 border-secondary cursor-pointer rounded-r">
+<span>T_вх_КВД</span>
+<div class="w-2 h-2 rounded-full bg-text-key opacity-100"></div> <!-- Selected/Crit size sim -->
+</div>
+<div class="flex items-center justify-between p-xs text-text-tertiary cursor-pointer hover:bg-line-subtle rounded">
+<span>P_вых_КВД</span>
+<div class="w-1.5 h-1.5 rounded-full bg-text-key opacity-50"></div>
+</div>
+<div class="flex items-center justify-between p-xs text-text-tertiary cursor-pointer hover:bg-line-subtle rounded">
+<span>Вибрация_Ось_X</span>
+<div class="w-1 h-1 rounded-full bg-text-key opacity-20"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tree Item: ГПА-2 -->
+<div class="mb-xs">
+<div class="flex items-center gap-xs p-xs text-text-tertiary cursor-pointer hover:bg-line-subtle rounded">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="material-symbols-outlined text-sm">settings_input_component</span>
+<span>ГПА-2</span>
+</div>
+</div>
+<!-- Tree Item: ГПА-3 -->
+<div class="mb-xs">
+<div class="flex items-center gap-xs p-xs text-text-tertiary cursor-pointer hover:bg-line-subtle rounded">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="material-symbols-outlined text-sm">settings_input_component</span>
+<span>ГПА-3</span>
+</div>
+</div>
+</div>
+<!-- Footer info -->
+<div class="p-md border-t border-line-subtle bg-surface-container-low/50">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-text-secondary text-[32px]">account_circle</span>
+<div>
+<div class="font-mono-label text-mono-label text-text-key">Диспетчер</div>
+<div class="font-mono-label text-mono-label text-text-tertiary">Смена: Альфа</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Column -->
+<section class="flex-1 flex flex-col p-lg gap-lg overflow-hidden relative">
+<!-- Priority Banner (CRIT) -->
+<div class="glass-panel severity-crit-glow rounded-lg p-sm flex items-center justify-between cursor-pointer hover:bg-surface-bright/10 transition-colors flex-shrink-0">
+<div class="flex items-center gap-md">
+<div class="w-3 h-3 rounded-full bg-severity-crit animate-pulse"></div>
+<span class="bg-severity-crit/20 text-severity-crit-ink font-mono-label text-mono-label px-2 py-0.5 rounded uppercase">Критично</span>
+<span class="font-mono-data text-mono-data text-text-key">ГПА-1</span>
+<span class="text-text-secondary">•</span>
+<span class="font-mono-data text-mono-data text-primary-fixed">T_вх_КВД</span>
+<span class="text-text-secondary">•</span>
+<span class="font-body-base text-body-base text-text-primary">Стат. выброс</span>
+</div>
+<div class="font-mono-data text-mono-data text-text-secondary">12.06 14:05</div>
+</div>
+<!-- KPI Row -->
+<div class="grid grid-cols-7 gap-sm flex-shrink-0">
+<!-- KPI 1: CRIT -->
+<div class="glass-panel severity-crit-glow rounded p-sm flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Стат. выброс</span>
+<span class="bg-severity-crit/20 text-severity-crit-ink font-mono-label text-[10px] px-1 rounded uppercase">КРИТ</span>
+</div>
+<span class="font-hero-2xl text-page-xl text-text-key mt-auto">12</span>
+</div>
+<!-- KPI 2 -->
+<div class="glass-panel rounded p-sm flex flex-col gap-xs">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Физичность</span>
+<span class="font-hero-2xl text-page-xl text-text-primary mt-auto">2</span>
+</div>
+<!-- KPI 3 -->
+<div class="glass-panel rounded p-sm flex flex-col gap-xs">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Датчик завис</span>
+<span class="font-hero-2xl text-page-xl text-text-primary mt-auto">0</span>
+</div>
+<!-- KPI 4 -->
+<div class="glass-panel rounded p-sm flex flex-col gap-xs">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Скачок ΔV</span>
+<span class="font-hero-2xl text-page-xl text-text-primary mt-auto">5</span>
+</div>
+<!-- KPI 5 -->
+<div class="glass-panel rounded p-sm flex flex-col gap-xs">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Сезонная</span>
+<span class="font-hero-2xl text-page-xl text-text-primary mt-auto">1</span>
+</div>
+<!-- KPI 6 -->
+<div class="glass-panel rounded p-sm flex flex-col gap-xs">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Смена режима</span>
+<span class="font-hero-2xl text-page-xl text-text-primary mt-auto">3</span>
+</div>
+<!-- KPI 7 -->
+<div class="glass-panel rounded p-sm flex flex-col gap-xs">
+<span class="font-body-base text-body-base text-text-secondary text-xs truncate">Кросс-ГПА</span>
+<span class="font-hero-2xl text-page-xl text-text-primary mt-auto">0</span>
+</div>
+</div>
+<!-- Bottom Grid (Heatmap & Chart) -->
+<div class="flex-1 grid grid-cols-2 gap-lg overflow-hidden">
+<!-- Heatmap -->
+<div class="glass-panel rounded-lg flex flex-col overflow-hidden">
+<div class="p-md border-b border-line-subtle flex justify-between items-center bg-surface-container-low/30">
+<h2 class="font-body-md text-body-md font-semibold text-text-key">Тепловая карта</h2>
+<div class="flex gap-sm font-mono-label text-[10px] text-text-secondary uppercase">
+<div class="flex items-center gap-1"><div class="w-2 h-2 bg-severity-crit"></div>Super</div>
+<div class="flex items-center gap-1"><div class="w-2 h-2 bg-severity-warn"></div>Warn</div>
+<div class="flex items-center gap-1"><div class="w-2 h-2 bg-severity-info"></div>Obsv</div>
+<div class="flex items-center gap-1"><div class="w-2 h-2 bg-surface-bright border border-line-subtle"></div>Norm</div>
+</div>
+</div>
+<div class="flex-1 p-sm overflow-hidden flex flex-col relative">
+<!-- Heatmap Grid Simulation -->
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-1 h-full text-center">
+<!-- Header -->
+<div></div>
+<div class="font-mono-label text-mono-label text-text-tertiary self-end pb-1">ГПА-1</div>
+<div class="font-mono-label text-mono-label text-text-tertiary self-end pb-1">ГПА-2</div>
+<div class="font-mono-label text-mono-label text-text-tertiary self-end pb-1">ГПА-3</div>
+<!-- Rows -->
+<div class="font-mono-label text-mono-label text-text-secondary text-right pr-2 self-center">T_вх</div>
+<div class="bg-severity-crit/80 rounded w-full h-full min-h-[24px]"></div>
+<div class="bg-surface-bright rounded border border-line-subtle w-full h-full min-h-[24px]"></div>
+<div class="bg-severity-warn/60 rounded w-full h-full min-h-[24px]"></div>
+<div class="font-mono-label text-mono-label text-text-secondary text-right pr-2 self-center">P_вых</div>
+<div class="bg-surface-bright rounded border border-line-subtle w-full h-full min-h-[24px]"></div>
+<div class="bg-severity-info/50 rounded w-full h-full min-h-[24px]"></div>
+<div class="bg-surface-bright rounded border border-line-subtle w-full h-full min-h-[24px]"></div>
+<div class="font-mono-label text-mono-label text-text-secondary text-right pr-2 self-center">Вибр_X</div>
+<div class="bg-severity-warn/80 rounded w-full h-full min-h-[24px]"></div>
+<div class="bg-surface-bright rounded border border-line-subtle w-full h-full min-h-[24px]"></div>
+<div class="bg-surface-bright rounded border border-line-subtle w-full h-full min-h-[24px]"></div>
+<div class="font-mono-label text-mono-label text-text-secondary text-right pr-2 self-center">Вибр_Y</div>
+<div class="bg-severity-info/30 rounded w-full h-full min-h-[24px]"></div>
+<div class="bg-severity-crit/60 rounded w-full h-full min-h-[24px]"></div>
+<div class="bg-surface-bright rounded border border-line-subtle w-full h-full min-h-[24px]"></div>
+</div>
+</div>
+</div>
+<!-- Chart -->
+<div class="glass-panel rounded-lg flex flex-col overflow-hidden">
+<div class="p-md border-b border-line-subtle flex justify-between items-center bg-surface-container-low/30">
+<div class="flex gap-md font-mono-label text-[10px] text-text-secondary uppercase items-center">
+<div class="flex items-center gap-1"><div class="w-3 h-[2px] bg-text-key"></div>Значение</div>
+<div class="flex items-center gap-1"><div class="w-3 h-[2px] border-t border-dashed border-primary"></div>Модель</div>
+<div class="flex items-center gap-1"><div class="w-3 h-2 bg-line-strong rounded-sm" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px);"></div>Дов. интервал</div>
+</div>
+<div class="flex bg-surface-dim rounded border border-line-subtle">
+<button class="px-2 py-1 text-[10px] font-mono-label text-text-secondary hover:text-text-primary">1h</button>
+<button class="px-2 py-1 text-[10px] font-mono-label bg-surface-variant text-text-key rounded-sm">1d</button>
+<button class="px-2 py-1 text-[10px] font-mono-label text-text-secondary hover:text-text-primary">1w</button>
+</div>
+</div>
+<div class="flex-1 relative p-sm bg-[#0a0d12]"> <!-- Darker bg for chart area -->
+<!-- Placeholder for actual chart canvas -->
+<div class="absolute inset-0 m-sm border-l border-b border-line-strong flex items-end">
+<!-- Simulated Chart SVG -->
+<svg class="opacity-80" height="100%" preserveaspectratio="none" viewbox="0 0 100 100" width="100%">
+<!-- Hatched confidence interval (simulated with light fill) -->
+<polygon fill="url(#hatch)" opacity="0.3" points="0,60 20,65 40,50 60,70 80,40 100,60 100,80 80,60 60,90 40,70 20,85 0,80"></polygon>
+<defs>
+<pattern height="4" id="hatch" patternunits="userSpaceOnUse" width="4">
+<path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="rgba(255,255,255,0.2)" stroke-width="1"></path>
+</pattern>
+</defs>
+<!-- Model Line (Dashed) -->
+<polyline fill="none" points="0,70 20,75 40,60 60,80 80,50 100,70" stroke="theme('colors.primary')" stroke-dasharray="2,2" stroke-width="1"></polyline>
+<!-- Actual Value Line (Solid White) -->
+<polyline fill="none" points="0,68 20,73 35,58 38,20 42,62 60,78 75,48 78,15 82,52 100,68" stroke="#FFFFFF" stroke-width="1.5"></polyline>
+<!-- Anomaly Markers -->
+<polygon fill="theme('colors.severity-crit')" points="38,15 41,20 38,25 35,20"></polygon> <!-- Diamond -->
+<circle cx="78" cy="15" fill="none" r="3" stroke="theme('colors.severity-warn')" stroke-width="1"></circle> <!-- Circle -->
+</svg>
+</div>
+</div>
+<!-- Range Slider Area -->
+<div class="h-8 border-t border-line-subtle p-xs bg-surface-container-low/50 flex items-center px-sm">
+<div class="w-full h-1 bg-surface-dim rounded-full relative">
+<div class="absolute left-[20%] right-[30%] h-full bg-line-strong rounded-full">
+<div class="absolute -left-1.5 -top-1.5 w-3 h-3 bg-text-secondary rounded-full border-2 border-surface cursor-pointer"></div>
+<div class="absolute -right-1.5 -top-1.5 w-3 h-3 bg-text-secondary rounded-full border-2 border-surface cursor-pointer"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel (Analytics) -->
+<aside class="bg-surface-glass w-[300px] border-l border-line-subtle flex flex-col flex-shrink-0 z-40 backdrop-blur-xl">
+<div class="p-md border-b border-line-subtle">
+<h3 class="font-section-lg text-section-lg font-bold text-text-key truncate" title="Аналитика · T_вх_КВД">Аналитика · T_вх_КВД</h3>
+</div>
+<!-- Tabs -->
+<div class="flex overflow-x-auto border-b border-line-subtle no-scrollbar bg-surface-container-low/30">
+<button class="px-md py-sm font-mono-label text-mono-label text-primary border-b-2 border-primary whitespace-nowrap">Здоровье</button>
+<button class="px-md py-sm font-mono-label text-mono-label text-text-tertiary hover:text-text-secondary whitespace-nowrap">Качество модели</button>
+<button class="px-md py-sm font-mono-label text-mono-label text-text-tertiary hover:text-text-secondary whitespace-nowrap">Дрейф</button>
+<button class="px-md py-sm font-mono-label text-mono-label text-text-tertiary hover:text-text-secondary whitespace-nowrap">Калибровка</button>
+<button class="px-md py-sm font-mono-label text-mono-label text-text-tertiary hover:text-text-secondary whitespace-nowrap">Доменные индексы</button>
+</div>
+<!-- Здоровье Content -->
+<div class="flex-1 p-md flex flex-col gap-lg overflow-y-auto">
+<!-- Gauge Area (Severity) -->
+<div class="flex flex-col items-center py-md gap-sm">
+<!-- Simulated Gauge -->
+<div class="relative w-32 h-16 overflow-hidden">
+<div class="absolute inset-0 rounded-t-full border-[8px] border-surface-dim"></div>
+<!-- Progress arch -->
+<div class="absolute inset-0 rounded-t-full border-[8px] border-severity-crit" style="clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);"></div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
+<span class="font-hero-2xl text-[32px] leading-none font-bold text-severity-crit-ink block">12</span>
+</div>
+</div>
+<span class="bg-severity-crit/20 text-severity-crit-ink font-mono-label text-mono-label px-2 py-0.5 rounded uppercase">Критично</span>
+</div>
+<!-- Metrics -->
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-dim p-sm rounded border border-line-subtle">
+<div class="font-mono-label text-[10px] text-text-secondary uppercase mb-1">Достоверность</div>
+<div class="font-mono-data text-mono-data text-text-key">42%</div>
+</div>
+<div class="bg-surface-dim p-sm rounded border border-line-subtle">
+<div class="font-mono-label text-[10px] text-text-secondary uppercase mb-1">Остаточный ресурс</div>
+<div class="font-mono-data text-mono-data text-text-key">Неизв.</div>
+</div>
+</div>
+<!-- Коды здоровья -->
+<div>
+<h4 class="font-body-md text-body-md text-text-primary mb-sm">Коды здоровья</h4>
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center text-sm">
+<span class="text-text-secondary">E_102: Обрыв связи</span>
+<span class="text-text-key font-mono-data">3</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-text-secondary">W_04: Шум сигнала</span>
+<span class="text-text-key font-mono-data">15</span>
+</div>
+</div>
+</div>
+<!-- History -->
+<div>
+<h4 class="font-body-md text-body-md text-text-primary mb-sm">История (30 дней)</h4>
+<div class="flex flex-wrap gap-1">
+<!-- Simulated 30 day history blocks -->
+<script>
+                            for(let i=0; i<30; i++) {
+                                let bg = 'bg-surface-bright border border-line-subtle'; // Normal
+                                if(i===28 || i===29) bg = 'bg-severity-crit';
+                                else if(i===25 || i===14) bg = 'bg-severity-warn';
+                                document.write(`<div class="w-3 h-3 rounded-[2px] ${bg}"></div>`);
+                            }
+                        </script>
+</div>
+</div>
+<!-- Events -->
+<div class="flex-1 min-h-0 flex flex-col">
+<h4 class="font-body-md text-body-md text-text-primary mb-sm">Последние события</h4>
+<div class="flex-1 overflow-y-auto pr-1 flex flex-col gap-sm">
+<div class="border-l-2 border-severity-crit pl-sm">
+<div class="font-mono-label text-[10px] text-text-secondary">14:05:22</div>
+<div class="font-body-base text-xs text-text-primary">Статистический выброс превысил порог 3σ. Переход в статус КРИТ.</div>
+</div>
+<div class="border-l-2 border-severity-warn pl-sm opacity-80">
+<div class="font-mono-label text-[10px] text-text-secondary">11:20:00</div>
+<div class="font-body-base text-xs text-text-primary">Повышение дисперсии сигнала.</div>
+</div>
+<div class="border-l-2 border-surface-bright pl-sm opacity-60">
+<div class="font-mono-label text-[10px] text-text-secondary">08:00:15</div>
+<div class="font-body-base text-xs text-text-primary">Перекалибровка модели (плановая).</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</body></html>

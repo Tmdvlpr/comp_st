@@ -1,0 +1,182 @@
+station_id: ohangaron
+display_name: "Охангаронская КС"
+
+db:
+  host: ${CS_DB_HOST:localhost}
+  port: ${CS_DB_PORT:5432}
+  name: ${CS_DB_NAME:cs_db}
+  user: ${CS_DB_USER:postgres}
+  password: ${CS_DB_PASSWORD:}
+  schema: ohangaron
+
+data:
+  table: raw_data
+  datetime_col: datetime
+  point_col: point
+  value_col: value
+
+units:
+  - GPA1
+  - GPA2
+  - GPA3
+
+models_dir: models/ohangaron
+state_file: state/ohangaron_live_state.json
+
+# Геолокация для внешней погоды (ambient_temp через Open-Meteo) — нужна для
+# приведённых оборотов, shaft mismatch, avo_approach.
+location:
+  lat: 40.966234
+  lon: 69.566591
+  timezone: "Asia/Tashkent"
+  weather_cache: data/ambient_ohangaron.csv
+
+# ── Семантический маппинг суффикса SCADA-тега → фича (источник: ETL CS.csv) ──
+# Применяется к тегам GPA-{n}.GPA-{n}.<суффикс> и GT-{n}.GT-{n}.<суффикс> → <фича>__GPA{n}.
+# Даёт осмысленные имена и делает возможными доменные фичи (η_p, shaft mismatch и т.п.).
+tag_mapping:
+  "ASV_IN.PV": anti_surge_valve_pos
+  "AX201.PV": compressor_rotor_axial_shift_t1
+  "AX202.PV": compressor_rotor_axial_shift_t2
+  "GC_BFS.PV": gas_leak_bfs
+  "GC_BFTG.PV": gas_leak_bftg
+  "GC_COM1.PV": gas_leak_over_compressor_1
+  "GC_COM2.PV": gas_leak_over_compressor_2
+  "GC_Cover.PV": gas_leak_over_enclosure
+  "GC_FCV.PV": gas_leak_over_sk12
+  "GC_FG7001.PV": gas_leak_over_bpg
+  "GC_UPTG.PV": gas_leak_over_uptg
+  "PD.PV": gas_pressure_out_gpa
+  "PE101.PV": fuel_gas_pressure_in_gtd
+  "PG_AIRC.PV": gas_pressure_out_avo
+  "PROGRAM:FLOWCALC.TOT_UNIT.IN": fuel_gas_flow_rate_sec
+  "PS.PV": gas_pressure_in_gpa
+  "STATES_GPA.0": is_emergency_stop_with_venting
+  "STATES_GPA.1": is_emergency_stop_no_venting
+  "STATES_GPA.2": is_normal_stop_with_venting
+  "STATES_GPA.3": is_normal_stop_no_venting
+  "STATES_GPA.4": is_anti_surge_to_ring
+  "STATES_GPA.5": is_anti_surge_to_main
+  "STATES_GPA.6": is_mode_ring
+  "STATES_GPA.7": is_mode_mainline
+  "STATES_GTD.0": is_gtd_status_stopped
+  "STATES_GTD.5": is_gtd_status_running
+  "TD.PV": gas_temp_out_gpa
+  "TE221.PV": temp_front_bearing_pads
+  "TE222.PV": temp_rear_bearing_pads
+  "TE223.PV": temp_active_pads_front_bearing
+  "TE224.PV": temp_passive_pads_rear_bearing
+  "TE51.PV": oil_temp_out_zod
+  "TE52.PV": oil_temp_out_st
+  "TE54.PV": oil_temp_in_pod
+  "TS.PV": gas_temp_in_gpa
+  "T_AIRC_OUT.PV": gas_temp_out_avo
+  "VT101.PV": vibro_front_support
+  "VT102.PV": vibro_rear_support
+  "VT103.PV": vibro_st_support
+  "VT201.PV": vibro_rotor_front_horiz
+  "VT202.PV": vibro_rotor_front_vert
+  "VT203.PV": vibro_disp_rotor_rear_horiz
+  "VT204.PV": vibro_disp_rotor_rear_vert
+  "GT01.CTRL.IN[1].VALUE": rpm_tvd
+  "GT01.CTRL.IN[2].VALUE": rpm_st
+  "GT01.CTRL.IN[5].VALUE": rpm_tnd
+
+# ── Параметры research-методологии ──
+methodology:
+  # граница train (окно мониторинга: cutoff на ~неделю назад от сегодня; CLI --cutoff-date переопределяет)
+  train_cutoff: "2026-06-12"
+
+  # МАСКА pooled vs per-unit (какой датчик обучается кросс-ГПА, какой по одному агрегату).
+  # Эксперимент (held-out по 3 ГПА): pooled выигрывает на термо/механике (temp/oil/polytropic/
+  # axial — общая физика идентичных агрегатов + перенос «жарких» режимов GPA-2/3 на GPA-1),
+  # per-unit лучше на вибрации (механ.подпись агрегата уникальна). Подстроки имён:
+  pooling:
+    enabled: true            # false → ВСЁ per-unit (отключить pooled-путь)
+    per_unit: ["vibro"]      # подстроки → принудительно per-unit (вибрация)
+    pooled: []               # подстроки → принудительно pooled (приоритетнее per_unit)
+    # нет совпадения → pooled (термо/механика по умолчанию)
+
+  # физические границы датчиков (паспорт КС; отсечь мусор, НЕ тугие уставки)
+  limits:
+    anti_surge_valve_pos: [0.0, 100.0]
+    gas_pressure_in_gpa: [-0.1, 12.0]
+    gas_pressure_out_gpa: [-0.1, 12.0]
+    gas_pressure_out_avo: [-0.1, 12.0]
+    fuel_gas_pressure_in_gtd: [-0.1, 12.0]
+    gas_temp_in_gpa: [-50.0, 150.0]
+    gas_temp_out_gpa: [-50.0, 250.0]
+    gas_temp_out_avo: [-50.0, 150.0]
+    ambient_temp: [-60.0, 60.0]
+    oil_temp_in_pod: [-20.0, 200.0]
+    oil_temp_out_st: [-20.0, 200.0]
+    oil_temp_out_zod: [-20.0, 200.0]
+    temp_front_bearing_pads: [-20.0, 200.0]
+    temp_rear_bearing_pads: [-20.0, 200.0]
+    temp_active_pads_front_bearing: [-20.0, 200.0]
+    temp_passive_pads_rear_bearing: [-20.0, 200.0]
+    rpm_tvd: [0.0, 9000.0]
+    rpm_tnd: [0.0, 8000.0]
+    rpm_st: [0.0, 7000.0]
+    fuel_gas_flow_rate_sec: [0.0, 10.0]
+    compressor_rotor_axial_shift_t1: [-3.0, 3.0]
+    compressor_rotor_axial_shift_t2: [-3.0, 3.0]
+    vibro_front_support: [0.0, 200.0]
+    vibro_rear_support: [0.0, 200.0]
+    vibro_st_support: [0.0, 200.0]
+    vibro_rotor_front_horiz: [0.0, 1000.0]
+    vibro_rotor_front_vert: [0.0, 1000.0]
+    vibro_disp_rotor_rear_horiz: [0.0, 1000.0]
+    vibro_disp_rotor_rear_vert: [0.0, 1000.0]
+
+  # conditioning (заданный режим) — предикторы откликов; + доменные приведённые обороты/степень сжатия
+  conditioning:
+    - gas_pressure_in_gpa
+    - gas_temp_in_gpa
+    - ambient_temp
+    - anti_surge_valve_pos
+    - fuel_gas_flow_rate_sec
+    - fuel_gas_pressure_in_gtd
+  cond_domain: [rpm_tvd_red, rpm_tnd_red, rpm_st_red, pressure_ratio]
+
+  # отклики здоровья — таргеты регрессии (без η_p/specific_fuel — они наблюдаемые индексы)
+  targets_dashboard:
+    - temp_front_bearing_pads
+    - temp_rear_bearing_pads
+    - vibro_front_support
+    - vibro_rear_support
+    - vibro_st_support
+    - vibro_rotor_front_horiz
+    - vibro_rotor_front_vert
+    - vibro_disp_rotor_rear_horiz
+    - vibro_disp_rotor_rear_vert
+  soft_targets: [polytropic_head]
+  axial_targets: [compressor_rotor_axial_shift_t1, compressor_rotor_axial_shift_t2]
+  extra_response: [gas_temp_out_gpa, oil_temp_out_zod, oil_temp_out_st, oil_temp_in_pod]
+  # наблюдаемые индексы здоровья (мониторим напрямую/атрибуция; НЕ conditioning, НЕ обычные таргеты)
+  health_index: [polytropic_eff, polytropic_head, dT_disch, dT_cooler, avo_approach,
+                 specific_fuel, shaft_resid_tnd, shaft_ratio, shaft_resid_st, dT_bearings]
+  # для soft-таргетов исключаем их собственные термодинамические входы (иначе цикл)
+  soft_input_excl:
+    polytropic_eff: [gas_pressure_in_gpa, gas_temp_in_gpa, pressure_ratio]
+    polytropic_head: [gas_pressure_in_gpa, gas_temp_in_gpa, pressure_ratio]
+
+  # пороги детекции и калибровки (на свежей норме holdout, не на train)
+  thresholds:
+    conformal_alpha: 0.01
+    pot_alpha: 0.001
+    min_duration: 3
+    calib_days: 7
+    corr_redundant: 0.97
+    frozen_hours: 6.0
+    cusum_k: 0.5
+    cusum_h: 5.0
+    ewma_alpha: 0.05
+    # коридор по неопределённости CatBoost (RMSEWithUncertainty)
+    n_sigma: 5.0
+    # пол коридора как доля диапазона датчика. 0.15 перекрывал реальную
+    # неопределённость модели (коридор = 15% полного диапазона → слишком широко).
+    # 0.04: коридор определяется n_sigma·y_std (неопределённостью модели), а %-пол —
+    # лишь мягкая защита от слишком узкого коридора на малошумных датчиках.
+    min_buffer_pct: 0.04
+    var_smoothing: 24

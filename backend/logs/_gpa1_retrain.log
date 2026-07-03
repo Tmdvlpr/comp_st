@@ -1,0 +1,19 @@
+▶ Методология: normalized-conformal (|факт−предикт|/σ, virtual ensembles) + epistemic-novelty
+  wide из кэша: models/ohangaron_v23_staging/_wide_cache.pkl
+  merge: сохранено 32 моделей др. ГПА (перезапишу ГПА-1)
+  temp_front_bearing_pads__GPA1: univariate_only n_trees=54 R²_eval=-0.2866
+  temp_rear_bearing_pads__GPA1: ml_corridor n_trees=35 R²_eval=-0.353
+  vibro_front_support__GPA1: ml_corridor n_trees=35 R²_eval=0.2992
+  vibro_rear_support__GPA1: ml_corridor n_trees=36 R²_eval=0.1404
+  vibro_st_support__GPA1: ml_corridor n_trees=22 R²_eval=0.1285
+  vibro_rotor_front_horiz__GPA1: univariate_only n_trees=48 R²_eval=-0.8678
+  vibro_rotor_front_vert__GPA1: univariate_only n_trees=61 R²_eval=-0.4148
+  vibro_disp_rotor_rear_horiz__GPA1: univariate_only n_trees=27 R²_eval=-0.1964
+  vibro_disp_rotor_rear_vert__GPA1: ml_corridor n_trees=47 R²_eval=-0.0597
+  polytropic_head__GPA1: univariate_only n_trees=75 R²_eval=0.2089
+  compressor_rotor_axial_shift_t1__GPA1: ml_corridor n_trees=11 R²_eval=0.0696
+  compressor_rotor_axial_shift_t2__GPA1: ml_corridor n_trees=10 R²_eval=0.0687
+  gas_temp_out_gpa__GPA1: ml_corridor n_trees=29 R²_eval=-2.5564
+  oil_temp_out_zod__GPA1: ml_corridor n_trees=40 R²_eval=-0.9101
+  oil_temp_out_st__GPA1: ml_corridor n_trees=26 R²_eval=-1.8936
+  oil_temp_in_pod__GPA1: ml_corridor n_trees=47 R²_eval=-0.1951

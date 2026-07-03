@@ -1,0 +1,8 @@
+2026-06-15 14:28:01,203 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s
+2026-06-15 15:27:46,301 WARNING data_loader streaming-fetch попытка 1/3 упала (server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+) — повтор через 5s

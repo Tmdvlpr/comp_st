@@ -1,0 +1,13 @@
+[   35910ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=484f748a:14337
+[   36380ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
+[   36406ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
+[   36431ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
+[   36444ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
+[   79055ms] ReferenceError: Cannot access 'PVDATA' before initialization
+    at buildFlow (<anonymous>:495:28)
+    at applyFlow (<anonymous>:525:2)
+    at <anonymous>:488:2
+    at <anonymous>:489:3
+    at http://localhost:5173/src/components/Schema/SchemaPanel.tsx:38:21
+    at Array.forEach (<anonymous>)
+    at http://localhost:5173/src/components/Schema/SchemaPanel.tsx:34:53

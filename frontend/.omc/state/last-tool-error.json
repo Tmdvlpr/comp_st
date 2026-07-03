@@ -1,0 +1,7 @@
+{
+  "tool_name": "Read",
+  "tool_input_preview": "{\"file_path\":\"c:\\\\Users\\\\Timur\\\\Desktop\\\\UTG\\\\КС\\\\cs_4\\\\frontend\\\\detail-view.png\"}",
+  "error": "File does not exist. Note: your current working directory is C:\\Users\\Timur\\Desktop\\UTG\\КС\\cs_4\\frontend.",
+  "timestamp": "2026-06-15T11:39:18.624Z",
+  "retry_count": 1
+}
