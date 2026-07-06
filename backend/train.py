@@ -721,21 +721,28 @@ def block_conformal_threshold(scores, alpha: float = DEFAULT_ALPHA,
     return out
 
 
-def pre_fault_sanity(scores, slope_z_thresh: float = 3.0) -> dict:
-    """Дешёвая проверка окна на скрытый дрейф: значимый растущий тренд скора → окно подозрительно
-    (возможна рампа деградации до планового останова). Не гейт — предупреждение."""
-    a = np.asarray(scores, float)
+def pre_fault_sanity(scores, slope_z_thresh: float = 3.0, mag_frac_thresh: float = 0.5) -> dict:
+    """Проверка окна на скрытую рампу деградации. suspect ТОЛЬКО при СОВПАДЕНИИ двух условий:
+      • статзначимость тренда: z = slope/se > slope_z_thresh;
+      • практическая ВЕЛИЧИНА: суммарный рост за окно (slope·n) больше mag_frac_thresh от типичного
+        уровня скора (медианы) → тренд реально что-то добавляет, а не микро-дрейф.
+    КРИТИЧНО: при больших окнах (n до 6000) z ∝ slope·n^1.5 → почти любой сезонный микро-тренд значим;
+    без порога на величину гейт массово отключал бы режимы (AUDIT_2026-07-03, fix #1)."""
+    a = np.abs(np.asarray(scores, float))
     a = a[np.isfinite(a)]
     n = len(a)
     if n < 20:
-        return dict(suspect=False, z=0.0, slope=0.0, reason="too_few")
+        return dict(suspect=False, z=0.0, slope=0.0, mag_frac=0.0, reason="too_few")
     t = np.arange(n, dtype=float)
-    slope, intercept = np.polyfit(t, np.abs(a), 1)
-    line = np.abs(a) - (slope * t + intercept)
+    slope, intercept = np.polyfit(t, a, 1)
+    line = a - (slope * t + intercept)
     denom = np.sqrt(np.sum((t - t.mean()) ** 2)) + 1e-12
     se = np.sqrt(np.sum(line ** 2) / max(n - 2, 1)) / denom
     z = float(slope / (se + 1e-12))
-    return dict(suspect=bool(z > slope_z_thresh), z=z, slope=float(slope))
+    level = float(np.median(a)) + 1e-12
+    mag_frac = float(abs(slope) * (n - 1) / level)          # рост за окно относительно уровня скора
+    suspect = bool(z > slope_z_thresh and mag_frac > mag_frac_thresh)
+    return dict(suspect=suspect, z=z, slope=float(slope), mag_frac=round(mag_frac, 3))
 
 
 def enbpi_oob_residuals(X, y, fit_fn, B: int = 20, seed: int = 42):
@@ -832,9 +839,11 @@ def _calibrate_one(scores, alpha: float, n_eff_min: int, conservative_q: float, 
     if pf.get("suspect") and not _force:
         ok = False
     # CS_FORCE_CORRIDOR=1: строим полосу даже при n_eff<min. Малая выборка → квантиль ненадёжен →
-    # КОНСЕРВАТИВНО расширяем ×1.5, чтобы не занизить покрытие.
+    # КОНСЕРВАТИВНО расширяем ×1.5. Базируемся на НАИВНОМ квантиле q_naive, а НЕ на уже-консервативном
+    # p90-пороге (иначе двойная консервативность conservative_q×1.5 — fix #4, AUDIT_2026-07-03).
     if (not ok) and np.isfinite(thr) and _force:
-        thr = float(thr) * 1.5
+        _qn = bc.get("q_naive")
+        thr = float(_qn) * 1.5 if (_qn is not None and np.isfinite(_qn)) else float(thr) * 1.5
         ok, forced = True, True
     return dict(threshold=thr, n=bc["n"], n_eff=bc["n_eff"],
                 block_len=bc["block_len"], q_naive=bc["q_naive"],
@@ -888,23 +897,34 @@ def build_self_candidate(df_gpa, sub, target, unit_cutoff, limits, binning, regi
     return None, None
 
 
-def _self_band_mae(df_gpa, target, eval_idx, centers, binning, regime_cfg) -> float:
-    """MAE self-band (центр = healthy-медиана режима) на held-out eval-точках — тот же набор,
-    что и mae_val модели. Служит ЧЕСТНЫМ MAE-baseline для роутинга: модель служится, только если
-    бьёт эту простую медиану по MAE (R² в решении НЕ участвует). NaN если центров нет."""
-    if not centers:
-        return float("nan")
+def _self_band_mae(df_gpa, target, eval_idx, binning, regime_cfg, unit_cutoff, limits) -> float:
+    """ЧЕСТНЫЙ MAE-baseline для роутинга genuine-vs-self (fix mae_self-leakage, AUDIT_2026-07-03).
+    Центр self-band для СРАВНЕНИЯ считается СТРОГО на train (≤ cutoff) — как обучается модель — и
+    оценивается на ТЕХ ЖЕ eval-точках (полный eval_idx с глобальным train-fallback), что и mae_val.
+    Раньше центр брался из пост-cutoff калибровки, пересекающейся с eval (in-sample) → mae_self занижен
+    → genuine-модели ложно демотировались. NaN если train/eval < 30 точек."""
     try:
         lab = label_regime(df_gpa, regime_cfg)
         sm = sub_mode(df_gpa, regime_cfg)
         lb = load_bin_labels(df_gpa, binning)
         rk = regime_key(lab, sm, lb)
+        y = df_gpa[target].astype(float)
+        healthy = verified_healthy_mask(df_gpa, limits, cfg=regime_cfg).reindex(df_gpa.index).fillna(False)
+        train_m = healthy & (lab == STEADY) & (df_gpa.index <= unit_cutoff) & y.notna()
+        if int(train_m.sum()) < 30:
+            return float("nan")
+        gmed = float(np.median(y[train_m]))                       # глобальный train-медиан (fallback)
+        cen_by_rk = {}                                            # per-режимный train-медиан (≥30 точек)
+        for k in pd.unique(rk[train_m]):
+            v = y[train_m & (rk == k)]
+            if len(v) >= 30:
+                cen_by_rk[k] = float(np.median(v))
         idx = pd.DatetimeIndex(eval_idx).intersection(df_gpa.index)
         rk_e = rk.reindex(idx)
-        cen = rk_e.map(lambda k: centers.get(str(k), centers.get(k))).astype(float)
-        resid = (df_gpa[target].reindex(idx).astype(float) - cen).abs()
+        cen = rk_e.map(lambda k: cen_by_rk.get(k, gmed)).astype(float)   # support = ВЕСЬ eval (как mae_val)
+        resid = (y.reindex(idx) - cen).abs()
         resid = resid[np.isfinite(resid)]
-        return float(resid.mean()) if len(resid) else float("nan")
+        return float(resid.mean()) if len(resid) >= 30 else float("nan")
     except Exception as e:
         logger.debug("self-band MAE %s: %s", target, e)
         return float("nan")
@@ -1034,8 +1054,29 @@ def train_sensor(df_gpa: pd.DataFrame, target: str, feat_cols: list,
     feats = [f for f in feat_cols if f in df_gpa.columns and f != target]
     base = SensorModel(target=target, gpa_id=gpa_id, feat_cols=feats,
                        unit_cutoff=None, cutoff_mode="", detector_mode="univariate_only")
-    if target not in df_gpa.columns or len(feats) < 2:
-        base.note = "нет таргета/фич"
+    if target not in df_gpa.columns:
+        base.note = "нет таргета"
+        return base
+    if len(feats) < 2:
+        # НЕТ кросс-фич → self-band-only (центр = healthy-медиана режима, без CatBoost). fix #3a
+        # (AUDIT_2026-07-03): раньше внешний цикл делал continue → датчик МОЛЧА выпадал из мониторинга.
+        base.note = "нет кросс-фич — self-band-only"
+        try:
+            _res = resolve_unit_cutoff(df_gpa, global_cutoff, limits, regime_cfg, allow_per_unit=per_unit)
+            _uc = _res.get("unit_cutoff") or global_cutoff
+            base.unit_cutoff = str(_uc); base.cutoff_mode = _res.get("mode", "")
+            _bin = fit_load_bins(df_gpa, label_regime(df_gpa, regime_cfg) == STEADY, regime_cfg)
+            base.load_binning = dict(axis=_bin.axis, edges=_bin.edges, cv=_bin.cv, n_bins=_bin.n_bins)
+            _hm = verified_healthy_mask(df_gpa, limits, cfg=regime_cfg).reindex(df_gpa.index).fillna(False)
+            _sub = df_gpa.loc[_hm, [target]].dropna(subset=[target])
+            _c, _art = build_self_candidate(df_gpa, _sub, target, _uc, limits, _bin, regime_cfg,
+                                            calib_cfg, force_build=True)
+            if _art:
+                base.self_centers = _c; base.self_calibration = _art; base.calibration = _art
+                base.detector_mode = "univariate_band"; base.corridor_quality = "self_band"
+                base.sensor_range = float(np.nanmax(df_gpa[target]) - np.nanmin(df_gpa[target])) or 1.0
+        except Exception as e:
+            logger.debug("self-band-only %s: %s", target, e)
         return base
 
     # ── 1. cutoff (единый глобальный; пер-юнитный B — опц.) ──
@@ -1189,7 +1230,7 @@ def train_sensor(df_gpa: pd.DataFrame, target: str, feat_cols: list,
     if _art_self:
         base.self_calibration = _art_self
         base.self_centers = _centers
-    mae_self = _self_band_mae(df_gpa, target, eval_idx, _centers, binning, regime_cfg) if _centers else float("nan")
+    mae_self = _self_band_mae(df_gpa, target, eval_idx, binning, regime_cfg, unit_cutoff, limits)
     base.mae_self = round(mae_self, 6) if np.isfinite(mae_self) else float("nan")
     # baseline сравнения: per-режимная self-band медиана (или глобальная медиана, если по-режимной нет)
     _cmp = mae_self if np.isfinite(mae_self) else mae_median_base
@@ -1383,7 +1424,7 @@ def _finalize_calibration(base: SensorModel, mdl, df_gpa, sub, tr, ho, target, f
     if _art_self:
         base.self_calibration = _art_self
         base.self_centers = _centers
-    mae_self = _self_band_mae(df_gpa, target, eval_idx, _centers, binning, regime_cfg) if _centers else float("nan")
+    mae_self = _self_band_mae(df_gpa, target, eval_idx, binning, regime_cfg, unit_cutoff, limits)
     base.mae_self = round(mae_self, 6) if np.isfinite(mae_self) else float("nan")
     _cmp = mae_self if np.isfinite(mae_self) else mae_median_base
     _model_beats_self = (base.detector_mode == "ml_corridor" and np.isfinite(base.mae_val)
@@ -1813,8 +1854,8 @@ def train_all(station: str, cutoff_date=None, from_date=None,
                 if tgt not in dfu.columns or verd_by_gpa[gid].get(tgt, "ok") in UNMODELABLE:
                     continue
                 feats = _feats_per_unit(gid, tgt)
-                if len(feats) < 2:
-                    continue
+                # <2 кросс-фич больше НЕ пропускаем: train_sensor построит self-band-only (fix #3a),
+                # датчик остаётся в мониторинге с полосой нормального диапазона, а не выпадает молча.
                 m = train_sensor(dfu, tgt, feats, cutoff_ts, limits, gid, regime_cfg, per_unit=per_unit_cutoff)
                 key = f"{tgt}__GPA{gid}"
                 models_meta[key] = sensor_to_meta(m, name_to_tag)

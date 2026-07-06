@@ -1,9 +1,0 @@
-last_updated: 2026-06-11T17:46:49 | events: 500
-  GPA1    frozen: 209
-  GPA1        ml: 83
-  GPA1       neg: 51
-  GPA2    frozen: 15
-  GPA2       roc: 4
-  GPA3    frozen: 78
-  GPA3        ml: 10
-  GPA3       neg: 50

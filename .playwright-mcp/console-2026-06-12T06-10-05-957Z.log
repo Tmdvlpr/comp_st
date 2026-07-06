@@ -1,2 +1,0 @@
-[    1232ms] [WARNING] createSpring() is deprecated use spring() instead @ https://cdn.jsdelivr.net/npm/animejs@4/+esm:79
-[  809807ms] [ERROR] Failed to load resource: net::ERR_INSUFFICIENT_RESOURCES @ http://gc.kis.v2.scr.kaspersky-labs.com/6F84090D-D046-4209-9D40-ADC4A5524E1B/AF35E8C0-1AB9-4C77-80F9-3C4679ADEE1E/from?get&nocache=1e30e&tm=2026-06-12T06%3A23%3A34.713Z:0

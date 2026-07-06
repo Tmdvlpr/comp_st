@@ -2,6 +2,9 @@
 .env
 .env.local
 .env.*.local
+# .env.example содержит реальные прод-креды (не плейсхолдеры) → тоже не коммитим
+.env.example
+.env.*.example
 
 # Python virtualenv и кэши (переустанавливаемое, платформозависимое)
 venv/
@@ -20,6 +23,21 @@ backend/models/
 
 # Git
 .git/
+
+# Скретч оркестратора OMC (research/state/logs) — содержит прод-пароль и не является кодом
+.omc/
+
+# Скретч инструментов и локальные настройки — не код
+.playwright-mcp/
+.superpowers/
+.claude/
+
+# Артефакты обучения / рантайма / логи — переустанавливаемое, не код
+catboost_info/
+backend/logs/
+*.log
+backend/live_state.json
+backend/state/*.json
 
 # Крупные данные и дампы (не в VCS — раздувают .git)
 Рисёрч/

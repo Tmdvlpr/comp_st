@@ -1,5 +1,0 @@
-[     625ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=cc3c7362:14337
-[    1203ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
-[    1236ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
-[    1263ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509
-[    1274ms] [WARNING] createSpring() is deprecated use spring() instead @ http://localhost:5173/@vite/client:509

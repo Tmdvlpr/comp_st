@@ -189,30 +189,49 @@ def classify_points(
 
 def episodes(labels: np.ndarray, index: pd.DatetimeIndex, cfg: dict | None = None) -> list[dict]:
     """Сворачивает поточечные метки в ЭПИЗОДЫ (конец точечного спама).
-    Эпизод = непрерывный участок одного не-НОРМА класса; тревога поднимается, только если
-    доля класса в трейлинг-окне превышает порог (для датчик-классов — сразу, они дискретны)."""
+    ФИЗ-классы (РЕЖИМ/ДЕФЕКТ): тревога = ПЛОТНОСТЬ класса в трейлинг-окне > episode_frac (rolling),
+    активные области сливаются в эпизоды. Перемежающийся дефект (дефект/норма/дефект) не подавляется —
+    именно этот случай ломала прежняя «только непрерывный прогон» реализация (fix #5, AUDIT_2026-07-03).
+    ДАТЧИК-классы (не-физ/залипание/выброс) дискретны → непрерывные прогоны как есть, без плотностного гейта."""
     c = {**DEFAULTS, **(cfg or {})}
-    out = []
+    labels = np.asarray(labels, dtype=object)
     n = len(labels)
+    out = []
     if n == 0:
         return out
-    # эпизодный гейт только для РЕЖИМ/ДЕФЕКТ (стохастика); датчик-классы дискретны и проходят как есть
-    i = 0
-    while i < n:
-        cls = labels[i]
-        if cls == NORM:
-            i += 1
+    win, frac = c["episode_win"], c["episode_frac"]
+
+    # ФИЗ-классы — по плотности в окне
+    for cls in (REGIME, DEFECT):
+        m = (labels == cls).astype(float)
+        if m.sum() == 0:
             continue
-        j = i
-        while j < n and labels[j] == cls:
-            j += 1
-        seg_len = j - i
-        # для физ-режимных классов требуем плотность (гасим одиночные хвосты conformal ~2%)
-        keep = True
-        if cls in (REGIME, DEFECT):
-            keep = seg_len >= max(1, int(c["episode_frac"] * min(c["episode_win"], seg_len))) \
-                   and seg_len >= c["persist_k"]
-        if keep:
-            out.append(dict(cls=cls, start=index[i], end=index[j - 1], n=seg_len))
-        i = j
+        roll = pd.Series(m).rolling(win, min_periods=1).mean().values
+        active = roll > frac
+        i = 0
+        while i < n:
+            if active[i]:
+                j = i
+                while j < n and active[j]:
+                    j += 1
+                cnt = int((labels[i:j] == cls).sum())
+                out.append(dict(cls=cls, start=index[i], end=index[j - 1], n=cnt, span=j - i))
+                i = j
+            else:
+                i += 1
+
+    # ДАТЧИК-классы — дискретные непрерывные прогоны
+    for cls in (NONPHYS, STUCK, SPIKE):
+        i = 0
+        while i < n:
+            if labels[i] == cls:
+                j = i
+                while j < n and labels[j] == cls:
+                    j += 1
+                out.append(dict(cls=cls, start=index[i], end=index[j - 1], n=j - i, span=j - i))
+                i = j
+            else:
+                i += 1
+
+    out.sort(key=lambda e: e["start"])
     return out
