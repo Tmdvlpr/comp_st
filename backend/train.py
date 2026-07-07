@@ -1638,7 +1638,7 @@ def sensor_to_meta(m: SensorModel, name_to_tag: dict | None = None) -> dict:
 
 
 def build_metadata(station_id, gpa_ids, tag_to_name, name_to_tag, models_meta,
-                   regime_cfg: RegimeConfig, global_cutoff, extra_root: dict | None = None) -> dict:
+                   regime_cfg: RegimeConfig, global_cutoff, cfg=None, extra_root: dict | None = None) -> dict:
     """Полный metadata.json (schema_version=v2 + regime_config + сохранённые корневые поля)."""
     md = {
         "station_id": station_id, "schema_version": "v2", "model_version": "v23.0-norm-conformal",
@@ -1650,9 +1650,18 @@ def build_metadata(station_id, gpa_ids, tag_to_name, name_to_tag, models_meta,
         "corridor_mode": "conformal",
         "trained_at": None, "last_train_timestamp": pd.Timestamp(global_cutoff).isoformat(),
         "cutoff_date": str(pd.Timestamp(global_cutoff).date()),
+        "train_cutoff_date": str(pd.Timestamp(global_cutoff).date()),
         "gpa_ids": list(gpa_ids), "tag_to_name": tag_to_name, "name_to_tag": name_to_tag,
         "regime_config": dataclasses.asdict(regime_cfg), "models": models_meta,
+        "data_source": "postgresql",
     }
+    if cfg:
+        md.update({
+            "db_host": cfg.db.get("host"),
+            "db_name": cfg.db.get("name"),
+            "db_schema": cfg.db.get("schema"),
+            "db_table": cfg.data.get("table"),
+        })
     if extra_root:
         md.update(extra_root)
     return md
@@ -1866,6 +1875,7 @@ def train_all(station: str, cutoff_date=None, from_date=None,
     th = meth.get("thresholds", {})
     md = build_metadata(
         cfg.station_id, gpa_ids, tag_to_name, name_to_tag, models_meta, regime_cfg, cutoff_ts,
+        cfg=cfg,
         extra_root={
             "health_index": list(meth.get("health_index", [])),
             "conditioning": conditioning + cond_domain, "response_targets": regression_targets,
