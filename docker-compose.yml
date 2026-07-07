@@ -1,11 +1,13 @@
 services:
-  predictor:
+  predictor-ohangaron:
     build: ./backend
     restart: unless-stopped
     env_file: .env
     command: python live_predict.py --mode live --station ohangaron
     volumes:
       - state_data:/app/state
+    environment:
+      - STATION_ID=ohangaron
 
   backend:
     build: ./backend
@@ -17,7 +19,7 @@ services:
     volumes:
       - state_data:/app/state
     depends_on:
-      - predictor
+      - predictor-ohangaron
 
   frontend:
     build: ./frontend

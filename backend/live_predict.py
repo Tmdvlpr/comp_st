@@ -1826,6 +1826,7 @@ def _write_live_state(results, metadata, models=None, df_wide=None, historical=F
                 _pred_through = _last
 
     state = {
+        'station_id':      _station_id,
         'last_updated':    pd.Timestamp.now().isoformat(),
         'predicted_through': _pred_through.isoformat() if _pred_through is not None else None,
         'model_trained_at': metadata.get('last_train_timestamp', ''),
